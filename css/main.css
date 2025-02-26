@@ -1,0 +1,269 @@
+/* 🔹 General Page Styling */
+body {
+    margin: 0;
+    padding: 0;
+    overflow:hidden; /* Disable scrolling */
+    background: linear-gradient(to right, #0a0f2c, #1b1f3a);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+    height: 100vh;
+}
+
+
+
+
+/* 🔹 Background Animation (Cyber Effect) */
+/* Cyber-Themed Background Animation */
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('assets/images/cyber-matrix.gif') no-repeat center center;
+    background-size: cover;
+    animation: fadeBackground 20s infinite alternate;
+    z-index: -2;  /* Place behind everything */
+  }
+  
+  /* Network Canvas: full-screen, behind UI elements */
+  #networkCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place between background and UI */
+    pointer-events: none; /* So it doesn't block clicks */
+  }
+  
+  /* Centered UI: ensure it’s above the canvas */
+  .center-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    z-index: 2; /* Make sure it's above the canvas */
+  }
+  
+  
+
+/* 🔹 Navigation Menu */
+nav {
+    position: fixed;
+    top: 10px;
+    right: 30px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-right: auto;
+    margin-left: 20px;
+}
+.menu-icon {
+    font-size: 30px;
+    cursor: pointer;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+.menu-icon:hover {
+    background: limegreen;
+}
+
+/* 🔹 Dropdown Menu */
+.dropdown-menu {
+    display: none; /* Initially hidden */
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    padding: 10px;
+    list-style: none;
+    width: 180px;
+    transition: all 0.3s ease-in-out; /* Smooth transition */
+    opacity: 0; /* Ensures it starts hidden */
+    visibility: hidden;
+}
+
+/* ✅ Fix Visibility Issue */
+.dropdown-menu.active {
+    display: block; /* Make sure it's visible */
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-menu li {
+    padding: 10px;
+    text-align: left;
+}
+.dropdown-menu li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    font-size: 18px;
+    padding: 5px;
+    transition: background 0.3s;
+}
+.dropdown-menu li a:hover {
+    background: limegreen;
+    border-radius: 5px;
+}
+
+
+@keyframes pulseGlow {
+    0% { text-shadow: 0 0 5px limegreen; }
+    50% { text-shadow: 0 0 30px limegreen; }
+    100% { text-shadow: 0 0 5px limegreen; }
+}
+/* ✅ Typing Effect for CyberSavvy Title */
+/* ============================================= */
+/* CYBER TITLE - TYPING + PER-LETTER GLITCH HOVER */
+/* ============================================= */
+
+/* We keep the font-size, color, shadows, etc. */
+.cyber-title {
+    font-size: 80px;
+    color: limegreen;
+    text-shadow: 0 0 5px limegreen, 0 0 10px cyan;
+    /* We want to hide overflow and keep everything on one line */
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 4px solid limegreen; /* The "cursor" effect */
+    display: inline-block; /* So the border-right looks like a cursor at the end */
+    /* Optional: animate the cursor blinking */
+    animation: blinkCursor 0.8s infinite;
+    margin: 0 auto; /* Center horizontally if needed */
+}
+
+/* Blinking cursor animation */
+@keyframes blinkCursor {
+    0%, 49% {
+        border-right-color: limegreen;
+    }
+    50%, 99% {
+        border-right-color: transparent;
+    }
+    100% {
+        border-right-color: limegreen;
+    }
+}
+
+/* Each letter gets a class so we can hover them individually */
+.letter {
+    display: inline-block; /* So each letter can be hovered separately */
+}
+
+/* Once typing is complete, we add .typing-completed to the parent (.cyber-title).
+   Then any .letter inside it will glitch on hover. */
+.typing-completed .letter:hover {
+    animation: glitch 0.3s infinite;
+}
+
+/* We'll keep your existing glitch keyframes */
+@keyframes glitch {
+    0%   { transform: translate(1px, 1px); }
+    25%  { transform: translate(-1px, -1px); }
+    50%  { transform: translate(1px, -1px); }
+    75%  { transform: translate(-1px, 1px); }
+    100% { transform: translate(0, 0); }
+}
+
+.subtitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* 🔹 3D Interactive Buttons */
+.btn {
+    padding: 15px 40px;
+    font-size: 22px;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.green-btn {
+    background: limegreen;
+    box-shadow: 0 0 15px limegreen;
+}
+.blue-btn {
+    background: dodgerblue;
+    box-shadow: 0 0 15px dodgerblue;
+}
+.btn:hover {
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: 0 0 20px cyan;
+}
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* 🔹 Floating Cyber Icons */
+.floating-icon {
+    position: absolute;
+    width: 80px;
+    opacity: 0.5;
+    filter: blur(3px); /* Adds depth effect */
+}
+.icon1 { top: 10%; left: 5%; animation: float 2s infinite alternate; }
+.icon2 { top: 50%; right: 10%; animation: float 1s infinite alternate; }
+.icon3 { bottom: 20%; left: 15%; animation: float 2s infinite alternate; }
+.icon4 { top: 30%; right: 25%; animation: float 1s infinite alternate; }
+.icon5 { bottom: 10%; right: 40%; animation: float 2s infinite alternate; }
+
+/* 🔹 Animations */
+@keyframes pulse {
+    0% { text-shadow: 0 0 10px limegreen; }
+    100% { text-shadow: 0 0 20px limegreen; }
+}
+@keyframes fadeBackground {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+@keyframes float {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(10px); }
+}
+
+
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: limegreen;
+    color: black;
+    transition: 0.3s;
+}
+button:hover {
+    background-color: rgb(0, 121, 0);
+}
+.hidden {
+    display: none;
+}
+
+/* 🔹 Floating Cyber Icons */
+.floating-icon {
+    position: absolute;
+    width: 80px;
+    opacity: 0.5;
+    filter: blur(3px);
+}
+.icon1 {
+    top: 10%; left: 10%; animation: float 6s infinite alternate;
+}
+.icon2 {
+    bottom: 10%; right: 15%; animation: float 8s infinite alternate;
+}
+
