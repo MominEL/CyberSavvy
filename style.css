@@ -1,0 +1,246 @@
+/* 🔹 General Page Styling */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Disable scrolling */
+    background: linear-gradient(to right, #0a0f2c, #1b1f3a);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+    height: 100vh;
+}
+
+/* 🔹 Background Animation (Cyber Effect) */
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('assets/images/cyber-matrix.gif') no-repeat center center;
+    background-size: cover;
+    animation: fadeBackground 20s infinite alternate;
+}
+
+/* 🔹 Navigation Menu */
+nav {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    z-index: 1000;
+}
+.menu-icon {
+    font-size: 30px;
+    cursor: pointer;
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    padding: 10px;
+    list-style: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.dropdown-menu li {
+    padding: 10px;
+}
+.dropdown-menu li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-menu li a:hover {
+    background: limegreen;
+}
+
+/* 🔹 Centered UI */
+.center-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+@keyframes pulseGlow {
+    0% { text-shadow: 0 0 5px limegreen; }
+    50% { text-shadow: 0 0 15px limegreen; }
+    100% { text-shadow: 0 0 5px limegreen; }
+}
+.cyber-title {
+    font-size: 50px;
+    text-shadow: 0 0 15px limegreen;
+    animation: pulseGlow 3s infinite alternate;
+}
+
+.subtitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* 🔹 3D Interactive Buttons */
+.btn {
+    padding: 15px 40px;
+    font-size: 22px;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.green-btn {
+    background: limegreen;
+    box-shadow: 0 0 15px limegreen;
+}
+.blue-btn {
+    background: dodgerblue;
+    box-shadow: 0 0 15px dodgerblue;
+}
+.btn:hover {
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: 0 0 20px cyan;
+}
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* 🔹 Floating Cyber Icons */
+.floating-icon {
+    position: absolute;
+    width: 80px;
+    opacity: 0.5;
+    filter: blur(3px); /* Adds depth effect */
+}
+.icon1 { top: 10%; left: 5%; animation: float 6s infinite alternate; }
+.icon2 { top: 50%; right: 10%; animation: float 8s infinite alternate; }
+.icon3 { bottom: 20%; left: 15%; animation: float 7s infinite alternate; }
+.icon4 { top: 30%; right: 25%; animation: float 9s infinite alternate; }
+.icon5 { bottom: 10%; right: 40%; animation: float 5s infinite alternate; }
+
+/* 🔹 Animations */
+@keyframes pulse {
+    0% { text-shadow: 0 0 10px limegreen; }
+    100% { text-shadow: 0 0 20px limegreen; }
+}
+@keyframes fadeBackground {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+@keyframes float {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(10px); }
+}
+
+
+
+
+/* 🔹 FAQ Section */
+.faq-section {
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.faq:hover {
+    background: rgba(0, 255, 0, 0.2);
+    transition: 0.3s ease-in-out;
+}
+
+.faq {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+.faq-answer {
+    display: none;
+    padding-top: 10px;
+    font-size: 16px;
+    color: #ddd;
+    transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+}
+/* 🔹 FAQ Hover Effect */
+.faq-question {
+    transition: 0.3s ease-in-out;
+}
+.faq:hover {
+    background: rgba(0, 255, 0, 0.3);
+    transform: scale(1.02);
+    transition: 0.3s ease-in-out;
+}
+.faq.open {
+    background: rgba(0, 255, 0, 0.6);
+}
+
+.faq.open .faq-answer {
+    display: block;
+    max-height: 500px; /* Adjust as needed */
+    opacity: 1;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+
+/* 🔹 Submit Button Hover Effect */
+button {
+    transition: 0.3s;
+}
+button:hover {
+    background-color: limegreen;
+    box-shadow: 0 0 10px limegreen;
+}
+
+
+.toggle-icon {
+    font-size: 20px;
+}
+
+/* 🔹 Contact Form */
+.contact-form {
+    max-width: 500px;
+    margin: 30px auto;
+    text-align: center;
+}
+input {
+    width: 80%;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: limegreen;
+    color: black;
+    transition: 0.3s;
+}
+button:hover {
+    background-color: darkgreen;
+}
+.hidden {
+    display: none;
+}
+
+/* 🔹 Floating Cyber Icons */
+.floating-icon {
+    position: absolute;
+    width: 80px;
+    opacity: 0.5;
+    filter: blur(3px);
+}
+.icon1 {
+    top: 10%; left: 10%; animation: float 6s infinite alternate;
+}
+.icon2 {
+    bottom: 10%; right: 15%; animation: float 8s infinite alternate;
+}
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSavvy - Help & FAQs</title>
+    <link rel="stylesheet" href="css/help.css">
+    <script src="js/help.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> <!-- GSAP for animations -->
+    
+</head>
+
+<body>
+
+    <!-- 🔹 Animated Background -->
+    <div class="background-animation"></div>
+
+    <!-- 🔹 Back to Home Button -->
+    <nav>
+        <a href="index.html" class="back-btn">← Back to Home</a>
+    </nav>
+
+    <!-- 🔹 Title & Animated Question Mark -->
+    <div class="title-container">
+        <h1 class="cyber-title">❓ Help & FAQs</h1>
+        <img src="assets/images/question-mark.png" class="question-icon" alt="Question Mark">
+    </div>
+
+    <p class="subtitle">Find answers to common questions or ask your own!</p>
+
+    <!-- 🔹 FAQ Section -->
+    <section class="faq-section">
+        <div class="faq">
+            <h3 class="faq-question">🔹 How do I play CyberSavvy? <span class="toggle-icon">+</span></h3>
+            <p class="faq-answer">Click 'Start Playing' on the home page, choose a level, and follow the instructions on-screen to complete the challenge!</p>
+        </div>
+        <div class="faq">
+            <h3 class="faq-question">🔹 Is this game safe for kids? <span class="toggle-icon">+</span></h3>
+            <p class="faq-answer">Yes! CyberSavvy is designed for kids and teaches online safety in a fun and interactive way.</p>
+        </div>
+        <div class="faq">
+            <h3 class="faq-question">🔹 Can I reset my progress? <span class="toggle-icon">+</span></h3>
+            <p class="faq-answer">Yes! You can reset your progress in the Settings page by selecting 'Reset Data'.</p>
+        </div>
+    </section>
+
+    <!-- 🔹 Contact Form -->
+    <section class="contact-form">
+        <h2>📩 Ask a Question</h2>
+        <p>If you need help, submit your question below:</p>
+        <input type="text" id="questionInput" placeholder="Type your question...">
+        <button id="submitQuestion">Submit</button>
+        <p id="formMessage" class="hidden">✅ Your question has been sent!</p>
+    </section>
+
+</body>
+</html>
+

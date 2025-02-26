@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberSavvy - Learn Cybersecurity</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/main.js" defer></script>
+  <script src="assets/phaser.min.js"></script> <!-- Phaser for future interactions -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> <!-- GSAP for animations -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet"> <!-- Font -->
+</head>
+<body>
+  <!-- Cyber-Themed Background Animation -->
+  <div class="background-animation"></div>
+
+  <!-- Network Canvas Background -->
+  <canvas id="networkCanvas"></canvas>
+
+  <!-- 🔹 Navigation Menu (Dropdown) -->
+  <nav>
+    <div class="logo">🔐 CyberSavvy</div>
+    <div class="menu-icon"> ☰</div>
+    <ul class="dropdown-menu">
+      <li><a href="levels.html">🎮 Play Game</a></li>
+      <li><a href="learn.html">📚 Learn</a></li>
+      <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="help.html">❓ Help</a></li>
+    </ul>
+  </nav>
+
+  <!-- 🔹 Main Content (Centered UI) -->
+  <div class="center-content">
+    <h1 class="cyber-title"></h1> <!-- Empty at first, will be typed by JavaScript -->
+    <p class="subtitle">Become a Cyber Hero & Stay Safe Online!</p>
+    <button id="playGame" class="btn green-btn">Start Playing</button>
+    <button id="learnMore" class="btn blue-btn">Learn More</button>
+  </div>
+</body>
+</html>
