@@ -1,19 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select a Level</title>
-    <link rel="stylesheet" href="css/levels.css">
-    <script src="js/levels.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>CyberSavvy - Levels</title>
+  <!-- Link to your custom levels.css -->
+  <link rel="stylesheet" href="css/levels.css" />
+  <!-- GSAP for animations (optional) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- Your custom levels.js script -->
+  <script src="js/levels.js" defer></script>
 </head>
 <body>
-    <h1>Select a Level</h1>
-    <div class="level-container">
-        <button onclick="window.location.href='levels/level1.html'">Level 1 - Password Security</button>
-        <button onclick="window.location.href='levels/level2.html'">Level 2 - Command Line</button>
-        <button onclick="window.location.href='levels/level3.html'">Level 3 - Social Media Privacy</button>
-        <button onclick="window.location.href='levels/level4.html'">Level 4 - Phishing Awareness</button>
+  <!-- Subtle Background & Particle Canvas -->
+  <div class="levels-bg"></div>
+  <canvas id="levelsCanvas"></canvas>
+
+  <!-- Bubble Bar Navigation (Exactly like main page) -->
+  <nav class="bubble-bar-right">
+    <a href="levels.html" class="bubble">
+      <span class="label">Play Game</span>
+      <img src="assets/images/controller-icon.png" alt="Play Game">
+    </a>
+    <a href="learn.html" class="bubble">
+      <span class="label">Learn</span>
+      <img src="assets/images/book-icon.png" alt="Learn">
+    </a>
+    <a href="leaderboard.html" class="bubble">
+      <span class="label">Leaderboard</span>
+      <img src="assets/images/trophy-icon.png" alt="Leaderboard">
+    </a>
+    <a href="settings.html" class="bubble">
+      <span class="label">Settings</span>
+      <img src="assets/images/settings-icon.png" alt="Settings">
+    </a>
+    <a href="help.html" class="bubble">
+      <span class="label">Help</span>
+      <img src="assets/images/help-icon.png" alt="Help">
+    </a>
+  </nav>
+
+  <!-- Go Back to Home Button (top-right) -->
+  <a href="index.html" class="home-button">Home</a>
+
+  <!-- Page Header / Intro -->
+  <header class="levels-header">
+    <h1 class="levels-title">Ready to Become a Cyber Hero?</h1>
+    <p class="levels-subtitle">Choose any level below or play them all in order!</p>
+    <button class="play-all-btn">Play All Levels in Order</button>
+  </header>
+
+  <!-- 4 Level Cards Side by Side -->
+  <main>
+    <div class="levels-container">
+      <!-- Card 1 -->
+      <div class="level-card">
+        <img src="assets/images/shield-icon.png" alt="Password Security" class="level-icon" />
+        <h2>Level 1: Password Security</h2>
+        <p class="tagline">Learn to create strong passwords!</p>
+        <button class="start-level-btn">Play Now</button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="level-card">
+        <img src="assets/images/lock-icon.png" alt="Command Line" class="level-icon" />
+        <h2>Level 2: Command Line</h2>
+        <p class="tagline">Master basic command line skills!</p>
+        <button class="start-level-btn">Play Now</button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="level-card">
+        <img src="assets/images/firewall-icon.png" alt="Social Media Privacy" class="level-icon" />
+        <h2>Level 3: Social Media Privacy</h2>
+        <p class="tagline">Protect your data online!</p>
+        <button class="start-level-btn">Play Now</button>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="level-card">
+        <img src="assets/images/virus-icon.png" alt="Phishing Awareness" class="level-icon" />
+        <h2>Level 4: Phishing Awareness</h2>
+        <p class="tagline">Spot fake emails & scams!</p>
+        <button class="start-level-btn">Play Now</button>
+      </div>
     </div>
+  </main>
 </body>
 </html>

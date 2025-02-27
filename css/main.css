@@ -48,78 +48,84 @@ body {
     width: 100%;
     z-index: 2; /* Make sure it's above the canvas */
   }
-  
-  
 
-/* 🔹 Navigation Menu */
-nav {
+/* ---------------------------
+   Right-Side Bubble Bar Navigation (FIXED)
+--------------------------- */
+.bubble-bar-right {
     position: fixed;
-    top: 10px;
-    right: 30px;
-    z-index: 1000;
+    right: 15px;                   /* Gap from the screen edge */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;                   /* Fixed width so container doesn't grow */
     display: flex;
-    align-items: center;
-}
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    margin-right: auto;
-    margin-left: 20px;
-}
-.menu-icon {
-    font-size: 30px;
+    flex-direction: column;
+    align-items: flex-end;         /* Bubbles align to the right edge */
+    gap: 1.5rem;                   /* Vertical space between bubbles */
+    z-index: 1000;
+    overflow: visible;             /* Allows bubble expansion beyond container */
+  }
+  
+  .bubble {
+    position: relative;
+    flex-shrink: 0;               /* Prevent flex from resizing or shifting items */
+    width: 50px;
+    height: 50px;
+    background: #39FF14;          /* Neon green (adjust as desired) */
+    border-radius: 50%;
     cursor: pointer;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 8px;
-    transition: background 0.3s;
-}
-.menu-icon:hover {
-    background: limegreen;
-}
-
-/* 🔹 Dropdown Menu */
-.dropdown-menu {
-    display: none; /* Initially hidden */
+    overflow: visible;
+    transition: width 0.3s ease, border-radius 0.3s ease;
+  }
+  
+  /* Absolutely place the icon so it never moves or stretches */
+  .bubble img {
     position: absolute;
-    right: 0;
-    top: 50px;
-    background: rgba(0, 0, 0, 0.9);
-    border-radius: 10px;
-    padding: 10px;
-    list-style: none;
-    width: 180px;
-    transition: all 0.3s ease-in-out; /* Smooth transition */
-    opacity: 0; /* Ensures it starts hidden */
-    visibility: hidden;
-}
-
-/* ✅ Fix Visibility Issue */
-.dropdown-menu.active {
-    display: block; /* Make sure it's visible */
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;        /* Fixed icon size so it doesn’t stretch */
+    height: 28px;
+    pointer-events: none;
+  }
+  
+  /* Absolutely place the label on the left side, hidden by default */
+  .bubble .label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%) translateX(-20px);
+    font-size: 1rem;    /* Larger text for easy reading */
+    font-weight: bold;
+    color: #000;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none; 
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Expand the hovered/tapped bubble from 50px to 160px, become a pill shape */
+  .bubble:hover,
+  .bubble.expanded {
+    width: 160px;
+    border-radius: 25px;
+  }
+  
+  /* Reveal the label when expanded */
+  .bubble:hover .label,
+  .bubble.expanded .label {
     opacity: 1;
-    visibility: visible;
-}
+    transform: translateY(-50%) translateX(0);
+  }
+  
+  /* Optional glow on hover */
+  .bubble:hover {
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
+  }
+  
+  
 
-.dropdown-menu li {
-    padding: 10px;
-    text-align: left;
-}
-.dropdown-menu li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    font-size: 18px;
-    padding: 5px;
-    transition: background 0.3s;
-}
-.dropdown-menu li a:hover {
-    background: limegreen;
-    border-radius: 5px;
-}
-
-
+  
 @keyframes pulseGlow {
     0% { text-shadow: 0 0 5px limegreen; }
     50% { text-shadow: 0 0 30px limegreen; }

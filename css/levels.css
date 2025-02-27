@@ -1,0 +1,231 @@
+/* Basic reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body */
+body {
+  font-family: 'Nunito', sans-serif;
+  color: white;
+  background: #0a0f2c;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle BG + Particle Canvas */
+.levels-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('assets/images/cyber-matrix.gif') no-repeat center center;
+  background-size: cover;
+  opacity: 0.8;
+  z-index: -2;
+}
+#levelsCanvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ---------------------------
+   Right-Side Bubble Bar Navigation (From Main Page)
+--------------------------- */
+.bubble-bar-right {
+  position: fixed;
+  right: 15px; /* Gap from the screen edge */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px; /* Fixed width so container doesn't grow */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Bubbles align to the right edge */
+  gap: 1.5rem; /* Vertical space between bubbles */
+  z-index: 1000;
+  overflow: visible; /* Allows bubble expansion beyond container */
+}
+.bubble {
+  position: relative;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background: #39FF14; /* Neon green (adjust as desired) */
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: visible;
+  transition: width 0.3s ease, border-radius 0.3s ease;
+}
+.bubble img {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;  /* Fixed icon size so it doesn’t stretch */
+  height: 28px;
+  pointer-events: none;
+}
+/* The label is placed in a span, same as main page */
+.bubble .label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-20px);
+  font-size: 1rem; /* Larger text for easy reading */
+  font-weight: bold;
+  color: #000;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.bubble:hover,
+.bubble.expanded {
+  width: 160px;
+  border-radius: 25px;
+}
+.bubble:hover .label,
+.bubble.expanded .label {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+.bubble:hover {
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
+}
+
+/* Go Back to Home Button (top-right) */
+.home-button {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: limegreen;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  z-index: 1001;
+}
+.home-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px limegreen;
+}
+
+/* Header / Intro */
+.levels-header {
+  text-align: center;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 1;
+}
+.levels-title {
+  font-size: 2.5rem;
+  color: limegreen;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px limegreen, 0 0 10px cyan;
+}
+.levels-subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+.play-all-btn {
+  background: limegreen;
+  border: none;
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  color: black;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.play-all-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px limegreen;
+}
+
+/* Levels Container: 4 side by side, no mismatch in card heights */
+.levels-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+  flex-wrap: nowrap; /* Single row => might overflow horizontally on smaller screens */
+}
+
+/* Each Card: fixed width & height => none appear taller */
+.level-card {
+  width: 300px;
+  height: 450px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 15px;
+  padding: 60px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.level-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 0 20px limegreen;
+}
+
+/* Icon at the top */
+.level-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 10px;
+  transition: transform 0.3s;
+}
+.level-card:hover .level-icon {
+  animation: bounceIcon 0.5s;
+}
+@keyframes bounceIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Title & Tagline inside card */
+.level-card h2 {
+  font-size: 1.1rem;
+  color: limegreen;
+  margin-bottom: 5px;
+  text-shadow: 0 0 5px limegreen;
+}
+.tagline {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+/* "Play Now" button */
+.start-level-btn {
+  background: limegreen;
+  border: none;
+  color: black;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.start-level-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px limegreen;
+}
+
+/* Let them wrap on smaller screens if you prefer no horizontal scroll */
+@media (max-width: 1000px) {
+  .levels-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

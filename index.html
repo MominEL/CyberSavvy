@@ -17,23 +17,34 @@
   <!-- Network Canvas Background -->
   <canvas id="networkCanvas"></canvas>
 
-  <!-- 🔹 Navigation Menu (Dropdown) -->
-  <nav>
-    <div class="logo">🔐 CyberSavvy</div>
-    <div class="menu-icon"> ☰</div>
-    <ul class="dropdown-menu">
-      <li><a href="levels.html">🎮 Play Game</a></li>
-      <li><a href="learn.html">📚 Learn</a></li>
-      <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
-      <li><a href="settings.html">⚙️ Settings</a></li>
-      <li><a href="help.html">❓ Help</a></li>
-    </ul>
+  <!-- Bubble Bar Navigation on the Right -->
+  <nav class="bubble-bar-right">
+    <a href="levels.html" class="bubble">
+      <span class="label">Play Game</span>
+      <img src="assets/images/controller-icon.png" alt="Play Game">
+    </a>
+    <a href="learn.html" class="bubble">
+      <span class="label">Learn</span>
+      <img src="assets/images/book-icon.png" alt="Learn">
+    </a>
+    <a href="leaderboard.html" class="bubble">
+      <span class="label">Leaderboard</span>
+      <img src="assets/images/trophy-icon.png" alt="Leaderboard">
+    </a>
+    <a href="settings.html" class="bubble">
+      <span class="label">Settings</span>
+      <img src="assets/images/settings-icon.png" alt="Settings">
+    </a>
+    <a href="help.html" class="bubble">
+      <span class="label">Help</span>
+      <img src="assets/images/help-icon.png" alt="Help">
+    </a>
   </nav>
 
-  <!-- 🔹 Main Content (Centered UI) -->
+  <!-- Main Content -->
   <div class="center-content">
-    <h1 class="cyber-title"></h1> <!-- Empty at first, will be typed by JavaScript -->
-    <p class="subtitle">Become a Cyber Hero & Stay Safe Online!</p>
+    <h1 class="cyber-title"></h1> <!-- Title will be typed via JS -->
+    <p class="subtitle">Become a Cyber Hero &amp; Stay Safe Online!</p>
     <button id="playGame" class="btn green-btn">Start Playing</button>
     <button id="learnMore" class="btn blue-btn">Learn More</button>
   </div>
