@@ -1,0 +1,388 @@
+/* Basic Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body & Background */
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #0a0f2c;
+  color: white;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.level-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../assets/images/cyber-matrix.gif') no-repeat center center;
+  background-size: cover;
+  opacity: 0.8;
+  z-index: -2;
+}
+
+#levelCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Bubble Bar */
+.bubble-bar-right {
+  position: fixed;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.5rem;
+  z-index: 1000;
+  overflow: visible;
+}
+
+.bubble {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background: #39FF14;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: visible;
+  transition: width 0.3s ease, border-radius 0.3s ease;
+}
+
+.bubble img {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+}
+
+.bubble .label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-20px);
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.bubble:hover,
+.bubble.expanded {
+  width: 160px;
+  border-radius: 25px;
+}
+
+.bubble:hover .label,
+.bubble.expanded .label {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.bubble:hover {
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
+}
+
+/* Home Button => in-page popup now */
+.home-button {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: limegreen;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  z-index: 1001;
+}
+.home-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px limegreen;
+}
+
+/* Header */
+.level-header {
+  text-align: center;
+  padding: 40px 20px;
+  margin-right: 80px;
+}
+.level-title {
+  font-size: 2.5rem;
+  color: limegreen;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px limegreen, 0 0 10px cyan;
+}
+.level-subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+/* Main Layout */
+.level-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  margin-right: 80px; /* Avoid overlap with bubble bar */
+}
+
+.level-left,
+.level-right {
+  background: rgba(0,0,0,0.6);
+  border-radius: 10px;
+  padding: 20px;
+  flex: 1 1 300px;
+  min-height: 400px;
+  position: relative;
+}
+
+/* Castle & Hacker side by side */
+.castle-hacker-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Castle bigger: 350x350 */
+.castle-container {
+  width: 350px;
+  height: 350px;
+  margin: 0 auto 20px;
+}
+
+.castle-part {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 350px;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+/* Hacker bigger => ~160px */
+.hacker-img {
+  display: block;
+  margin: 0 auto;
+  max-width: 250px;
+}
+
+/* Single instructions text => center & animate */
+.cyber-instructions {
+  text-align: center;
+  font-size: 1.5rem;
+  color: cyan;
+  text-shadow: 0 0 5px cyan;
+  margin-bottom: 15px;
+  /* We'll do a subtle glow & random shake in JS */
+}
+
+/* The password display => can be typed or drag&drop */
+.password-display {
+  background: #222;
+  min-height: 80px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  outline: none; /* for contenteditable */
+}
+
+.placeholder-text {
+  opacity: 0.5;
+}
+
+/* Larger & more padded meter */
+.strength-meter.bigger-meter {
+  margin-bottom: 20px;
+  height: 30px; /* bigger bar */
+}
+
+.meter-bar {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease, background 0.3s ease;
+  background: red;
+}
+
+.tile-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tile-btn {
+  background: #39FF14;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: grab;
+  transition: background 0.3s;
+}
+.tile-btn:hover {
+  background: #2ecc71;
+}
+
+/* Submit button bigger & more alive */
+.bigger-submit {
+  font-size: 1.1rem;
+  padding: 15px 25px;
+  box-shadow: 0 0 10px dodgerblue;
+}
+
+/* Buttons row */
+.buttons-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.action-btn {
+  background: dodgerblue;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.action-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px cyan;
+}
+
+.result-area {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
+
+/* Tip Circle */
+.tip-circle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  background: limegreen;
+  border-radius: 50%;
+  color: black;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 0 10px limegreen;
+}
+
+/* Popups => fancy style & glow */
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.hidden {
+  display: none !important;
+}
+.popup-content {
+  background: #222;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+  position: relative;
+}
+.popup-animated {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.fancy-popup {
+  box-shadow: 0 0 20px cyan;
+  color: #fff;
+}
+.popup-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  text-shadow: 0 0 5px limegreen;
+}
+.popup-content p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+.popup-btn {
+  background: limegreen;
+  border: none;
+  color: black;
+  padding: 12px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.popup-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px limegreen;
+}
+.popup-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 800px) {
+  .level-left,
+  .level-right {
+    flex: 1 1 100%;
+  }
+  .level-main {
+    margin-right: 0;
+  }
+  .castle-container {
+    width: 250px;
+    height: 250px;
+  }
+  .castle-part {
+    max-width: 250px;
+  }
+  .hacker-img {
+    max-width: 120px;
+  }
+}

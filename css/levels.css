@@ -11,7 +11,9 @@ body {
   color: white;
   background: #0a0f2c;
   min-height: 100vh;
-  overflow: hidden;
+  /* Remove overflow hidden so we can scroll vertically on smaller screens */
+  overflow-x: hidden; /* Only hide horizontal scroll if you want */
+  overflow-y: auto;   /* Allow vertical scroll if cards exceed screen height */
   position: relative;
 }
 
@@ -69,7 +71,6 @@ body {
   height: 28px;
   pointer-events: none;
 }
-/* The label is placed in a span, same as main page */
 .bubble .label {
   position: absolute;
   left: 10px;
@@ -157,10 +158,10 @@ body {
   padding: 20px;
   position: relative;
   z-index: 1;
-  flex-wrap: nowrap; /* Single row => might overflow horizontally on smaller screens */
+  flex-wrap: nowrap; /* Single row => might overflow horizontally on small screens */
 }
 
-/* Each Card: fixed width & height => none appear taller */
+/* Each Card: fixed 300×450 => none appear taller */
 .level-card {
   width: 300px;
   height: 450px;
@@ -222,10 +223,11 @@ body {
   box-shadow: 0 0 10px limegreen;
 }
 
-/* Let them wrap on smaller screens if you prefer no horizontal scroll */
+/* If screen is smaller than 1200px or 1000px, let them wrap in multiple rows
+   so the user can scroll vertically. */
 @media (max-width: 1000px) {
   .levels-container {
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* multiple rows if needed */
     justify-content: center;
   }
 }
