@@ -52,7 +52,6 @@ body {
   z-index: 1000;
   overflow: visible;
 }
-
 .bubble {
   position: relative;
   width: 50px;
@@ -63,7 +62,6 @@ body {
   overflow: visible;
   transition: width 0.3s ease, border-radius 0.3s ease;
 }
-
 .bubble img {
   position: absolute;
   right: 10px;
@@ -73,7 +71,6 @@ body {
   height: 28px;
   pointer-events: none;
 }
-
 .bubble .label {
   position: absolute;
   left: 10px;
@@ -87,19 +84,16 @@ body {
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
 .bubble:hover,
 .bubble.expanded {
   width: 160px;
   border-radius: 25px;
 }
-
 .bubble:hover .label,
 .bubble.expanded .label {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
 }
-
 .bubble:hover {
   box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
 }
@@ -168,13 +162,12 @@ body {
   justify-content: center;
 }
 
-/* Castle bigger: 350x350 */
+/* Castle bigger => 350x350 */
 .castle-container {
   width: 350px;
   height: 350px;
   margin: 0 auto 20px;
 }
-
 .castle-part {
   position: absolute;
   top: 0;
@@ -182,25 +175,28 @@ body {
   max-width: 350px;
   transition: opacity 0.5s, transform 0.5s;
 }
+.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+}
 
 /* Hacker bigger => ~160px */
 .hacker-img {
   display: block;
   margin: 0 auto;
-  max-width: 250px;
+  max-width: 300px;
 }
 
-/* Single instructions text => center & animate */
+/* Instructions text => center, color, glow */
 .cyber-instructions {
   text-align: center;
   font-size: 1.5rem;
   color: cyan;
   text-shadow: 0 0 5px cyan;
   margin-bottom: 15px;
-  /* We'll do a subtle glow & random shake in JS */
 }
 
-/* The password display => can be typed or drag&drop */
+/* Single password area => typed or drag&drop */
 .password-display {
   background: #222;
   min-height: 80px;
@@ -211,7 +207,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 5px;
-  outline: none; /* for contenteditable */
+  outline: none;
 }
 
 .placeholder-text {
@@ -221,7 +217,7 @@ body {
 /* Larger & more padded meter */
 .strength-meter.bigger-meter {
   margin-bottom: 20px;
-  height: 30px; /* bigger bar */
+  height: 30px;
 }
 
 .meter-bar {
@@ -252,14 +248,13 @@ body {
   background: #2ecc71;
 }
 
-/* Submit button bigger & more alive */
+/* Submit & Reset bigger */
 .bigger-submit {
   font-size: 1.1rem;
   padding: 15px 25px;
   box-shadow: 0 0 10px dodgerblue;
 }
 
-/* Buttons row */
 .buttons-row {
   display: flex;
   gap: 20px;
@@ -316,9 +311,6 @@ body {
   justify-content: center;
   z-index: 2000;
 }
-.hidden {
-  display: none !important;
-}
 .popup-content {
   background: #222;
   padding: 30px;
@@ -364,6 +356,10 @@ body {
   display: flex;
   gap: 20px;
   justify-content: center;
+}
+
+.hidden {
+  display: none !important;
 }
 
 /* Responsive Tweaks */

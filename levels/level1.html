@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>CyberSavvy - Level 1</title>
 
-  <!-- Level 1 CSS (in the same folder) -->
+  <!-- Level 1 CSS -->
   <link rel="stylesheet" href="level1.css" />
 
   <!-- GSAP (for animations) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-  <!-- Level 1 JS (in the same folder) -->
+  <!-- Level 1 JS -->
   <script src="level1.js" defer></script>
 </head>
 <body>
@@ -21,7 +21,6 @@
 
   <!-- Bubble Bar -->
   <nav class="bubble-bar-right">
-    <!-- Link "Play Game" to levels selection page -->
     <a href="../levels.html" class="bubble">
       <span class="label">Play Game</span>
       <img src="../assets/images/controller-icon.png" alt="Play Game" />
@@ -91,7 +90,8 @@
       <!-- Buttons -->
       <div class="buttons-row">
         <button id="submitBtn" class="action-btn bigger-submit">Submit Password</button>
-        <button id="resetBtn" class="action-btn">Reset</button>
+        <!-- Larger reset button with icon -->
+        <button id="resetBtn" class="action-btn bigger-submit">🔄 Reset</button>
       </div>
 
       <div class="result-area">
@@ -126,13 +126,10 @@
     </div>
   </div>
 
-  <!-- Quiz Popup -->
+  <!-- Quiz Popup => One question at a time, must get it right to proceed -->
   <div class="popup-overlay hidden" id="quizPopup">
     <div class="popup-content popup-animated fancy-popup">
-      <h2>Cyber Quiz: Keep Your Password Safe!</h2>
-      <p>Answer these questions to move on!</p>
       <div id="quizQuestions"></div>
-      <button id="quizSubmitBtn" class="popup-btn">Submit Answers</button>
       <p id="quizFeedback"></p>
     </div>
   </div>
@@ -141,7 +138,6 @@
   <div class="popup-overlay hidden" id="tipPopup">
     <div class="popup-content popup-animated fancy-popup" id="tipContent">
       <!-- We'll fill in JS depending on mode. -->
-      <button id="tipCloseBtn" class="popup-btn">Got it!</button>
     </div>
   </div>
 

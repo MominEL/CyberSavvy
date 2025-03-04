@@ -1,0 +1,535 @@
+/* Basic Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Body & Background */
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #0a0f2c;
+    color: white;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Page Header */
+  .page-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #111;
+    color: limegreen;
+    text-align: center;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 0 15px limegreen;
+  }
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  /* BG & Canvas */
+  .level-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/images/cyber-matrix.gif') no-repeat center center;
+    background-size: cover;
+    opacity: 0.6;
+    z-index: -2;
+  }
+  #levelCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  /* Bubble Menu */
+  .bubble-bar-right {
+    position: fixed;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.5rem;
+    z-index: 1000;
+    overflow: visible;
+  }
+  .bubble {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background: #39FF14;
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: visible;
+    transition: width 0.3s ease, border-radius 0.3s ease;
+  }
+  .bubble img {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    pointer-events: none;
+  }
+  .bubble .label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%) translateX(-20px);
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .bubble:hover,
+  .bubble.expanded {
+    width: 160px;
+    border-radius: 25px;
+  }
+  .bubble:hover .label,
+  .bubble.expanded .label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  .bubble:hover {
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
+  }
+  
+  /* Home Button */
+  .home-button {
+    position: fixed;
+    top: 60px;
+    right: 15px;
+    background: limegreen;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-decoration: none;
+    z-index: 1001;
+    transition: 0.3s;
+  }
+  .home-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px limegreen;
+  }
+  
+  /* Popup Overlays & Content */
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+  }
+  .hidden {
+    display: none !important;
+  }
+  .popup-content {
+    background: #222;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    font-size: 1.5rem;
+    position: relative;
+    box-shadow: 0 0 15px cyan;
+  }
+  .popup-animated {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  .popup-btn {
+    background: limegreen;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+  }
+  .popup-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px limegreen;
+  }
+  .bigger-btn {
+    font-size: 1.3rem;
+    padding: 15px 25px;
+  }
+  
+  /* Intro Popup */
+  .intro-popup {
+    width: 700px;
+    max-width: 90%;
+  }
+  .intro-flex {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .intro-hacker-img {
+    max-width: 300px;
+  }
+  .typing-container {
+    flex: 1;
+  }
+  .typing-text {
+    font-size: 1.6rem;
+    line-height: 1.8;
+    margin-top: 10px;
+    min-height: 100px;
+  }
+  
+  /* Mode Popup */
+  .mode-popup h2 {
+    font-size: 1.8rem;
+  }
+  .mode-popup p {
+    font-size: 1.3rem;
+  }
+  
+  /* Main Layout */
+  .main-layout {
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  /* Left Window */
+  .left-window {
+    flex: 2;
+    background: #111;
+    border: 2px solid limegreen;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Right Column */
+  .right-window {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 100px;
+  }
+  
+  /* Window Style */
+  .window {
+    background: #222;
+    border: 2px solid limegreen;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex: 1;
+  }
+  .window-titlebar {
+    background: #333;
+    padding: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+    border-bottom: 2px solid limegreen;
+  }
+  .window-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #fff;
+  }
+  .instructions-window .window-content {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+  .instructions-window .window-content span.secret-name {
+    color: yellow;
+    font-weight: bold;
+  }
+  
+  /* Answer Area */
+  .task-content {
+    text-align: center;
+  }
+  .task-content label {
+    text-shadow: 0 0 8px #FFD700;
+    color: #FFD700;
+  }
+  .submit-btn {
+    background: limegreen;
+    color: black;
+    font-size: 1.3rem;
+    padding: 12px 25px;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .submit-btn:hover {
+    animation: shake 0.5s;
+    box-shadow: 0 0 15px limegreen;
+  }
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+  }
+  
+  /* Terminal Window */
+/* Terminal Window */
+.terminal-window {
+    background: #011; /* unify the entire window background */
+    border: 2px solid limegreen;
+    border-radius: 8px;
+    position: absolute;
+    top: 10px; left: 10px; right: 10px; bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* ASCII art shares same background for uniformity */
+  .ascii-art {
+    color: #0f0;
+    margin: 10px;
+    text-shadow: 0 0 5px #0f0;
+  }
+  
+  /* The scrollable terminal screen. Same background color, 
+     so lines blend in visually. */
+  .terminal-screen {
+    flex: 1;
+    overflow-y: auto;
+    background: #011;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    font-size: 1.4rem;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Each line we dynamically create for the prompt or output */
+  .terminal-line {
+    background: transparent; /* no special color or border */
+    margin: 5px 0;          /* spacing between lines */
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Prompt text color */
+  .terminal-line .prompt {
+    color: #0f0;
+    margin-right: 5px;
+  }
+  
+  /* The user’s typed input is distinct, e.g. yellow (#ff0) */
+  .terminal-line .terminal-input {
+    color: #fff; /* or #fff if you prefer white */
+    outline: none;
+    border: none;
+    background: transparent;
+    cursor: text;
+    white-space: nowrap;
+  }
+  
+  /* Explorer Window */
+  .explorer-window {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: #224;
+    border: 2px solid limegreen;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  /* Special style classes for “ACCESS GRANTED” / “ACCESS DENIED” popups */
+.popup-access-granted {
+    background: #044; /* dark greenish background */
+    color: #0f0;      /* bright green text */
+    animation: bounce 1s infinite alternate;
+  }
+  .popup-access-denied {
+    background: #400; /* dark red background */
+    color: #f00;      /* bright red text */
+    animation: shake2 0.5s infinite alternate;
+  }
+  
+  /* Some simple animations for the popups */
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+  @keyframes shake2 {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+  
+  /*************************************************
+   * SIMPLE FILE EXPLORER (Polished & Engaging)
+   *************************************************/
+  .simple-explorer {
+    padding: 15px;
+    background: #111; 
+    border: 2px solid limegreen;
+    color: #fff;
+    width: 100%;
+    height: calc(100% - 50px);
+    box-sizing: border-box;
+    overflow-y: auto;
+    font-size: 1.4rem;
+  }
+  .explorer-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+  }
+  .explorer-header button {
+    background: #444;
+    color: #fff;
+    border: 1px solid limegreen;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  .current-path {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFD700;
+  }
+  .explorer-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  .folder-item, .file-item {
+    cursor: pointer;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+  }
+  .folder-item {
+    color: #FFD700;
+  }
+  .file-item {
+    color: #ADFF2F;
+  }
+  .folder > ul {
+    margin-left: 30px;
+    list-style: none;
+    display: none;
+  }
+  .folder.open > ul {
+    display: block;
+  }
+  .folder-item i, .file-item i {
+    margin-right: 12px;
+    font-size: 1.6rem;
+  }
+  
+  /* File Viewer Popup */
+  .file-viewer {
+    position: absolute;
+    top: 60px;
+    left: 60px;
+    width: 500px;
+    height: 300px;
+    background: #222;
+    border: 2px solid limegreen;
+    border-radius: 5px;
+    z-index: 999;
+    animation: pulseFileViewer 0.5s ease-in-out;
+  }
+  @keyframes pulseFileViewer {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .viewer-header {
+    background: #333;
+    padding: 10px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid limegreen;
+    font-size: 1.3rem;
+  }
+  #closeFileBtn {
+    border: none;
+    background: red;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+  }
+  .viewer-content {
+    padding: 15px;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    height: calc(100% - 55px);
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #0f0;
+  }
+  
+  /* Final Popup (Level Complete) */
+  .final-popup {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: typingEffect 0.5s ease-in-out;
+  }
+  .final-popup img {
+    width: 150px;
+    border-radius: 10px;
+  }
+  @keyframes typingEffect {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  

@@ -1,2 +1,158 @@
-<script src="../assets/js/phaser.min.js"></script>
-<script src="level1.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>CyberSavvy - Level 2</title>
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="level2.css" />
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Main JS -->
+    <script src="level2.js" defer></script>
+  </head>
+  <body>
+    <!-- Persistent Header -->
+    <header class="page-header">
+      <h1>Level 2: System Infiltration</h1>
+    </header>
+
+    <!-- Background & Particle Canvas -->
+    <div class="level-bg"></div>
+    <canvas id="levelCanvas"></canvas>
+
+    <!-- Bubble Menu -->
+    <nav class="bubble-bar-right">
+      <a href="../levels.html" class="bubble">
+        <span class="label">Play Game</span>
+        <img src="../assets/images/controller-icon.png" alt="Play Game">
+      </a>
+      <a href="../learn.html" class="bubble">
+        <span class="label">Learn</span>
+        <img src="../assets/images/book-icon.png" alt="Learn">
+      </a>
+      <a href="../leaderboard.html" class="bubble">
+        <span class="label">Leaderboard</span>
+        <img src="../assets/images/trophy-icon.png" alt="Leaderboard">
+      </a>
+      <a href="../settings.html" class="bubble">
+        <span class="label">Settings</span>
+        <img src="../assets/images/settings-icon.png" alt="Settings">
+      </a>
+      <a href="../help.html" class="bubble">
+        <span class="label">Help</span>
+        <img src="../assets/images/help-icon.png" alt="Help">
+      </a>
+    </nav>
+
+    <!-- Home Button -->
+    <a href="../index.html" class="home-button" id="homeBtn">Home</a>
+
+    <!-- Intro Story Popup -->
+    <div class="popup-overlay hidden" id="introPopup">
+      <div class="popup-content popup-animated fancy-popup intro-popup">
+        <div class="intro-flex">
+          <img src="../assets/images/hacker-normal.png" alt="Hacker" class="intro-hacker-img">
+          <div class="typing-container">
+            <h2>System Infiltration</h2>
+            <div id="introStoryText" class="typing-text"></div>
+          </div>
+        </div>
+        <button id="introStartBtn" class="popup-btn bigger-btn">Start</button>
+      </div>
+    </div>
+
+    <!-- Mode Selection Popup -->
+    <div class="popup-overlay hidden" id="modePopup">
+      <div class="popup-content popup-animated fancy-popup mode-popup">
+        <h2>Choose Your Interface</h2>
+        <p style="font-size:1.2rem;">Select how you want to navigate the system:</p>
+        <button id="explorerBtn" class="popup-btn bigger-btn">File Explorer</button>
+        <button id="terminalBtn" class="popup-btn bigger-btn">Terminal</button>
+      </div>
+    </div>
+
+    <!-- Leave Game Popup -->
+    <div class="popup-overlay hidden" id="leaveGamePopup">
+      <div class="popup-content popup-animated fancy-popup">
+        <h2>Leave the Game?</h2>
+        <p>Your progress will be lost. Are you sure?</p>
+        <div class="popup-buttons">
+          <button id="leaveYes" class="popup-btn">Yes</button>
+          <button id="leaveNo" class="popup-btn">No</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+      <!-- Left Window: Terminal or File Explorer -->
+      <div class="left-window" id="leftWindow">
+        <!-- Terminal Window (Hidden by Default) -->
+        <div class="terminal-window hidden" id="terminalWindow">
+            <div class="window-titlebar">Terminal</div>
+            <pre class="ascii-art" id="asciiArt">
+
+                                                         _____         _                  _____                             
+                                                        /  __ \       | |                /  ___|                            
+                                                        | /  \/ _   _ | |__    ___  _ __ \ `--.   __ _ __   ____   __ _   _ 
+                                                        | |    | | | || '_ \  / _ \| '__| `--. \ / _` |\ \ / /\ \ / /| | | |
+                                                        | \__/\| |_| || |_) ||  __/| |   /\__/ /| (_| | \ V /  \ V / | |_| |
+                                                         \____/ \__, ||_.__/  \___||_|   \____/  \__,_|  \_/    \_/   \__, |
+                                                                 __/ |                                                 __/ |
+                                                                 |___/                                                 |___/ 
+                                                        
+            </pre>
+        
+            <!-- Scrollable terminal screen -->
+            <div class="terminal-screen" id="terminalScreen"></div>
+        </div>
+  
+
+        <!-- File Explorer Window (Hidden by Default) -->
+        <div class="explorer-window hidden" id="explorerWindow">
+          <div class="window-titlebar">
+            <span>File Explorer</span>
+          </div>
+          <div class="simple-explorer" id="simpleExplorer">
+            <div class="explorer-header">
+              <button id="goBackBtn">Collapse Folders</button>
+              <span id="currentPath" class="current-path">Current Folder: root</span>
+            </div>
+            <ul class="explorer-list" id="explorerList"></ul>
+          </div>
+          <!-- Popup to display file contents -->
+          <div class="file-viewer hidden" id="fileViewer">
+            <div class="viewer-header">
+              <span id="viewerFilename"></span>
+              <button id="closeFileBtn">X</button>
+            </div>
+            <div class="viewer-content" id="viewerContent"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Instructions & Task -->
+      <div class="right-window">
+        <div class="window instructions-window">
+          <div class="window-titlebar">Instructions</div>
+          <div class="window-content" id="instructionsText">
+            <h2 style="font-size:1.8rem; text-align:center; color:#FFD700;">Select an Interface</h2>
+          </div>
+        </div>
+        <div class="window answer-window">
+          <div class="window-titlebar">Task</div>
+          <div class="window-content task-content">
+            <label for="answerInput" style="font-size:1.3rem; color:#FFD700;">Enter Discovered Info:</label>
+            <input type="text" id="answerInput" placeholder="Type secret here" style="font-size:1.3rem; padding:12px;">
+            <button id="submitAnswerBtn" class="popup-btn submit-btn">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const proBtn = document.getElementById("proBtn");
   let difficulty = "rookie";
 
+  // Show difficulty popup initially
   showPopup(difficultyPopup);
 
   rookieBtn.addEventListener("click", () => {
@@ -56,9 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // ========== 4) TIP POPUP (Hint) ==========
   const tipBtn = document.getElementById("tipBtn");
   const tipPopup = document.getElementById("tipPopup");
-  const tipContent = document.getElementById("tipContent"); // inside popup-content
+  const tipContent = document.getElementById("tipContent");
+
   tipBtn.addEventListener("click", () => {
-    // Change hint text based on mode
     if (difficulty === "rookie") {
       tipContent.innerHTML = `
         <h2>Hint (Rookie)</h2>
@@ -79,7 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
     showPopup(tipPopup);
-    document.getElementById("tipCloseBtn").addEventListener("click", () => {
+
+    const tipCloseBtnDynamic = document.getElementById("tipCloseBtn");
+    tipCloseBtnDynamic.addEventListener("click", () => {
       hidePopup(tipPopup);
     });
   });
@@ -145,11 +148,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackText = document.getElementById("feedbackText");
   const starRating = document.getElementById("starRating");
 
-  // Hacker images & click trick
+  // Hacker images & hidden click trick
   const hackerImg = document.getElementById("hackerImg");
   let hackerClickCount = 0;
 
-  // Instructions text (centered, glowing)
+  // Instructions text
   const cyberInstructions = document.getElementById("cyberInstructions");
 
   // 4 castle parts
@@ -158,8 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const part3 = document.querySelector(".part3");
   const part4 = document.querySelector(".part4");
 
-  let currentPasswordArr = []; // for rookie (drag-and-drop)
-  let typedPassword = "";      // for pro (typed)
+  // Password data
+  let currentPasswordArr = []; // for rookie
+  let typedPassword = "";      // for pro
   let successfulPasswords = 0;
 
   // Arrays for difficulty
@@ -168,44 +172,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const numbers = ["123", "007", "42", "999", "2023", "000"];
   const symbols = ["!", "@", "#", "$", "%", "^", "&"];
 
-  // QUIZ: We'll show one question at a time
+  // QUIZ => 10 possible, pick 3 random
   const quizPopup = document.getElementById("quizPopup");
   const quizQuestionsDiv = document.getElementById("quizQuestions");
-  const quizSubmitBtn = document.getElementById("quizSubmitBtn");
   const quizFeedback = document.getElementById("quizFeedback");
 
-
-  const quizQuestions = [
-    {
-      question: "Which is safer: '123456' or 'C@t42!'?",
-      options: ["123456", "C@t42!"],
-      answer: 1
-    },
-    {
-      question: "Should you share your password with friends?",
-      options: ["Yes", "No"],
-      answer: 1
-    },
-    {
-      question: "What's the best length for a password?",
-      options: ["At least 8 characters", "3-4 is enough", "Doesn't matter"],
-      answer: 0
-    }
+  const allPossibleQuestions = [
+    { question: "Which is safer: '123456' or 'C@t42!'?", options: ["123456", "C@t42!"], answer: 1 },
+    { question: "Should you share your password with friends?", options: ["Yes", "No"], answer: 1 },
+    { question: "What's the best length for a password?", options: ["At least 8 chars", "3-4 is enough", "Doesn't matter"], answer: 0 },
+    { question: "Which symbol might help a password?", options: ["@", "No symbols needed"], answer: 0 },
+    { question: "Should you use personal info in your password?", options: ["Yes", "No"], answer: 1 },
+    { question: "Is 'abc123' strong enough?", options: ["Yes", "No"], answer: 1 },
+    { question: "Should you reuse the same password everywhere?", options: ["Yes", "No"], answer: 1 },
+    { question: "Is 'Passw0rd!' a good password?", options: ["Yes", "No"], answer: 1 },
+    { question: "Which is better: 'password' or 'pA$sW0rd'?", options: ["password", "pA$sW0rd"], answer: 1 },
+    { question: "How often should you change your password?", options: ["Never", "Regularly"], answer: 1 }
   ];
 
+  let selectedQuestions = [];   
+  let currentQuizIndex = 0;     
+  let quizCorrectCount = 0;      
+
   // Celebration popup & confetti
-  const castleCompletePopup = document.getElementById("castleCompletePopup");
+  const castleCompletePopup = document.getElementById("castleCompletePopup"); 
   const castleCompleteClose = document.getElementById("castleCompleteClose");
   const confettiContainer = document.getElementById("confettiContainer");
 
   if (castleCompleteClose) {
     castleCompleteClose.addEventListener("click", () => {
       hidePopup(castleCompletePopup);
-      doReset(); // auto-reset after user closes
+      doReset();
     });
   }
 
-  // Hacker click trick: 3 clicks => become angry for 3 sec, then revert
+  // Hacker click trick => 3 clicks => angry
   if (hackerImg) {
     hackerImg.addEventListener("click", () => {
       hackerClickCount++;
@@ -219,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Animate instructions text => subtle glow & random shake
+  // Animate instructions => random small shake
   function animateInstructions() {
     gsap.to("#cyberInstructions", {
       x: (Math.random() - 0.5) * 5,
@@ -228,20 +229,22 @@ document.addEventListener("DOMContentLoaded", () => {
       yoyo: true,
       repeat: 1,
       ease: "power1.inOut",
-      onComplete: () => setTimeout(animateInstructions, 3000 + Math.random() * 2000)
+      onComplete: () => {
+        setTimeout(animateInstructions, 3000 + Math.random() * 2000);
+      }
     });
   }
+  animateInstructions();
 
-  // Called after user picks difficulty
+  // Initialize game after difficulty
   function initGame() {
-    // Set instructions text
     if (difficulty === "rookie") {
       cyberInstructions.innerText = "Drag tiles to build your fortress!";
     } else {
       cyberInstructions.innerText = "Type your password to build your fortress!";
     }
 
-    // Hide all castle parts
+    // Hide castle
     part1.classList.add("hidden");
     part2.classList.add("hidden");
     part3.classList.add("hidden");
@@ -258,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // If pro => contenteditable => bigger font
     if (difficulty === "pro") {
       passwordDisplay.setAttribute("contenteditable", "true");
-      passwordDisplay.style.fontSize = "2rem"; // bigger typed text
+      passwordDisplay.style.fontSize = "2rem";
       tileContainer.classList.add("hidden");
       passwordDisplay.innerText = "";
     } else {
@@ -268,15 +271,18 @@ document.addEventListener("DOMContentLoaded", () => {
       createRookieTiles();
     }
 
-    // Hacker normal at start
     setHackerNormal();
     updatePasswordDisplay();
+
+    // Prepare new quiz set
+    selectedQuestions = getRandomItems(allPossibleQuestions, 3);
+    currentQuizIndex = 0;
+    quizCorrectCount = 0;
   }
 
   function createRookieTiles() {
     tileContainer.innerHTML = "";
-    let wordCount = 3;
-    let randomWords = getRandomItems(rookieWords, wordCount);
+    let randomWords = getRandomItems(rookieWords, 3);
     let randomNums = getRandomItems(numbers, 3);
     let randomSyms = getRandomItems(symbols, 3);
     let allTiles = [...randomWords, ...randomNums, ...randomSyms];
@@ -294,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // For Pro => user types in passwordDisplay
+  // Pro => typed
   passwordDisplay.addEventListener("input", () => {
     if (difficulty === "pro") {
       typedPassword = passwordDisplay.textContent.trim();
@@ -302,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Drag & drop (rookie)
+  // Drag & drop => rookie
   passwordDisplay.addEventListener("dragover", (e) => {
     e.preventDefault();
   });
@@ -318,12 +324,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updatePasswordDisplay() {
     if (difficulty === "pro") {
-      // typed
       if (passwordDisplay.textContent.trim() !== typedPassword) {
         passwordDisplay.textContent = typedPassword;
       }
     } else {
-      // rookie
       passwordDisplay.innerHTML = "";
       if (currentPasswordArr.length === 0) {
         const placeholder = document.createElement("span");
@@ -395,7 +399,6 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.killTweensOf(hackerImg);
     hackerImg.src = "../assets/images/hacker-happy.png";
     hackerImg.title = "I'm almost in!";
-    // small jump
     gsap.to(hackerImg, {
       y: -10,
       duration: 0.5,
@@ -409,7 +412,6 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.killTweensOf(hackerImg);
     hackerImg.src = "../assets/images/hacker-angry.png";
     hackerImg.title = "Oh Nooo... fortress is too strong!";
-    // shake
     gsap.to(hackerImg, {
       x: 5,
       duration: 0.1,
@@ -438,9 +440,9 @@ document.addEventListener("DOMContentLoaded", () => {
       starRating.textContent = "★★★";
       successfulPasswords++;
 
-      // If 2 strong passwords => quiz
+      // If 2 strong passwords => start quiz
       if (successfulPasswords >= 2) {
-        showNextQuizQuestion();
+        startQuiz();
       }
       showCastleCompletePopup();
     }
@@ -468,31 +470,47 @@ document.addEventListener("DOMContentLoaded", () => {
     resetBtn.innerHTML = "🔄 Reset";
   }
 
-  // ========== 8) QUIZ => ONE QUESTION PER POPUP ==========
-  let currentQuizIndex = 0;
-  let quizCorrectCount = 0;
+  // ========== QUIZ LOGIC: 10 possible => pick 3 random => must get correct to proceed ==========
+  function startQuiz() {
+    selectedQuestions = getRandomItems(allPossibleQuestions, 3);
+    currentQuizIndex = 0;
+    quizCorrectCount = 0;
+    showNextQuizQuestion();
+  }
 
   function showNextQuizQuestion() {
-    if (currentQuizIndex >= quizQuestions.length) {
-      // Done => show final result
+    if (currentQuizIndex >= selectedQuestions.length) {
+      // user got all 3 => final success in quiz popup
       quizQuestionsDiv.innerHTML = "";
-      quizFeedback.textContent = `You got ${quizCorrectCount}/${quizQuestions.length} correct!`;
+      quizFeedback.innerHTML = "You got all 3 questions correct! Great job!<br>";
+      spawnConfettiQuiz(); // confetti in quiz popup
+
+      // Two buttons => Play again or Next level
+      const againBtn = document.createElement("button");
+      againBtn.className = "popup-btn";
+      againBtn.textContent = "Play Again";
+      againBtn.addEventListener("click", () => {
+        hidePopup(quizPopup);
+        doReset();
+      });
+      quizQuestionsDiv.appendChild(againBtn);
+
       const nextBtn = document.createElement("button");
       nextBtn.className = "popup-btn";
-      nextBtn.textContent = "Go to Level 2";
+      nextBtn.textContent = "Next Level";
       nextBtn.addEventListener("click", () => {
         window.location.href = "level2.html";
       });
       quizQuestionsDiv.appendChild(nextBtn);
+
       showPopup(quizPopup);
       return;
     }
 
-    // Build single question
+    // show single question
+    const q = selectedQuestions[currentQuizIndex];
     quizQuestionsDiv.innerHTML = "";
     quizFeedback.textContent = "";
-    const q = quizQuestions[currentQuizIndex];
-
     const div = document.createElement("div");
     div.className = "quiz-question";
     const p = document.createElement("p");
@@ -507,23 +525,61 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.style.margin = "5px";
       btn.innerText = opt;
       btn.addEventListener("click", () => {
-        if (i === q.answer) quizCorrectCount++;
-        currentQuizIndex++;
-        hidePopup(quizPopup);
-        setTimeout(() => showNextQuizQuestion(), 400);
+        if (i === q.answer) {
+          // correct => next question
+          currentQuizIndex++;
+          hidePopup(quizPopup);
+          setTimeout(() => showNextQuizQuestion(), 400);
+        } else {
+          // wrong => shake
+          quizFeedback.textContent = "Nope, try again!";
+          shakePopup(quizPopup);
+        }
       });
       div.appendChild(btn);
     });
-
     quizQuestionsDiv.appendChild(div);
     showPopup(quizPopup);
   }
 
-  quizSubmitBtn.addEventListener("click", () => {
-    // not used in single-question approach
-  });
+  function shakePopup(overlay) {
+    const content = overlay.querySelector(".popup-content");
+    gsap.fromTo(content, { x:0 }, {
+      x:10,
+      duration:0.1,
+      yoyo:true,
+      repeat:3,
+      ease:"power1.inOut"
+    });
+  }
 
-  // ========== 9) CELEBRATION POPUP & CONFETTI ==========
+  function spawnConfettiQuiz() {
+    for (let i=0; i<20; i++) {
+      const conf = document.createElement("div");
+      conf.style.position = "absolute";
+      conf.style.width = "15px";
+      conf.style.height = "15px";
+      conf.style.borderRadius = "50%";
+      conf.style.backgroundColor = getRandomColor();
+      conf.style.left = Math.random()*80 + "%";
+      conf.style.top = "0px";
+      conf.style.zIndex = 9999;
+      quizQuestionsDiv.appendChild(conf);
+      gsap.to(conf, {
+        y:150 + Math.random()*100,
+        x:(Math.random()-0.5)*200,
+        rotation:360*Math.random(),
+        duration:1.5+Math.random(),
+        ease:"power1.out",
+        onComplete: () => conf.remove()
+      });
+    }
+  }
+
+  // ========== 9) CASTLE COMPLETE POPUP & CONFETTI ==========
+  //const castleCompleteClose = document.getElementById("castleCompleteClose");
+  //const confettiContainer = document.getElementById("confettiContainer");
+
   function showCastleCompletePopup() {
     let sc = calculateScore();
     if (sc < 100) return;
@@ -567,7 +623,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
-  // ========== 10) SHOW/HIDE POPUP UTILS ==========
+  // ========== 10) POPUP SHOW/HIDE UTILS ==========
   function showPopup(overlay) {
     overlay.classList.remove("hidden");
     const content = overlay.querySelector(".popup-content");
@@ -599,23 +655,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========== 11) ON LOAD ANIMATIONS & START ==========
-
-  // Animate castle & hacker
   gsap.from(".castle-container", { x: -30, opacity: 0, duration: 1 });
   gsap.from(".hacker-img", { x: 30, opacity: 0, duration: 1 });
-
-  // Animate instructions text => subtle random shake
-  function animateInstructions() {
-    gsap.to("#cyberInstructions", {
-      x: (Math.random() - 0.5) * 5,
-      y: (Math.random() - 0.5) * 5,
-      duration: 0.5,
-      yoyo: true,
-      repeat: 1,
-      ease: "power1.inOut",
-      onComplete: () => setTimeout(animateInstructions, 3000 + Math.random() * 2000)
-    });
-  }
   animateInstructions();
 });
 
