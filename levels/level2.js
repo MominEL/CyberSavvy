@@ -131,9 +131,10 @@ document.addEventListener("DOMContentLoaded", () => {
         `<h2 style="font-size:1.8rem; color:#FFD700;">Terminal Mode</h2>
          <p style="font-size:1.4rem;">Use commands to navigate and search for the secret <span class="secret-name">${chosen.name}</span>!</p>
          <ul style="font-size:1.4rem;">
-           <li><code>ls</code> - list files/folders</li>
-           <li><code>cd folderName</code> - enter folder</li>
-           <li><code>cat file.txt</code> - read file</li>
+           <li><code style="color:#FFD700;">ls</code> - list files/folders</li>
+           <li><code style="color:#FFD700;">cd folderName</code> - enter folder</li>
+           <li><code style="color:#FFD700;">cat file.txt</code> - read file</li>
+           <li><code style="color:#FFD700;">cd ..  </code> - Go back</li>
          </ul>`;
     });
   
@@ -201,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.reload();
       });
       overlay.querySelector("#goLevel3Btn").addEventListener("click", () => {
-        window.location.href = "../level3.html";
+        window.location.href = "../levels/level3.html";
       });
     }
   
@@ -591,7 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.reload();
       });
       overlay.querySelector("#goLevel3Btn").addEventListener("click", () => {
-        window.location.href = "../level3.html";
+        window.location.href = "../levels/level3.html";
       });
     }
   

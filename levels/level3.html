@@ -1,2 +1,124 @@
-<script src="../assets/js/phaser.min.js"></script>
-<script src="level1.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>CyberSavvy - Level 3: Social Media Privacy</title>
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="level3.css" />
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- jQuery (if needed) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Level 3 JS -->
+    <script src="level3.js" defer></script>
+  </head>
+  <body>
+    <!-- Persistent Header -->
+    <header class="page-header">
+      <h1>Level 3: Social Media Privacy</h1>
+      <div id="scoreBoard" class="score-board">Score: 0 | Progress: 0/0</div>
+    </header>
+
+    <!-- Background & Particle Canvas -->
+    <div class="level-bg"></div>
+    <canvas id="levelCanvas"></canvas>
+
+    <!-- Bubble Menu -->
+    <nav class="bubble-bar-right">
+      <a href="../levels.html" class="bubble">
+        <span class="label">Play Game</span>
+        <img src="../assets/images/controller-icon.png" alt="Play Game" />
+      </a>
+      <a href="../learn.html" class="bubble">
+        <span class="label">Learn</span>
+        <img src="../assets/images/book-icon.png" alt="Learn" />
+      </a>
+      <a href="../leaderboard.html" class="bubble">
+        <span class="label">Leaderboard</span>
+        <img src="../assets/images/trophy-icon.png" alt="Leaderboard" />
+      </a>
+      <a href="../settings.html" class="bubble">
+        <span class="label">Settings</span>
+        <img src="../assets/images/settings-icon.png" alt="Settings" />
+      </a>
+      <a href="../help.html" class="bubble">
+        <span class="label">Help</span>
+        <img src="../assets/images/help-icon.png" alt="Help" />
+      </a>
+    </nav>
+
+    <!-- Home Button -->
+    <a href="../index.html" class="home-button" id="homeBtn">Home</a>
+
+    <!-- Intro Popup -->
+    <div class="popup-overlay hidden" id="introPopup">
+      <div class="popup-content popup-animated fancy-popup intro-popup">
+        <div class="intro-flex">
+          <img src="../assets/images/hacker-normal.png" alt="Hacker" class="intro-hacker-img" />
+          <div class="typing-container">
+            <h2>Welcome, Hacker!</h2>
+            <div id="introStoryText" class="typing-text"></div>
+          </div>
+        </div>
+        <button id="introStartBtn" class="popup-btn bigger-btn">Start</button>
+      </div>
+    </div>
+
+    <!-- Mode Popup -->
+    <div class="popup-overlay hidden" id="modePopup">
+      <div class="popup-content popup-animated fancy-popup mode-popup">
+        <h2>Choose Your Interface</h2>
+        <p style="font-size:1.2rem;">Select how you want to navigate the system:</p>
+        <button id="feedModeBtn" class="popup-btn bigger-btn">Post Feed</button>
+        <button id="terminalModeBtn" class="popup-btn bigger-btn">Terminal</button>
+      </div>
+    </div>
+
+    <!-- Quiz Popup (Final Quiz) -->
+    <div class="popup-overlay hidden" id="quizPopup">
+      <div class="popup-content popup-animated fancy-popup quiz-popup">
+        <h2>Final Quiz</h2>
+        <div id="quizQuestions"></div>
+        <button id="submitQuizBtn" class="popup-btn bigger-btn">Submit Quiz</button>
+      </div>
+    </div>
+
+    <!-- Final Level Complete Popup -->
+    <div class="popup-overlay hidden" id="finalPopup">
+      <div class="popup-content final-popup">
+        <img src="../assets/images/hacker-normal.png" alt="Hacker" />
+        <div>
+          <h2 id="finalTitle">Level Complete!</h2>
+          <p id="finalMessage"></p>
+          <div>
+            <button class="popup-btn" id="replayBtn">Play Again</button>
+            <button class="popup-btn" id="goLevel4Btn">Go to Level 4</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Layout: Two Columns -->
+    <div class="main-layout">
+      <!-- Left Side: Social Media Feed -->
+      <div class="left-feed">
+        <div id="postFeed" class="post-feed">
+          <!-- Fake posts will be injected here -->
+        </div>
+      </div>
+      <!-- Right Side: Interactive Panel -->
+      <div class="right-panel">
+        <div id="taskPanel" class="task-panel">
+          <!-- Instructions / questions dynamically update here -->
+          <h2 id="taskTitle">Task</h2>
+          <div id="taskContent" class="task-content">
+            <!-- Input elements for answers, dropdowns, etc. -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
