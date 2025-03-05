@@ -1,583 +1,460 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ---------------- Global Variables ----------------
-    let currentRound = 1; // 1 or 2; quiz follows rounds
-    let score = 0;
-    const round1Posts = [
-      {
-        id: 1,
-        image: "../assets/images/post1.jpg",
-        caption: "Just had a great birthday party! My birthday is 05/12/2002. #celebrate",
-        question: "Find the Date of Birth in this post.",
-        answer: "05/12/2002"
-      },
-      {
-        id: 2,
-        image: "../assets/images/post2.jpg",
-        caption: "I love my school! Studying at Sunshine Elementary.",
-        question: "Find the school name in this post.",
-        answer: "Sunshine Elementary"
-      }
-    ];
-    let round2Posts = [
-      {
-        id: 3,
-        image: "../assets/images/post3.jpg",
-        caption: "Chilling at home! My address is 742 Evergreen Terrace.",
-        question: "Does this post reveal private details?",
-        leak: true,
-        leakDetail: "Address"
-      },
-      {
-        id: 4,
-        image: "../assets/images/post4.jpg",
-        caption: "Enjoying the park! Nothing personal here.",
-        question: "Does this post reveal private details?",
-        leak: false
-      }
-    ];
-    
-    const quizQuestions = [
-      {
-        question: "Which of these should never be shared online?",
-        options: ["Home address", "Favorite color", "Hobby"],
-        answer: 0
-      },
-      {
-        question: "What is a sign that a post may be leaking private info?",
-        options: ["No hashtags", "Personal phone number", "Nice scenery"],
-        answer: 1
-      },
-      {
-        question: "Why is it dangerous to share your full name and birthday together?",
-        options: ["It’s fun!", "It can be used to steal your identity", "Everyone does it"],
-        answer: 1
-      }
-    ];
-    
-    let currentPostIndex = 0;
-    let currentPosts = []; // set based on round
-    let quizIndex = 0;
-    
-    // ---------------- DOM Elements ----------------
-    const feedArea = document.getElementById("feedArea");
-    const instructionsContent = document.getElementById("instructionsContent");
-    const answerContent = document.getElementById("answerContent");
-    const scoreDisplay = document.getElementById("scoreDisplay");
-    const roundDisplay = document.getElementById("roundDisplay");
-    
-    // Popups
-    const introPopup = document.getElementById("introPopup");
-    const introStoryText = document.getElementById("introStoryText");
-    const introStartBtn = document.getElementById("introStartBtn");
-    const modePopup = document.getElementById("modePopup");
-    const round1Btn = document.getElementById("round1Btn"); // we'll add these in our popup if needed
-    const round2Btn = document.getElementById("round2Btn");
-    const leaveGamePopup = document.getElementById("leaveGamePopup");
-    const leaveYes = document.getElementById("leaveYes");
-    const leaveNo = document.getElementById("leaveNo");
-    const quizPopup = document.getElementById("quizPopup");
-    const quizContent = document.getElementById("quizContent");
-    const quizNextBtn = document.getElementById("quizNextBtn");
-    const messagePopup = document.getElementById("messagePopup");
-    const messageText = document.getElementById("messageText");
-    const messageCloseBtn = document.getElementById("messageCloseBtn");
-    
-    // Terminal & Explorer Elements (if used)
-    const terminalWindow = document.getElementById("terminalWindow");
-    const terminalScreen = document.getElementById("terminalScreen");
-    const terminalInput = document.getElementById("terminalInput");
-    const explorerWindow = document.getElementById("explorerWindow");
-    const explorerBackBtn = document.getElementById("explorerBackBtn");
-    const explorerContent = document.getElementById("explorerContent");
-    
-    // ----------------- Score Update -----------------
-    function updateScore() {
-      scoreDisplay.textContent = "Score: " + score;
-    }
-    
-    // ----------------- Load Next Post -----------------
-    function loadNextPost() {
-      if (currentPostIndex >= currentPosts.length) {
-        if (currentRound === 1) {
-          // Advance to Round 2
-          currentRound = 2;
-          roundDisplay.textContent = "Round 2";
-          currentPostIndex = 0;
-          currentPosts = round2Posts;
-          loadNextPost();
+  // INTRO POPUP: Typing Effect Function
+  const introTextEl = document.getElementById("introText");
+  const introLines = [
+    "Welcome to Level 3: Social Media Privacy!",
+    "In this level, you'll view fake Instagram posts and identify private details.",
+    "Round 1: Look at the post and type in the missing private detail.",
+    "Round 2: Decide if a post is leaking private info and, if so, select the data type.",
+    "Read carefully and have fun!",
+    "When you're ready, click 'Start Game'."
+  ];
+  let currentLine = 0;
+  function typeIntroText() {
+    if (currentLine < introLines.length) {
+      let line = introLines[currentLine];
+      // Create an element for the line: use <h2> for the first line, <p> for others
+      let el = document.createElement(currentLine === 0 ? "h2" : "p");
+      el.className = currentLine === 0 ? "intro-title" : "intro-paragraph";
+      introTextEl.appendChild(el);
+      let charIndex = 0;
+      function typeChar() {
+        if (charIndex < line.length) {
+          el.textContent += line.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeChar, 40);
         } else {
-          // All posts done, start final quiz
-          startQuiz();
+          currentLine++;
+          setTimeout(typeIntroText, 300);
         }
-        return;
       }
-      const post = currentPosts[currentPostIndex];
-      renderPost(post);
-      renderTask(post);
+      typeChar();
     }
-    
-    // ----------------- Render Post (Left Panel) -----------------
-    function renderPost(post) {
-      feedArea.innerHTML = "";
-      const postDiv = document.createElement("div");
-      postDiv.className = "post";
-      const img = document.createElement("img");
-      img.src = post.image;
-      const caption = document.createElement("div");
-      caption.className = "caption";
-      caption.textContent = post.caption;
-      postDiv.appendChild(img);
-      postDiv.appendChild(caption);
-      feedArea.appendChild(postDiv);
-    }
-    
-    // ----------------- Render Task (Right Bottom Window) -----------------
-    function renderTask(post) {
-      answerContent.innerHTML = "";
-      if (currentRound === 1) {
-        // Round 1: Identification Challenge
-        const q = document.createElement("p");
-        q.textContent = post.question;
-        q.style.fontSize = "1.4rem";
-        q.style.marginBottom = "10px";
-        const input = document.createElement("input");
-        input.type = "text";
-        input.id = "roundAnswerInput";
-        input.placeholder = "Type your answer...";
-        input.style.fontSize = "1.4rem";
-        const submitBtn = document.createElement("button");
-        submitBtn.className = "popup-btn";
-        submitBtn.textContent = "Submit";
-        submitBtn.addEventListener("click", () => {
-          const userAns = input.value.trim();
-          if (userAns === "") {
-            showMessage("Please enter an answer!");
-            return;
-          }
-          if (userAns.toLowerCase().includes(post.answer.toLowerCase())) {
-            showMessage("Correct!");
-            score += 10;
-            updateScore();
-            currentPostIndex++;
-            setTimeout(loadNextPost, 1000);
-          } else {
-            showMessage("Incorrect. Hint: Look closely at the caption.");
-          }
-        });
-        answerContent.appendChild(q);
-        answerContent.appendChild(input);
-        answerContent.appendChild(submitBtn);
-      } else if (currentRound === 2) {
-        // Round 2: Leak Evaluation Challenge
-        const q = document.createElement("p");
-        q.textContent = post.question;
-        q.style.fontSize = "1.4rem";
-        q.style.marginBottom = "10px";
-        const yesNoDiv = document.createElement("div");
-        yesNoDiv.style.marginBottom = "10px";
-        const yesBtn = document.createElement("button");
-        yesBtn.className = "popup-btn";
-        yesBtn.textContent = "Yes";
-        const noBtn = document.createElement("button");
-        noBtn.className = "popup-btn";
-        noBtn.textContent = "No";
-        yesNoDiv.appendChild(yesBtn);
-        yesNoDiv.appendChild(noBtn);
-        answerContent.appendChild(q);
-        answerContent.appendChild(yesNoDiv);
-        
-        const dropdownDiv = document.createElement("div");
-        dropdownDiv.style.display = "none";
-        dropdownDiv.style.marginTop = "10px";
-        const select = document.createElement("select");
-        const options = ["Full Name", "Address", "Birthday", "Phone Number", "Email"];
-        options.forEach(opt => {
-          const option = document.createElement("option");
-          option.value = opt;
-          option.textContent = opt;
-          select.appendChild(option);
-        });
-        dropdownDiv.appendChild(select);
-        answerContent.appendChild(dropdownDiv);
-        
-        noBtn.addEventListener("click", () => {
-          if (post.leak) {
-            showMessage("Incorrect. Private details are leaking!");
-          } else {
-            showMessage("Correct! No leaks detected.");
-            score += 10;
-            updateScore();
-          }
-          currentPostIndex++;
-          setTimeout(loadNextPost, 1000);
-        });
-        
-        yesBtn.addEventListener("click", () => {
-          if (!post.leak) {
-            showMessage("Incorrect. This post does not reveal private details.");
-            currentPostIndex++;
-            setTimeout(loadNextPost, 1000);
-          } else {
-            dropdownDiv.style.display = "block";
-            select.addEventListener("change", (e) => {
-              if (e.target.value === post.leakDetail) {
-                showMessage("Correct! You identified the leak.");
-                score += 10;
-                updateScore();
-                currentPostIndex++;
-                setTimeout(loadNextPost, 1000);
-              } else {
-                showMessage("Incorrect. Try again.");
-              }
-            });
-          }
-        });
-      }
-    }
-    
-    // ----------------- Final Quiz -----------------
-    let quizCurrentIndex = 0;
-    function startQuiz() {
-      quizCurrentIndex = 0;
-      showQuizQuestion();
-    }
-    
-    function showQuizQuestion() {
-      if (quizCurrentIndex >= quizQuestions.length) {
-        showQuizResult();
-        return;
-      }
-      quizContent.innerHTML = "";
-      const currentQuiz = quizQuestions[quizCurrentIndex];
-      const quizDiv = document.createElement("div");
-      quizDiv.className = "quiz-question";
-      const qP = document.createElement("p");
-      qP.textContent = currentQuiz.question;
-      qP.style.fontSize = "1.5rem";
-      qP.style.marginBottom = "15px";
-      quizDiv.appendChild(qP);
-      
-      currentQuiz.options.forEach((opt, i) => {
-        const btn = document.createElement("button");
-        btn.className = "popup-btn";
-        btn.style.margin = "5px";
-        btn.textContent = opt;
-        btn.addEventListener("click", () => {
-          if (i === currentQuiz.answer) {
-            quizCurrentIndex++;
-            showQuizQuestion();
-          } else {
-            shakePopup(quizPopup);
-          }
-        });
-        quizDiv.appendChild(btn);
-      });
-      quizContent.appendChild(quizDiv);
-      showPopup(quizPopup);
-    }
-    
-    function showQuizResult() {
-      quizContent.innerHTML = `<p style="font-size:1.5rem;">You answered all quiz questions correctly!</p>`;
-      spawnConfettiQuiz();
-      const playAgainBtn = document.createElement("button");
-      playAgainBtn.className = "popup-btn";
-      playAgainBtn.textContent = "Play Again";
-      playAgainBtn.addEventListener("click", () => {
-        hidePopup(quizPopup);
-        initLevel3();
-      });
-      const nextLevelBtn = document.createElement("button");
-      nextLevelBtn.className = "popup-btn";
-      nextLevelBtn.textContent = "Next Level";
-      nextLevelBtn.addEventListener("click", () => {
-        window.location.href = "level4.html";
-      });
-      quizContent.appendChild(playAgainBtn);
-      quizContent.appendChild(nextLevelBtn);
-      showPopup(quizPopup);
-    }
-    
-    function spawnConfettiQuiz() {
-      for (let i = 0; i < 20; i++) {
-        const conf = document.createElement("div");
-        conf.style.position = "absolute";
-        conf.style.width = "15px";
-        conf.style.height = "15px";
-        conf.style.borderRadius = "50%";
-        conf.style.backgroundColor = getRandomColor();
-        conf.style.left = Math.random() * 80 + "%";
-        conf.style.top = "0px";
-        conf.style.zIndex = 9999;
-        quizContent.appendChild(conf);
-        gsap.to(conf, {
-          y: 150 + Math.random() * 100,
-          x: (Math.random() - 0.5) * 200,
-          rotation: 360 * Math.random(),
-          duration: 1.5 + Math.random(),
-          ease: "power1.out",
-          onComplete: () => conf.remove()
-        });
-      }
-    }
-    
-    function getRandomColor() {
-      const colors = ["#ff4757", "#2ed573", "#1e90ff", "#ff6b81", "#ffa502", "#70a1ff"];
-      return colors[Math.floor(Math.random() * colors.length)];
-    }
-    
-    // ----------------- Message Popup Utility -----------------
-    function showMessage(msg) {
-      const overlay = document.createElement("div");
-      overlay.className = "popup-overlay fancy-popup";
-      overlay.innerHTML = `
-        <div class="popup-content popup-animated" style="max-width:400px;">
-          <p>${msg}</p>
-          <button class="popup-btn" id="msgCloseBtn">OK</button>
-        </div>
-      `;
-      document.body.appendChild(overlay);
-      const content = overlay.querySelector(".popup-content");
-      gsap.fromTo(content, {opacity:0, scale:0.8}, {opacity:1, scale:1, duration:0.3, ease:"power2.out"});
-      overlay.querySelector("#msgCloseBtn").addEventListener("click", () => {
-        gsap.to(content, {
-          opacity:0, scale:0.8, duration:0.3, ease:"power2.in", onComplete:()=>overlay.remove()
-        });
-      });
-    }
-    
-    // ----------------- Terminal Functions -----------------
-    let terminalCurrentFolder = fileSystem;
-    function showTerminal() {
-      explorerWindow.classList.add("hidden");
-      terminalWindow.classList.remove("hidden");
-      terminalCurrentFolder = fileSystem;
-      terminalScreen.textContent = "Welcome to Terminal Mode.\nType 'ls' to list, 'cd folderName' to enter, 'cat file.txt' to read.\n";
-      terminalInput.value = "";
-      terminalInput.focus();
-    }
-    
-    terminalInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        const cmd = terminalInput.value.trim();
-        terminalInput.value = "";
-        processTerminalCommand(cmd);
+  }
+  const introPopup = document.getElementById("introPopup");
+  introPopup.style.display = "flex";
+  typeIntroText();
+  
+  // Start Game button animation (subtle bounce on hover)
+  const startGameBtn = document.getElementById("startGameBtn");
+  startGameBtn.addEventListener("mouseenter", () => {
+    gsap.to(startGameBtn, { scale: 1.1, duration: 0.3, ease: "back.out(1.7)" });
+  });
+  startGameBtn.addEventListener("mouseleave", () => {
+    gsap.to(startGameBtn, { scale: 1, duration: 0.3, ease: "power2.inOut" });
+  });
+  startGameBtn.addEventListener("click", () => {
+    gsap.to(introPopup, {
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.in",
+      onComplete: () => {
+        introPopup.style.display = "none";
+        startRound1();
       }
     });
-    
-    function processTerminalCommand(cmd) {
-      if (!cmd) return;
-      terminalScreen.textContent += `\n$ ${cmd}\n`;
-      const parts = cmd.split(" ");
-      const mainCmd = parts[0];
-      const arg = parts[1] || "";
-    
-      switch (mainCmd) {
-        case "ls":
-          listFolder(terminalCurrentFolder);
-          break;
-        case "cd":
-          if (!arg) {
-            terminalScreen.textContent += "Usage: cd <folderName>\n";
-          } else {
-            changeDirectory(arg);
-          }
-          break;
-        case "cat":
-          if (!arg) {
-            terminalScreen.textContent += "Usage: cat <filename>\n";
-          } else {
-            catFile(arg);
-          }
-          break;
-        default:
-          terminalScreen.textContent += `Unknown command: ${mainCmd}\n`;
-      }
-      terminalScreen.scrollTop = terminalScreen.scrollHeight;
-    }
-    
-    function listFolder(folder) {
-      folder.children?.forEach(item => {
-        terminalScreen.textContent += (item.type === "folder") ? (item.name + "/\n") : (item.name + "\n");
-      });
-    }
-    
-    function changeDirectory(folderName) {
-      if (folderName === "..") {
-        terminalCurrentFolder = fileSystem;
-        terminalScreen.textContent += "Moved back to root.\n";
-        return;
-      }
-      const target = terminalCurrentFolder.children?.find(
-        c => c.type === "folder" && c.name === folderName
-      );
-      if (!target) {
-        terminalScreen.textContent += `Folder not found: ${folderName}\n`;
-      } else {
-        terminalCurrentFolder = target;
-        terminalScreen.textContent += `Entered folder: ${folderName}\n`;
-      }
-    }
-    
-    function catFile(fileName) {
-      const target = terminalCurrentFolder.children?.find(
-        c => c.type === "file" && c.name === fileName
-      );
-      if (!target) {
-        terminalScreen.textContent += `File not found: ${fileName}\n`;
-      } else {
-        terminalScreen.textContent += `--- ${fileName} ---\n${target.content}\n`;
-      }
-    }
-    
-    // ----------------- File Explorer Functions -----------------
-    let currentFolder = fileSystem;
-    explorerBackBtn.addEventListener("click", () => {
-      currentFolder = fileSystem;
-      renderExplorerFolder(fileSystem);
-    });
-    
-    function showExplorer() {
-      terminalWindow.classList.add("hidden");
-      explorerWindow.classList.remove("hidden");
-      currentFolder = fileSystem;
-      renderExplorerFolder(currentFolder);
-    }
-    
-    function renderExplorerFolder(folder) {
-      explorerContent.innerHTML = `<h3>Folder: ${folder.name}</h3>`;
-      const grid = document.createElement("div");
-      grid.className = "explorer-grid";
-      folder.children?.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "explorer-item";
-        const iconImg = document.createElement("img");
-        iconImg.src = (item.type === "folder")
-          ? "../assets/images/folder-icon.png"
-          : "../assets/images/textfile-icon.png";
-        div.appendChild(iconImg);
-        const nameSpan = document.createElement("span");
-        nameSpan.textContent = item.name;
-        div.appendChild(nameSpan);
-        div.addEventListener("dblclick", () => {
-          if (item.type === "folder") {
-            currentFolder = item;
-            renderExplorerFolder(item);
-          } else {
-            showFileContentPopup(item);
-          }
-        });
-        grid.appendChild(div);
-      });
-      explorerContent.appendChild(grid);
-    }
-    
-    function showFileContentPopup(fileObj) {
-      const overlay = document.createElement("div");
-      overlay.className = "popup-overlay fancy-popup";
-      overlay.innerHTML = `
-        <div class="popup-content popup-animated" style="max-width:400px;">
-          <h3>${fileObj.name}</h3>
-          <p>${fileObj.content}</p>
-          <button class="popup-btn" id="closeFileBtn">Close</button>
-        </div>
-      `;
-      document.body.appendChild(overlay);
-      const content = overlay.querySelector(".popup-content");
-      gsap.fromTo(content, {opacity:0, scale:0.8}, {opacity:1, scale:1, duration:0.3, ease:"power2.out"});
-      overlay.querySelector("#closeFileBtn").addEventListener("click", () => {
-        gsap.to(content, {opacity:0, scale:0.8, duration:0.3, ease:"power2.in", onComplete:()=>overlay.remove()});
-      });
-    }
-    
-    // ----------------- Sample File System Data -----------------
-    const fileSystem = {
-      name: "root",
-      type: "folder",
-      children: [
-        {
-          name: "Secrets",
-          type: "folder",
-          children: [
-            { name: "clue.txt", type: "file", content: `Clue: The ${chosen.name} might be in data.txt!` },
-            { name: "data.txt", type: "file", content: `Match: ${chosen.value}` }
-          ]
-        },
-        {
-          name: "Docs",
-          type: "folder",
-          children: [
-            { name: "notes.txt", type: "file", content: "Some infiltration notes" }
-          ]
-        },
-        {
-          name: "images",
-          type: "folder",
-          children: [
-            { name: "random.png", type: "file", content: "An irrelevant image" }
-          ]
-        }
-      ]
-    };
-    
-    // ----------------- Particle Background (Optional) -----------------
-    const bgCanvas = document.getElementById("levelCanvas");
-    if (bgCanvas) {
-      const ctx = bgCanvas.getContext("2d");
-      let w = bgCanvas.width = window.innerWidth;
-      let h = bgCanvas.height = window.innerHeight;
-      class Particle {
-        constructor() {
-          this.x = Math.random() * w;
-          this.y = Math.random() * h;
-          this.dx = (Math.random()-0.5)*0.7;
-          this.dy = (Math.random()-0.5)*0.7;
-          this.size = Math.random()*2+1;
-        }
-        update() {
-          this.x += this.dx;
-          this.y += this.dy;
-          if (this.x < 0) this.x = w; else if (this.x > w) this.x = 0;
-          if (this.y < 0) this.y = h; else if (this.y > h) this.y = 0;
-        }
-        draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, 2*Math.PI);
-          ctx.fillStyle = "rgba(50,205,50,0.6)";
-          ctx.fill();
-        }
-      }
-      const parts = [];
-      for (let i = 0; i < 80; i++) { parts.push(new Particle()); }
-      function animateParts() {
-        ctx.clearRect(0, 0, w, h);
-        parts.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animateParts);
-      }
-      animateParts();
-      window.addEventListener("resize", () => {
-        w = bgCanvas.width = window.innerWidth;
-        h = bgCanvas.height = window.innerHeight;
-      });
-    }
-    
-    // ----------------- POPUP UTILS -----------------
-    function showPopup(overlay) {
-      overlay.classList.remove("hidden");
-      const content = overlay.querySelector(".popup-content");
-      if (content) {
-        content.style.opacity = 0;
-        content.style.transform = "scale(0.8)";
-        gsap.to(content, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" });
-      }
-    }
-    function hidePopup(overlay) {
-      const content = overlay.querySelector(".popup-content");
-      if (content) {
-        gsap.to(content, { opacity: 0, scale: 0.8, duration: 0.3, ease: "power2.in", onComplete: () => { overlay.classList.add("hidden"); } });
-      }
-    }
-    
-    // ----------------- INITIALIZE LEVEL 3 -----------------
-    initLevel3();
   });
   
+  // PARTICLES.JS SETUP
+  particlesJS("particles-js", {
+    particles: {
+      number: { value: 60, density: { enable: true, value_area: 800 } },
+      color: { value: "#39ff14" },
+      shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
+      opacity: { value: 0.5 },
+      size: { value: 4, random: true },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: "#39ff14",
+        opacity: 0.4,
+        width: 1
+      },
+      move: { enable: true, speed: 1, out_mode: "out" }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: { enable: true, mode: "repulse" },
+        onclick: { enable: false, mode: "push" },
+        resize: true
+      },
+      modes: { repulse: { distance: 100, duration: 0.4 } }
+    },
+    retina_detect: true
+  });
+  
+  // GLOBAL STATE and Post Pools
+  let currentRound = 1;
+  let currentPostIndex = 0;
+  let score = 0;
+  const round1Count = 2; // 2 posts for round 1 from poolRound1
+  const round2Count = 3; // 3 posts for round 2 from poolRound2
+  let postsR1 = [];
+  let postsR2 = [];
+  
+  // Define pool for Round 1
+  const poolRound1 = [
+    {
+      image: "../assets/images/post1.jpg",
+      question: "What is John's new address?",
+      answer: "204 high street",
+      hint: "Look at the door number and street name behind him."
+    },
+    {
+      image: "../assets/images/post2.jpg",
+      question: "What school does the child attend?",
+      answer: "william farr pre school",
+      hint: "Focus on the school banner in the image."
+    },
+    {
+      image: "../assets/images/post3.jpg",
+      question: "What is the name of Momin's new company?",
+      answer: "acme",
+      hint: "Check the sign on the building."
+    },
+    {
+      image: "../assets/images/post4.jpg",
+      question: "Calculate her date of birth.",
+      answer: "05/03/1985",
+      hint: "Subtract 40 from 2025 (05/03/2025 becomes 05/03/1985)."
+    }
+  ];
+  
+  // Define pool for Round 2
+  const poolRound2 = [
+    {
+      image: "../assets/images/post1.jpg",
+      privateData: "address",
+      hint: "The door number and street name are visible."
+    },
+    {
+      image: "../assets/images/post2.jpg",
+      privateData: "school",
+      hint: "The banner shows the school name."
+    },
+    {
+      image: "../assets/images/post5.jpg",
+      privateData: "",
+      hint: "This post shows a guy in a park having a good time—no private info here."
+    },
+    {
+      image: "../assets/images/post3.jpg",
+      privateData: "company",
+      hint: "Look at the building sign for the company name."
+    }
+  ];
+  
+  // Define pool of 10 quiz questions
+  const quizPool = [
+    { question: "Which of these should NEVER be shared online?", options: ["Home address", "Nickname", "Favorite color", "Pet's name"], correct: "Home address" },
+    { question: "Why should your full name and birthdate be kept private?", options: ["For fun", "To protect your identity", "To impress friends", "Because it’s trendy"], correct: "To protect your identity" },
+    { question: "Which information is considered sensitive?", options: ["Your favorite movie", "Your phone number", "The weather", "A random fact"], correct: "Your phone number" },
+    { question: "What can happen if you share too much personal info online?", options: ["Increased privacy", "Identity theft", "More friends", "Better credit score"], correct: "Identity theft" },
+    { question: "Which piece of information is best kept private?", options: ["Your email", "Your home address", "Your username", "Your hobby"], correct: "Your home address" },
+    { question: "Sharing your exact birth date can put you at risk of:", options: ["Online dating", "Identity theft", "Job offers", "More likes on social media"], correct: "Identity theft" },
+    { question: "What is a safe practice regarding personal data online?", options: ["Posting your bank details", "Sharing only necessary info", "Revealing your full address", "Using your real name everywhere"], correct: "Sharing only necessary info" },
+    { question: "Why should you avoid posting your school information publicly?", options: ["It’s boring", "It can compromise your safety", "Everyone does it", "It makes you look smart"], correct: "It can compromise your safety" },
+    { question: "What is an example of non-sensitive info?", options: ["Your favorite color", "Your full name", "Your date of birth", "Your address"], correct: "Your favorite color" },
+    { question: "Why is online privacy important?", options: ["For fun", "To protect personal safety", "It’s not important", "To get more likes"], correct: "To protect personal safety" }
+  ];
+  
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  
+  function initPosts() {
+    shuffleArray(poolRound1);
+    postsR1 = poolRound1.slice(0, round1Count);
+    shuffleArray(poolRound2);
+    postsR2 = poolRound2.slice(0, round2Count);
+  }
+  initPosts();
+  
+  // DOM References
+  const phoneScreen = document.getElementById("phoneScreen");
+  const roundInstructions = document.getElementById("roundInstructions");
+  const roundContent = document.getElementById("roundContent");
+  const scoreLabelEl = document.getElementById("scoreLabel");
+  const progressBarEl = document.getElementById("progressBar");
+  const progressPercentLabelEl = document.getElementById("progressPercentLabel");
+  const finalQuizOverlay = document.getElementById("finalQuizOverlay");
+  const finalQuizContent = document.getElementById("finalQuizContent");
+  const endLevelOverlay = document.getElementById("endLevelOverlay");
+  const endLevelMessage = document.getElementById("endLevelMessage");
+  const replayLevelBtn = document.getElementById("replayLevelBtn");
+  const nextLevelBtn = document.getElementById("nextLevelBtn");
+  
+  // Helper Functions
+  function updateScore(points) {
+    score += points;
+    scoreLabelEl.textContent = "Score: " + score;
+  }
+  function updateProgress(total, current) {
+    const percent = Math.floor((current / total) * 100);
+    progressPercentLabelEl.textContent = percent + "%";
+    progressBarEl.style.width = percent + "%";
+  }
+  function clearScreen() {
+    phoneScreen.innerHTML = "";
+  }
+  function showPost(post) {
+    clearScreen();
+    const img = document.createElement("img");
+    img.src = post.image;
+    img.alt = "Instagram Screenshot";
+    img.className = "phone-screenshot";
+    phoneScreen.appendChild(img);
+    gsap.fromTo(img, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" });
+  }
+  function isAnswerClose(userAnswer, correctAnswer) {
+    const normalize = str => str.toLowerCase().replace(/[^a-z0-9\s]/g, "").trim();
+    const normUser = normalize(userAnswer);
+    const normCorrect = normalize(correctAnswer);
+    if (correctAnswer.indexOf("/") !== -1) {
+      const year = normCorrect.slice(-4);
+      return normUser.indexOf(year) !== -1;
+    }
+    const words = normCorrect.split(/\s+/);
+    return words.every(word => normUser.indexOf(word) !== -1);
+  }
+  function animateWrongAnswer(inputEl) {
+    gsap.to(inputEl, { x: -5, duration: 0.1, yoyo: true, repeat: 5 });
+    inputEl.style.borderColor = "red";
+    setTimeout(() => {
+      inputEl.value = "";
+      inputEl.style.borderColor = "#39ff14";
+    }, 1000);
+  }
+  function addHintButton(hint) {
+    const existing = document.getElementById("hintBtn");
+    if (existing) existing.remove();
+    const btn = document.createElement("button");
+    btn.id = "hintBtn";
+    btn.className = "hint-btn";
+    btn.textContent = "Hint";
+    btn.addEventListener("click", () => {
+      showInPagePopup(hint);
+    });
+    roundContent.appendChild(btn);
+  }
+  
+  // ROUND 1: Identification Challenge
+  function startRound1() {
+    currentRound = 1;
+    currentPostIndex = 0;
+    roundInstructions.innerHTML = `
+      <h2 style="color:#81d4fa;">Round 1: Identify Private Info</h2>
+      <p style="font-size:1.3rem;">Check the screenshot on the phone and type the <strong>private detail</strong> you see!</p>
+    `;
+    loadRound1Post();
+  }
+  function loadRound1Post() {
+    if (currentPostIndex >= postsR1.length) {
+      startRound2();
+      return;
+    }
+    const post = postsR1[currentPostIndex];
+    showPost(post);
+    roundContent.innerHTML = `
+      <div>
+        <p style="font-size:1.3rem;"><strong>${post.question}</strong></p>
+        <input type="text" id="round1AnswerInput" placeholder="Type private info" style="font-size:1.2rem; padding:10px;">
+        <button id="round1SubmitBtn" class="popup-btn bigger-btn">Submit</button>
+      </div>
+    `;
+    addHintButton(post.hint);
+    document.getElementById("round1SubmitBtn").addEventListener("click", () => {
+      const inputEl = document.getElementById("round1AnswerInput");
+      const userAnswer = inputEl.value;
+      if (!userAnswer) {
+        showInPagePopup("Please enter an answer!");
+        return;
+      }
+      if (isAnswerClose(userAnswer, post.answer)) {
+        updateScore(10);
+        showCelebrationPopup(`Great job! You found: "${post.answer}".`);
+        currentPostIndex++;
+        updateProgress(postsR1.length, currentPostIndex);
+        loadRound1Post();
+      } else {
+        animateWrongAnswer(inputEl);
+      }
+    });
+  }
+  
+  // ROUND 2: Leak Evaluation Challenge
+  function startRound2() {
+    currentRound = 2;
+    currentPostIndex = 0;
+    roundInstructions.innerHTML = `
+      <h2 style="color:#ce93d8;">Round 2: Leak Evaluation</h2>
+      <p style="font-size:1.3rem;">Decide if the post leaks private info. If yes, select the <strong>data type</strong>!</p>
+    `;
+    loadRound2Post();
+  }
+  function loadRound2Post() {
+    if (currentPostIndex >= postsR2.length) {
+      startFinalQuiz();
+      return;
+    }
+    const post = postsR2[currentPostIndex];
+    showPost(post);
+    roundContent.innerHTML = `
+      <div>
+        <p style="font-size:1.3rem;"><strong>Does this post reveal private details?</strong></p>
+        <button id="round2YesBtn" class="popup-btn bigger-btn">Yes</button>
+        <button id="round2NoBtn" class="popup-btn bigger-btn">No</button>
+      </div>
+    `;
+    addHintButton(post.hint);
+    document.getElementById("round2YesBtn").addEventListener("click", () => {
+      if (!post.privateData) {
+        gsap.to(roundContent, { x: -5, duration: 0.1, yoyo: true, repeat: 5 });
+      } else {
+        roundContent.innerHTML += `
+          <div id="leakOptions" style="margin-top:10px;">
+            <p style="font-size:1.2rem;">What type of data is leaked?</p>
+            <select id="leakSelect" style="font-size:1.2rem; padding:8px;">
+              <option value="">Select a data type...</option>
+              <option value="address">Address</option>
+              <option value="school">School</option>
+              <option value="company">Company</option>
+              <option value="birthday">Birthday</option>
+              <option value="phone number">Phone Number</option>
+            </select>
+            <button id="leakSubmitBtn" class="popup-btn">Submit</button>
+          </div>
+        `;
+        document.getElementById("leakSubmitBtn").addEventListener("click", () => {
+          const userSelection = document.getElementById("leakSelect").value;
+          if (!userSelection) {
+            showInPagePopup("Please select a data type!");
+            return;
+          }
+          if (userSelection === post.privateData) {
+            updateScore(10);
+            showCelebrationPopup(`Great job! Correct leak: "${post.privateData}".`);
+            currentPostIndex++;
+            updateProgress(postsR2.length, currentPostIndex);
+            loadRound2Post();
+          } else {
+            gsap.to(roundContent, { x: -5, duration: 0.1, yoyo: true, repeat: 5 });
+          }
+        });
+      }
+    });
+    document.getElementById("round2NoBtn").addEventListener("click", () => {
+      if (post.privateData) {
+        gsap.to(roundContent, { x: -5, duration: 0.1, yoyo: true, repeat: 5 });
+      } else {
+        updateScore(10);
+        showCelebrationPopup("Great! No leak detected.");
+        currentPostIndex++;
+        updateProgress(postsR2.length, currentPostIndex);
+        loadRound2Post();
+      }
+    });
+  }
+  
+  // FINAL QUIZ
+  function startFinalQuiz() {
+    roundInstructions.innerHTML = `
+      <h2>Final Quiz</h2>
+      <p style="font-size:1.3rem;">Answer these questions to test your privacy knowledge!</p>
+    `;
+    roundContent.innerHTML = `
+      <button id="openQuizBtn" class="popup-btn bigger-btn">Open Final Quiz</button>
+    `;
+    document.getElementById("openQuizBtn").addEventListener("click", () => {
+      showFinalQuiz();
+    });
+  }
+  function selectQuizQuestions() {
+    let shuffled = quizPool.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3);
+  }
+  function showFinalQuiz() {
+    const selectedQuestions = selectQuizQuestions();
+    let quizHtml = "";
+    selectedQuestions.forEach((q, i) => {
+      quizHtml += `<div style="margin-bottom:20px; text-align:left;">
+        <p style="font-size:1.3rem;"><strong>${i + 1}. ${q.question}</strong></p>`;
+      q.options.forEach(option => {
+        quizHtml += `<label style="font-size:1.2rem;">
+          <input type="radio" name="q${i}" value="${option}"> ${option}
+        </label><br>`;
+      });
+      quizHtml += `</div>`;
+    });
+    finalQuizOverlay.classList.remove("hidden");
+    finalQuizContent.innerHTML = `
+      <h2>Final Quiz: Privacy Knowledge</h2>
+      <div id="quizQuestions">${quizHtml}</div>
+      <button id="submitQuizBtn" class="popup-btn bigger-btn">Submit Quiz</button>
+    `;
+    document.getElementById("submitQuizBtn").addEventListener("click", () => {
+      let quizScore = 0;
+      selectedQuestions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && selected.value === q.correct) {
+          quizScore += 10;
+        }
+      });
+      updateScore(quizScore);
+      finalQuizOverlay.classList.add("hidden");
+      endLevelMessage.textContent = `You scored ${score} points!`;
+      endLevelOverlay.classList.remove("hidden");
+    });
+  }
+  
+  // END-OF-LEVEL POPUP
+  replayLevelBtn.addEventListener("click", () => {
+    score = 0;
+    updateScore(0);
+    initPosts();
+    startRound1();
+  });
+  nextLevelBtn.addEventListener("click", () => {
+    window.location.href = "../level4.html";
+  });
+  
+  // POPUP UTILS
+  function showInPagePopup(msg) {
+    const overlay = document.createElement("div");
+    overlay.className = "popup-overlay fancy-popup";
+    overlay.innerHTML = `
+      <div class="popup-content" style="max-width:400px;">
+        <p>${msg}</p>
+        <button class="popup-btn" id="popupCloseBtn">OK</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    const content = overlay.querySelector(".popup-content");
+    gsap.fromTo(content, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" });
+    overlay.querySelector("#popupCloseBtn").addEventListener("click", () => {
+      gsap.to(content, { opacity: 0, scale: 0.8, duration: 0.3, ease: "power2.in", onComplete: () => overlay.remove() });
+    });
+  }
+  function showCelebrationPopup(msg) {
+    const overlay = document.createElement("div");
+    overlay.className = "popup-overlay fancy-popup";
+    overlay.innerHTML = `
+      <div class="popup-content celebrate" style="max-width:450px;">
+        <h3>${msg}</h3>
+        <button class="popup-btn" id="popupCloseBtn">Awesome!</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    const content = overlay.querySelector(".popup-content");
+    gsap.fromTo(content, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.7)" });
+    overlay.querySelector("#popupCloseBtn").addEventListener("click", () => {
+      gsap.to(content, { opacity: 0, scale: 0.8, duration: 0.3, ease: "power2.in", onComplete: () => overlay.remove() });
+    });
+  }
+  
+  // Start game after intro popup is dismissed (handled in the intro popup section)
+});
