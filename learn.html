@@ -1,17 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberSavvy - Learn</title>
-    <link rel="stylesheet" href="css/learn.css">
-    <script src="js/learn.js" defer></script>
+  <meta charset="UTF-8" />
+  <title>CyberSavvy - Learn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet" />
+  <script src="assets/phaser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Reuse main styling and scripts -->
+  <link rel="stylesheet" href="css/main.css" />
+  <script src="js/main.js" defer></script>
+
+  <!-- Learn-specific files -->
+  <link rel="stylesheet" href="css/learn.css" />
+  <script src="js/learn.js" defer></script>
 </head>
 <body>
-    <nav>
-        <a href="index.html" class="back-btn">← Back to Home</a>
-    </nav>
-    <h1>📚 Learn About Cybersecurity</h1>
-    <p>Explore cybersecurity tips, password security, phishing awareness, and more!</p>
+  <div class="background-animation"></div>
+  <canvas id="networkCanvas"></canvas>
+
+  <!-- Bubble Navigation -->
+  <nav class="bubble-bar-right">
+    <a href="levels.html" class="bubble">
+      <span class="label">Play Game</span>
+      <img src="assets/images/controller-icon.png" alt="Play Game"/>
+    </a>
+    <a href="learn.html" class="bubble expanded">
+      <span class="label">Learn</span>
+      <img src="assets/images/book-icon.png" alt="Learn"/>
+    </a>
+    <a href="leaderboard.html" class="bubble">
+      <span class="label">Leaderboard</span>
+      <img src="assets/images/trophy-icon.png" alt="Leaderboard"/>
+    </a>
+    <a href="settings.html" class="bubble">
+      <span class="label">Settings</span>
+      <img src="assets/images/settings-icon.png" alt="Settings"/>
+    </a>
+    <a href="help.html" class="bubble">
+      <span class="label">Help</span>
+      <img src="assets/images/help-icon.png" alt="Help"/>
+    </a>
+  </nav>
+
+  <div class="learn-container">
+    <h1 class="page-title">Learn</h1>
+    <p class="subtitle">Explore Cybersecurity Concepts!</p>
+
+    <!-- Example: Topic Cards or Sections -->
+    <div class="topics">
+      <div class="topic-card">
+        <h2>Phishing</h2>
+        <p>Phishing is when attackers trick you into revealing personal information...</p>
+        <button class="btn green-btn">Read More</button>
+      </div>
+      <div class="topic-card">
+        <h2>Passwords</h2>
+        <p>Strong passwords are essential to protect your accounts...</p>
+        <button class="btn green-btn">Read More</button>
+      </div>
+      <div class="topic-card">
+        <h2>Malware</h2>
+        <p>Malware is software designed to harm or exploit any programmable device...</p>
+        <button class="btn green-btn">Read More</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

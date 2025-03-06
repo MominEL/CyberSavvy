@@ -1,58 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberSavvy - Help & FAQs</title>
-    <link rel="stylesheet" href="css/help.css">
-    <script src="js/help.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> <!-- GSAP for animations -->
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>CyberSavvy - Help & FAQs</title>
+  
+  <!-- Shared Fonts & Libraries -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
+  <script src="assets/phaser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  
+  <!-- Main (for background & nav) + Page-specific CSS/JS -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/help.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/help.js" defer></script>
 </head>
-
 <body>
+  <!-- Cyber-Themed Background -->
+  <div class="background-animation"></div>
+  <canvas id="networkCanvas"></canvas>
 
-    <!-- 🔹 Animated Background -->
-    <div class="background-animation"></div>
+  <!-- Bubble Bar Navigation -->
+  <nav class="bubble-bar-right">
+    <a href="levels.html" class="bubble">
+      <span class="label">Play Game</span>
+      <img src="assets/images/controller-icon.png" alt="Play Game">
+    </a>
+    <a href="learn.html" class="bubble">
+      <span class="label">Learn</span>
+      <img src="assets/images/book-icon.png" alt="Learn">
+    </a>
+    <a href="leaderboard.html" class="bubble">
+      <span class="label">Leaderboard</span>
+      <img src="assets/images/trophy-icon.png" alt="Leaderboard">
+    </a>
+    <a href="settings.html" class="bubble">
+      <span class="label">Settings</span>
+      <img src="assets/images/settings-icon.png" alt="Settings">
+    </a>
+    <a href="help.html" class="bubble expanded">
+      <span class="label">Help</span>
+      <img src="assets/images/help-icon.png" alt="Help">
+    </a>
+  </nav>
 
-    <!-- 🔹 Back to Home Button -->
-    <nav>
-        <a href="index.html" class="back-btn">← Back to Home</a>
-    </nav>
+  <!-- Page Content -->
+  <div class="help-container">
+    <h1 class="page-title">Help &amp; FAQs</h1>
+    <p class="subtitle">Find answers to your questions, or contact us for more help!</p>
 
-    <!-- 🔹 Title & Animated Question Mark -->
-    <div class="title-container">
-        <h1 class="cyber-title">❓ Help & FAQs</h1>
-        <img src="assets/images/question-mark.png" class="question-icon" alt="Question Mark">
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span class="toggle-icon">+</span>
+          <h2>How do I start the game?</h2>
+        </div>
+        <div class="faq-answer">
+          <p>Click the "Play Game" bubble or the "Start Playing" button on the main page. Choose a level and begin!</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span class="toggle-icon">+</span>
+          <h2>Do I need an account?</h2>
+        </div>
+        <div class="faq-answer">
+          <p>You can play without an account, but creating one helps you track progress and rank on the leaderboard.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span class="toggle-icon">+</span>
+          <h2>How can I report a bug?</h2>
+        </div>
+        <div class="faq-answer">
+          <p>Please use our “Need More Help?” form or email us at support@cybersavvy.com.</p>
+        </div>
+      </div>
     </div>
 
-    <p class="subtitle">Find answers to common questions or ask your own!</p>
+    <!-- Need More Help? Section -->
+    <div class="need-help-container">
+      <h2>Need More Help?</h2>
+      <p>If you still have questions or need additional assistance, feel free to reach out!</p>
+      <button id="openChatBtn" class="btn blue-btn">Contact Us</button>
+    </div>
+  </div>
 
-    <!-- 🔹 FAQ Section -->
-    <section class="faq-section">
-        <div class="faq">
-            <h3 class="faq-question">🔹 How do I play CyberSavvy? <span class="toggle-icon">+</span></h3>
-            <p class="faq-answer">Click 'Start Playing' on the home page, choose a level, and follow the instructions on-screen to complete the challenge!</p>
-        </div>
-        <div class="faq">
-            <h3 class="faq-question">🔹 Is this game safe for kids? <span class="toggle-icon">+</span></h3>
-            <p class="faq-answer">Yes! CyberSavvy is designed for kids and teaches online safety in a fun and interactive way.</p>
-        </div>
-        <div class="faq">
-            <h3 class="faq-question">🔹 Can I reset my progress? <span class="toggle-icon">+</span></h3>
-            <p class="faq-answer">Yes! You can reset your progress in the Settings page by selecting 'Reset Data'.</p>
-        </div>
-    </section>
+  <!-- Popup Form (Hidden by default) -->
+  <div class="popup-overlay hidden" id="popupOverlay">
+    <div class="popup-form">
+      <!-- Glowing X button -->
+      <button type="button" class="close-popup" id="closeChatBtnX">✕</button>
 
-    <!-- 🔹 Contact Form -->
-    <section class="contact-form">
-        <h2>📩 Ask a Question</h2>
-        <p>If you need help, submit your question below:</p>
-        <input type="text" id="questionInput" placeholder="Type your question...">
-        <button id="submitQuestion">Submit</button>
-        <p id="formMessage" class="hidden">✅ Your question has been sent!</p>
-    </section>
+      <h2>Contact Us</h2>
+      <p>Let us know how we can help!</p>
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Your Name" required>
 
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Your Email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" rows="4" placeholder="Your question or issue..." required></textarea>
+
+        <button type="submit" class="btn green-btn">Send</button>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
-

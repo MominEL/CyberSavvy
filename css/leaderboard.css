@@ -1,0 +1,42 @@
+/* leaderboard.css */
+
+.leaderboard-container {
+    position: relative;
+    max-width: 800px;
+    margin: 100px auto 0 auto;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 10px;
+    border: 2px solid limegreen;
+    box-shadow: 0 0 15px limegreen;
+    text-align: center;
+  }
+  
+  .page-title {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px limegreen, 0 0 10px cyan;
+  }
+  
+  /* Leaderboard table */
+  .leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    color: #fff;
+  }
+  
+  .leaderboard-table th,
+  .leaderboard-table td {
+    border: 1px solid #39FF14;
+    padding: 15px;
+    font-size: 1.2rem;
+    background: rgba(10, 15, 40, 0.6);
+  }
+  
+  .leaderboard-table th {
+    background: rgba(10, 15, 40, 0.8);
+    color: #39FF14;
+    text-shadow: 0 0 5px limegreen;
+  }
+  

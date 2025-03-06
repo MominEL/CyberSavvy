@@ -1,0 +1,52 @@
+/* settings.css */
+
+.settings-container {
+    position: relative;
+    max-width: 600px;
+    margin: 100px auto 0 auto;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 10px;
+    border: 2px solid limegreen;
+    box-shadow: 0 0 15px limegreen;
+    text-align: center;
+  }
+  
+  .page-title {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px limegreen, 0 0 10px cyan;
+  }
+  
+  /* Settings form */
+  .settings-form {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .setting-item {
+    margin-bottom: 20px;
+  }
+  
+  .setting-item label {
+    display: inline-block;
+    width: 150px;
+    font-size: 1.2rem;
+    color: #39FF14;
+  }
+  
+  .setting-item input[type="range"] {
+    width: 200px;
+  }
+  
+  .setting-item select,
+  .setting-item input[type="checkbox"] {
+    font-size: 1rem;
+    padding: 5px;
+    background: #1b1f3a;
+    color: #fff;
+    border: 1px solid #39FF14;
+    border-radius: 5px;
+    outline: none;
+  }
+  

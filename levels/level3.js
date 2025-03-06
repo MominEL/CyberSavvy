@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "../assets/images/post4.jpg",
       question: "Calculate her date of birth.",
       answer: "05/03/1985",
-      hint: "Subtract 40 from 2025 (05/03/2025 becomes 05/03/1985)."
+      hint: "Subtract 40 from 2025 (she was born on __/__/1985)."
     }
   ];
   
@@ -142,6 +142,11 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "../assets/images/post3.jpg",
       privateData: "company",
       hint: "Look at the building sign for the company name."
+    },
+    {
+      image: "../assets/images/post6.jpg",
+      privateData: "",
+      hint: "This post shows a girl at home reading a book and having good time."
     }
   ];
   

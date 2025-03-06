@@ -1,17 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberSavvy - Leaderboard</title>
-    <link rel="stylesheet" href="css/leaderboard.css">
-    <script src="js/leaderboard.js" defer></script>
+  <meta charset="UTF-8" />
+  <title>CyberSavvy - Leaderboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet" />
+  <script src="assets/phaser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Reuse main styling and scripts for background & bubble bar -->
+  <link rel="stylesheet" href="css/main.css" />
+  <script src="js/main.js" defer></script>
+
+  <!-- Leaderboard-specific files -->
+  <link rel="stylesheet" href="css/leaderboard.css" />
+  <script src="js/leaderboard.js" defer></script>
 </head>
 <body>
-    <nav>
-        <a href="index.html" class="back-btn">← Back to Home</a>
-    </nav>
-    <h1>🏆 CyberSavvy Leaderboard</h1>
-    <p>See how you rank among the best cyber heroes!</p>
+  <div class="background-animation"></div>
+  <canvas id="networkCanvas"></canvas>
+
+  <!-- Bubble Navigation -->
+  <nav class="bubble-bar-right">
+    <a href="levels.html" class="bubble">
+      <span class="label">Play Game</span>
+      <img src="assets/images/controller-icon.png" alt="Play Game"/>
+    </a>
+    <a href="learn.html" class="bubble">
+      <span class="label">Learn</span>
+      <img src="assets/images/book-icon.png" alt="Learn"/>
+    </a>
+    <a href="leaderboard.html" class="bubble expanded">
+      <span class="label">Leaderboard</span>
+      <img src="assets/images/trophy-icon.png" alt="Leaderboard"/>
+    </a>
+    <a href="settings.html" class="bubble">
+      <span class="label">Settings</span>
+      <img src="assets/images/settings-icon.png" alt="Settings"/>
+    </a>
+    <a href="help.html" class="bubble">
+      <span class="label">Help</span>
+      <img src="assets/images/help-icon.png" alt="Help"/>
+    </a>
+  </nav>
+
+  <div class="leaderboard-container">
+    <h1 class="page-title">Leaderboard</h1>
+    <p class="subtitle">See who’s on top!</p>
+
+    <!-- Leaderboard Table or Cards -->
+    <table class="leaderboard-table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Player</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboardData">
+        <!-- Filled dynamically or statically -->
+        <tr>
+          <td>1</td>
+          <td>CyberHero101</td>
+          <td>9500</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>SafeSurfKid</td>
+          <td>8000</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>PhishBuster</td>
+          <td>7500</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>

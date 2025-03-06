@@ -1,0 +1,206 @@
+/* help.css */
+
+/* Override main.css scrolling settings for this page */
+body {
+    overflow-y: auto;
+    height: auto;
+    scroll-behavior: smooth;
+    
+    /* Firefox scrollbar settings */
+    scrollbar-width: thin;
+    scrollbar-color: #39FF14 rgba(0,0,0,0.3);
+  }
+  
+  /* Custom scrollbar for WebKit browsers */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #39FF14;
+    border-radius: 10px;
+  }
+  
+  /* ---------------------------
+     Frosted Glass Container
+  --------------------------- */
+  .help-container {
+    position: relative;
+    max-width: 800px;
+    margin: 100px auto;
+    background: rgba(255, 255, 255, 0.07); /* Slight translucent white */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+  }
+  
+  /* Page title and subtitle */
+  .page-title {
+    font-size: 52px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px limegreen, 0 0 10px cyan;
+  }
+  
+  .subtitle {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  /* FAQ Section */
+  .faq-section {
+    text-align: left;
+  }
+  
+  /* Each FAQ item */
+  .faq-item {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(57, 255, 20, 0.4);
+  }
+  
+  /* FAQ Question row */
+  .faq-question {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 20px;
+    font-size: 1.4rem;
+    color: #39FF14;
+    background: rgba(0,0,0,0.2);
+  }
+  
+  /* Plus/Minus Icon */
+  .toggle-icon {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #39FF14;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  /* FAQ Answer with smooth slide animation */
+  .faq-answer {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #fff;
+    background: rgba(0,0,0,0.3);
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+  }
+  
+  /* Expanded FAQ Answer */
+  .faq-item.open .faq-answer {
+    padding: 20px;
+    max-height: 500px;
+  }
+  
+  /* Rotate toggle icon when open */
+  .faq-item.open .toggle-icon {
+    transform: rotate(45deg);
+  }
+  
+  /* Need More Help Section */
+  .need-help-container {
+    margin-top: 30px;
+    padding: 20px;
+    border: 2px dashed rgba(57,255,20,0.5);
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .need-help-container h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.8rem;
+  }
+  
+  /* Popup Overlay & Form */
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  .popup-overlay.hidden {
+    display: none;
+  }
+  
+  .popup-form {
+    position: relative;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    box-shadow: 0 0 15px #39FF14;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .popup-form h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+  }
+  
+  .popup-form p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+  
+  .popup-form label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  .popup-form input,
+  .popup-form textarea {
+    width: 100%;
+    border: 1px solid #39FF14;
+    border-radius: 5px;
+    background: #1b1f3a;
+    color: #fff;
+    padding: 8px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  /* Form button */
+  .popup-form button {
+    margin-top: 15px;
+    margin-right: 10px;
+  }
+  
+  /* Glowing "X" Close Button */
+  .close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #39FF14;
+    font-size: 2rem;
+    cursor: pointer;
+    text-shadow: 0 0 5px #39FF14;
+    transition: text-shadow 0.3s ease;
+  }
+  .close-popup:hover {
+    text-shadow: 0 0 10px #39FF14;
+  }
+  

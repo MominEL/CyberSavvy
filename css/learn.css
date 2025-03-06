@@ -1,0 +1,52 @@
+/* learn.css */
+
+.learn-container {
+    position: relative;
+    max-width: 900px;
+    margin: 100px auto 0 auto;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 10px;
+    border: 2px solid limegreen;
+    box-shadow: 0 0 15px limegreen;
+    text-align: center;
+  }
+  
+  .page-title {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px limegreen, 0 0 10px cyan;
+  }
+  
+  /* Topics */
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .topic-card {
+    background: rgba(10,15,40, 0.7);
+    border: 1px solid #39FF14;
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 0 10px #39FF14;
+  }
+  
+  .topic-card h2 {
+    margin-top: 0;
+    color: #39FF14;
+  }
+  
+  .topic-card p {
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  
+  .topic-card button {
+    font-size: 1rem;
+  }
+  
