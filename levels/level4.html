@@ -1,2 +1,120 @@
-<script src="../assets/js/phaser.min.js"></script>
-<script src="level1.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberSavvy - Level 4: Phishing Awareness</title>
+    <link rel="stylesheet" href="level4.css" />
+    <!-- FontAwesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <!-- GSAP for animations -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+      defer
+    ></script>
+    <!-- Particles.js for background -->
+    <script
+      src="https://cdn.jsdelivr.net/gh/VincentGarreau/particles.js/particles.min.js"
+      defer
+    ></script>
+    <!-- Main JS -->
+    <script src="level4.js" defer></script>
+  </head>
+  <body>
+    <!-- Bubble Menu (Restored) -->
+    <div class="bubble-bar-right">
+      <div class="bubble">
+        <img src="assets/images/hacker-icon.png" alt="Hacker" />
+        <span class="label">Hacker Info</span>
+      </div>
+      <div class="bubble">
+        <img src="assets/images/lock-icon.png" alt="Lock" />
+        <span class="label">Lock Tips</span>
+      </div>
+      <div class="bubble">
+        <img src="assets/images/magnifier-icon.png" alt="Magnifier" />
+        <span class="label">Investigate</span>
+      </div>
+    </div>
+
+    <!-- Intro Popup with Big, Engaging Text & Image -->
+    <div class="popup-overlay" id="introPopup">
+      <div class="popup-content intro-content">
+        <img
+          src="assets/images/hacker-happy.png"
+          alt="Hacker"
+          style="width:100px; margin-bottom:15px;"
+        />
+        <div id="typingIntro"></div>
+        <button id="startGameBtn" class="popup-btn bigger-btn">Start Game</button>
+      </div>
+    </div>
+
+    <!-- Header (Modern, Floating Title with Animation) -->
+    <header class="page-header">
+      <div class="header-text">
+        <h1 id="mainTitle">Phishing Awareness</h1>
+        <h2 class="subtitle">Stay alert, spot the scams!</h2>
+      </div>
+      <div class="score-progress">
+        <span id="scoreLabel">Score: 0</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <span id="progressPercentLabel">0%</span>
+      </div>
+    </header>
+
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Main Layout: Inbox on Left & Email Preview on Right -->
+    <div class="main-layout">
+      <!-- Inbox Panel (Locked emails unlock sequentially) -->
+      <div class="inbox-panel" id="inboxPanel">
+        <h2 class="panel-title">Inbox</h2>
+        <ul id="emailList"></ul>
+      </div>
+      <!-- Preview Panel -->
+      <div class="preview-panel" id="previewPanel">
+        <h2 class="panel-title">Email Preview</h2>
+        <!-- Hint Button in top-right corner -->
+        <button id="hintBtn" class="hint-btn" title="Get a hint"></button>
+        <div id="emailPreview"></div>
+        <div class="button-group">
+          <button id="legitBtn" class="action-btn legit-btn">
+            <i class="fas fa-check"></i> Legit
+          </button>
+          <button id="phishingBtn" class="action-btn phishing-btn">
+            <i class="fas fa-fish"></i> Phishing
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hack Simulation Overlay (Matrix-style effect) -->
+    <div id="hackOverlay" class="hidden">
+      <div id="matrixEffect"></div>
+    </div>
+
+    <!-- End-of-Level Popup (Shows final score & rank) -->
+    <div class="popup-overlay hidden" id="endLevelPopup">
+      <div class="popup-content fancy-popup" id="endLevelContent">
+        <h2>Level Complete!</h2>
+        <p id="endLevelMessage">Your final score is: 0</p>
+        <p id="rankMessage"></p>
+        <div class="end-buttons">
+          <button id="replayLevelBtn" class="popup-btn bigger-btn">
+            Replay Level
+          </button>
+          <button id="nextLevelBtn" class="popup-btn bigger-btn">
+            Next Level
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
