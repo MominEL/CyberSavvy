@@ -30,7 +30,7 @@
     <script src="level4.js" defer></script>
   </head>
   <body>
-    <!-- Leave Game Popup (for bubble menu) -->
+    <!-- Leave Game Popup (Bubble Menu) -->
     <div class="popup-overlay hidden" id="leaveGamePopup">
       <div class="popup-content fancy-popup">
         <h2>Leave Game?</h2>
@@ -40,20 +40,20 @@
       </div>
     </div>
 
-    <!-- Intro Popup (Round 1 Start) -->
+    <!-- Intro Popup (Round 1) -->
     <div class="popup-overlay" id="introPopup">
-      <div class="popup-content intro-content" style="display: flex; align-items: center; gap: 20px;">
-        <!-- Hacker Image on the Side -->
+      <div class="popup-content intro-content welcome-popup">
+        <!-- Hacker Image with bounce -->
         <img
           src="../assets/images/hacker-happy.png"
           alt="Hacker"
-          style="width:120px;"
+          class="welcome-hacker"
         />
-        <!-- Colored Title & Typed Text -->
-        <div>
-          <h2 style="color:#39ff14; margin-bottom:10px;">Welcome to Level 4!</h2>
-          <div id="typingIntro" style="white-space: pre-line; font-size:1.1rem; line-height:1.4;"></div>
-          <button id="startRound1Btn" class="popup-btn bigger-btn" style="margin-top:10px;">Start Level</button>
+        <!-- Title & typed text -->
+        <div class="welcome-text">
+          <h2 class="welcome-title">Welcome to Level 4!</h2>
+          <div id="typingIntro" class="typing-intro"></div>
+          <button id="startRound1Btn" class="popup-btn bigger-btn welcome-start">Start Level</button>
         </div>
       </div>
     </div>
@@ -69,10 +69,10 @@
 
     <!-- End-of-Level Popup -->
     <div class="popup-overlay hidden" id="endLevelPopup">
-      <div class="popup-content fancy-popup">
+      <div class="popup-content fancy-popup" style="pointer-events: auto;">
         <h2>Level Complete!</h2>
-        <p id="endLevelMessage"></p>
-        <p id="endLevelRank"></p>
+        <p id="endLevelMessage" class="end-level-score"></p>
+        <p id="endLevelRank" class="end-level-rank"></p>
         <div class="end-buttons">
           <button id="homeBtn" class="popup-btn bigger-btn">Go Home</button>
           <button id="replayBtn" class="popup-btn bigger-btn">Replay Level</button>
@@ -80,9 +80,19 @@
       </div>
     </div>
 
-    <!-- Hack Simulation Overlay (Matrix-Style) -->
+    <!-- Retry Popup if time runs out in Round 2 -->
+    <div class="popup-overlay hidden" id="round2RetryPopup">
+      <div class="popup-content fancy-popup">
+        <h2>Time’s Up!</h2>
+        <p>You ran out of time. Do you want to try Round 2 again?</p>
+        <button id="retryYes" class="popup-btn bigger-btn">Retry</button>
+        <button id="retryNo" class="popup-btn bigger-btn">Quit</button>
+      </div>
+    </div>
+
+    <!-- Hack Simulation Overlay with Transparent Matrix Canvas -->
     <div id="hackOverlay" class="hidden">
-      <div id="matrixEffect"></div>
+      <canvas id="matrixCanvas"></canvas>
     </div>
 
     <!-- Particles Background (optional) -->
@@ -90,7 +100,7 @@
 
     <!-- Header -->
     <header class="page-header">
-      <h1>Phishing Awareness</h1>
+      <h1 id="mainTitle">Phishing Awareness</h1>
       <h2 class="subtitle">Stay alert, spot the scams!</h2>
       <div class="score-bar">
         <span id="scoreLabel">Score: 0</span>
@@ -101,7 +111,7 @@
       </div>
     </header>
 
-    <!-- Bubble Menu (HTML code exactly as you provided) -->
+    <!-- Bubble Menu (as provided) -->
     <nav class="bubble-bar-right">
       <a href="../levels.html" class="bubble">
         <span class="label">Play Game</span>
@@ -146,15 +156,14 @@
       <!-- Instructions Panel -->
       <div class="panel" id="instructionsPanel">
         <h3>Instructions</h3>
-        <p class="inst-text">
-          1. Click on the first unlocked email in the Inbox.<br/>
-          2. Look for suspicious elements (red-flag text).<br/>
-          3. If you click them, you earn extra points.<br/>
-          4. Decide if the email is Legit or Phishing.<br/>
-          5. If you click a “CLAIM NOW” in a scam, watch out!<br/>
-          6. Once you classify an email, the next unlocks.<br/>
-          7. After all are done, see your Round 1 score, then proceed to Round 2!
-        </p>
+        <ul class="inst-list">
+          <li>Click the first unlocked email.</li>
+          <li>Look for suspicious (red) text. Click it for extra points.</li>
+          <li>If you click a scam CTA, watch out for the hack!</li>
+          <li>Decide if the email is Legit or Phishing.</li>
+          <li>Each email can only be classified once.</li>
+          <li>When done, see your Round 1 score, then go to Round 2.</li>
+        </ul>
       </div>
     </div>
 
@@ -162,16 +171,20 @@
     <div class="popup-overlay hidden" id="round1ResultsPopup">
       <div class="popup-content fancy-popup">
         <h2>Round 1 Complete!</h2>
-        <p id="round1Results"></p>
+        <p id="round1Results" class="end-level-score"></p>
         <button id="goRound2Btn" class="popup-btn bigger-btn">Go to Round 2</button>
       </div>
     </div>
 
     <!-- Round 2 Container (Hidden initially) -->
     <div id="round2Container" class="round-container hidden">
-      <h2>Round 2: Timed Challenge</h2>
-      <div id="timerBar">Time Left: <span id="timeLeft">30</span>s</div>
-      <div class="round2-content">
+      <h2 id="round2Title" style="width:100%; text-align:center; font-size:2.2rem; margin-bottom:10px;">
+        Round 2: Timed Challenge
+      </h2>
+      <div id="timerBar" style="font-size:2rem; text-align:center; margin-bottom:15px;">
+        Time Left: <span id="timeLeft">30</span>s
+      </div>
+      <div class="round2-content" style="width:600px;">
         <div id="round2ImageBox"></div>
         <div class="button-group">
           <button id="round2SafeBtn" class="action-btn legit-btn">Safe</button>

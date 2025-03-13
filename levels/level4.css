@@ -8,7 +8,36 @@ body {
   font-family: 'Nunito', sans-serif;
   background: #0a0f2c;
   color: #fff;
-  /* We allow scrolling, so no overflow:hidden; */
+}
+
+/* WELCOME POPUP */
+.welcome-popup {
+  max-width: 700px;
+  min-height: 300px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.welcome-hacker {
+  width: 180px;
+  margin-right: 15px;
+}
+.welcome-text {
+  flex: 1;
+}
+.welcome-title {
+  font-size: 2.2rem;
+  color: #39ff14;
+  margin-bottom: 15px;
+}
+.typing-intro {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+.welcome-start {
+  font-size: 1.3rem;
+  padding: 15px 25px;
 }
 
 /* HEADER */
@@ -17,12 +46,28 @@ body {
   padding: 15px;
   background: transparent;
   position: relative;
-  z-index: 1000; /* on top of particles */
+  z-index: 1000;
 }
-.page-header h1 {
+/* Matrix-style glitch on hover for #mainTitle */
+#mainTitle {
+  position: relative;
+  display: inline-block;
+  color: #0f0;
   font-size: 2.4rem;
-  color: #39ff14;
   margin-bottom: 5px;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+  transition: all 0.3s ease;
+}
+#mainTitle:hover {
+  animation: glitchHover 1s infinite;
+}
+@keyframes glitchHover {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(2px, -2px) skewX(5deg); }
+  40% { transform: translate(-2px, 2px) skewX(-5deg); }
+  60% { transform: translate(1px, -1px) skewX(3deg); }
+  80% { transform: translate(-1px, 1px) skewX(-3deg); }
+  100% { transform: translate(0, 0); }
 }
 .subtitle {
   font-size: 1.3rem;
@@ -35,6 +80,7 @@ body {
   background: rgba(0,0,0,0.3);
   border-radius: 10px;
   padding: 5px 10px;
+  position: relative; /* for floating +score elements */
 }
 #scoreLabel {
   margin-right: 10px;
@@ -59,7 +105,7 @@ body {
   margin-left: 10px;
 }
 
-/* BUBBLE MENU (as provided) */
+/* BUBBLE MENU */
 .bubble-bar-right {
   position: fixed;
   right: 15px;
@@ -142,6 +188,8 @@ body {
   width: 90%;
   box-shadow: 0 0 20px #39ff14;
   color: #fff;
+  font-size: 1.2rem;
+  line-height: 1.6;
 }
 .intro-content {
   background: #111;
@@ -162,35 +210,27 @@ body {
   transform: scale(1.05);
 }
 .bigger-btn {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   padding: 15px 25px;
 }
 
-/* HACK OVERLAY (Matrix) */
+/* HACK OVERLAY (Transparent Matrix Canvas) */
 #hackOverlay {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(0,255,0,0.9);
+  background: transparent;
   z-index: 4000;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
 }
-#matrixEffect {
-  font-family: 'Courier New', monospace;
-  font-size: 1.2rem;
-  color: rgba(0,0,0,0.2);
+#matrixCanvas {
+  display: block;
   width: 100%;
   height: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  animation: matrixFall 4s linear forwards;
-}
-@keyframes matrixFall {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+  background: transparent;
 }
 
 /* PARTICLES BACKGROUND */
@@ -198,14 +238,14 @@ body {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  z-index: -1; /* behind content */
+  z-index: -1;
 }
 
 /* ROUNDS LAYOUT */
 .round-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center; /* center vertically */
   gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
@@ -220,7 +260,7 @@ body {
   min-height: 400px;
 }
 .panel h3 {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   margin-bottom: 15px;
   color: #81d4fa;
 }
@@ -234,11 +274,24 @@ body {
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, box-shadow 0.3s;
   position: relative;
 }
 #emailList li:hover {
   background: #444;
+}
+#emailList li.selectedEmail {
+  box-shadow: 0 0 8px #39ff14;
+}
+.lock-symbol {
+  width: 24px;
+  height: 24px;
+  margin-left: 5px;
+  animation: floatlock 2s ease-in-out infinite alternate;
+}
+@keyframes floatlock {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-3px); }
 }
 .big-panel {
   flex: 1;
@@ -285,11 +338,24 @@ body {
 
 /* Instructions Panel */
 #instructionsPanel {
-  max-width: 250px;
+  max-width: 280px;
 }
-.inst-text {
-  font-size: 1rem;
-  line-height: 1.4;
+.inst-list {
+  list-style: none;
+  margin-top: 10px;
+}
+.inst-list li {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+.inst-list li::before {
+  content: "•";
+  color: #39ff14;
+  font-size: 1.3rem;
+  margin-right: 5px;
+  transform: translateY(2px);
 }
 
 /* Round 2 */
@@ -297,8 +363,18 @@ body {
   flex-direction: column;
   text-align: center;
 }
+#round2Title {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 10px;
+  transition: transform 0.3s;
+}
+#round2Title:hover {
+  transform: scale(1.05) rotate(3deg);
+}
 #timerBar {
-  font-size: 1.3rem;
+  font-size: 2rem;
+  text-align: center;
   margin-bottom: 15px;
 }
 .round2-content {
@@ -306,7 +382,7 @@ body {
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 0 15px rgba(57,255,20,0.3);
-  width: 500px;
+  width: 600px;
   margin: 0 auto;
 }
 #round2ImageBox {
@@ -320,22 +396,32 @@ body {
   justify-content: center;
 }
 
-/* Email Action Buttons in the email content */
 .email-action {
   display: inline-block;
-  background: #ffce00;
+  background: linear-gradient(135deg, #ffce00, #f9a825);
+  border: none;
+  border-radius: 12px;
   color: #333;
+  font-size: 1.1rem;
   font-weight: bold;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 10px 20px;
   cursor: pointer;
-  margin-top: 10px;
   text-align: center;
-  min-width: 120px;
+  min-width: 140px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
+
 .email-action:hover {
-  filter: brightness(1.1);
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
 }
+
+.email-action:active {
+  transform: scale(0.98);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+}
+
 
 /* Suspicious Red Flags */
 .redflag {
@@ -345,4 +431,14 @@ body {
 .redflag.flagged {
   background: rgba(255,0,0,0.2);
   color: red;
+}
+
+/* Glitch hover for mainTitle */
+@keyframes glitchHover {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(2px, -2px) skewX(5deg); }
+  40% { transform: translate(-2px, 2px) skewX(-5deg); }
+  60% { transform: translate(1px, -1px) skewX(3deg); }
+  80% { transform: translate(-1px, 1px) skewX(-3deg); }
+  100% { transform: translate(0, 0); }
 }

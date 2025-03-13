@@ -1,5 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* ========== UTILITY: SHUFFLE ARRAY ========== */
+  /* ========== 1) BOUNCE THE HACKER IMAGE ========== */
+  gsap.to(".welcome-hacker", {
+    y: -15,
+    repeat: -1,
+    yoyo: true,
+    ease: "power1.inOut",
+    duration: 1.2
+  });
+
+  /* ========== 2) INTRO TYPING EFFECT ========== */
+  const introLines = [
+    "Hello Cyber Investigator!",
+    "In Round 1, explore 5–6 emails in your Inbox.",
+    "Click suspicious red text for bonus points.",
+    "If you click a scam button, watch out for the hack!",
+    "Then proceed to Round 2 for a timed challenge.",
+    "Have fun and stay alert!"
+  ];
+  let iLine = 0, iChar = 0;
+  const introEl = document.getElementById("typingIntro");
+  function typeIntro() {
+    if (iLine < introLines.length) {
+      if (iChar < introLines[iLine].length) {
+        introEl.textContent += introLines[iLine].charAt(iChar);
+        iChar++;
+        setTimeout(typeIntro, 40);
+      } else {
+        introEl.textContent += "\n\n";
+        iLine++;
+        iChar = 0;
+        setTimeout(typeIntro, 400);
+      }
+    }
+  }
+  typeIntro();
+
+  /* ========== 3) SHUFFLE ARRAY UTILITY ========== */
   function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -7,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ========== GLOBAL VARIABLES ========== */
+  /* ========== 4) GLOBAL VARIABLES ========== */
   let score = 0;
   let currentEmailIndex = 0;
   let emails = [];
@@ -19,8 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let round2Timer = null;
   let round2TimeLeft = 30;
   let round2Correct = 0;
+  let isEmailClassified = {};
 
-  /* ========== DOM REFERENCES ========== */
+  /* ========== 5) DOM REFERENCES ========== */
   const introPopupEl = document.getElementById("introPopup");
   const startRound1Btn = document.getElementById("startRound1Btn");
   const round1Container = document.getElementById("round1Container");
@@ -35,10 +72,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const endLevelPopup = document.getElementById("endLevelPopup");
   const endLevelMessageEl = document.getElementById("endLevelMessage");
   const endLevelRankEl = document.getElementById("endLevelRank");
+  const round2RetryPopup = document.getElementById("round2RetryPopup");
+  const retryYesBtn = document.getElementById("retryYes");
+  const retryNoBtn = document.getElementById("retryNo");
   const homeBtn = document.getElementById("homeBtn");
   const replayBtn = document.getElementById("replayBtn");
+  const timeLeftEl = document.getElementById("timeLeft");
 
-  /* ========== BUBBLE MENU - LEAVE GAME POPUP ========== */
+
+  homeBtn.addEventListener("click", () => {
+    console.log("Home button clicked");
+    // Adjust the URL to your home page if needed
+    window.location.href = "../index.html";
+  });
+
+  replayBtn.addEventListener("click", () => {
+    console.log("Replay button clicked");
+    // Hide the end-level popup and restart Round 1
+    endLevelPopup.classList.add("hidden");
+    startRound1();
+  });
+
+  /* ========== BUBBLE MENU LEAVE GAME POPUP ========== */
   const bubbleLinks = document.querySelectorAll(".bubble-bar-right a");
   const leaveGamePopup = document.getElementById("leaveGamePopup");
   const leaveYes = document.getElementById("leaveYes");
@@ -52,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
       leaveGamePopup.classList.remove("hidden");
     });
   });
-
   if (leaveYes && leaveNo) {
     leaveYes.addEventListener("click", () => {
       if (pendingLink) window.location.href = pendingLink;
@@ -76,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
     floatEl.style.position = "absolute";
     floatEl.style.fontSize = "1.2rem";
     floatEl.style.fontWeight = "bold";
-    floatEl.style.color = "#39ff14";
+    floatEl.style.color = points > 0 ? "#39ff14" : "red";
     floatEl.style.top = "0";
     floatEl.style.right = "0";
     floatEl.textContent = points > 0 ? `+${points}` : `${points}`;
@@ -89,21 +143,56 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ========== HACK SIMULATION ========== */
+  /* ========== HACK SIMULATION (5s Transparent Matrix) ========== */
+  let matrixInterval = null;
   function triggerHackSimulation() {
     const hackOverlay = document.getElementById("hackOverlay");
+    const canvas = document.getElementById("matrixCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
     hackOverlay.classList.remove("hidden");
     gsap.to("#hackOverlay", { opacity: 1, duration: 0.3 });
+
+    let letters = 'ABCDEFGHIJKLMNOPQRSTUVXYZ1234567890';
+    letters = letters.split('');
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+    for (let x = 0; x < columns; x++) drops[x] = 1;
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.02)'; 
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0f0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    matrixInterval = setInterval(drawMatrix, 50);
+
+    // 5 seconds total
     setTimeout(() => {
+      clearInterval(matrixInterval);
       gsap.to("#hackOverlay", {
         opacity: 0,
         duration: 0.5,
         onComplete: () => hackOverlay.classList.add("hidden")
       });
-    }, 4000);
+    }, 5000);
   }
 
-  /* ========== ROUND 1 EMAIL POOL ========== */
+  /* ========== 9) ROUND 1 EMAIL POOL ========== */
   const emailPool = [
     /* (Same emails as before, referencing ../assets/images if needed) */
     {
@@ -284,7 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "../assets/images/round2_10.png"
   ];
 
-  /* ========== INTRO POPUP & START ROUND 1 ========== */
+  /* ========== START ROUND 1 ON CLICK ========== */
   startRound1Btn.addEventListener("click", () => {
     gsap.to(introPopupEl, {
       opacity: 0,
@@ -306,11 +395,13 @@ document.addEventListener("DOMContentLoaded", () => {
     round1Correct = 0;
     score = 0;
     updateScore(0);
+    isEmailClassified = {};
 
     round1Container.classList.remove("hidden");
     round2Container.classList.add("hidden");
     endLevelPopup.classList.add("hidden");
     round1ResultsPopup.classList.add("hidden");
+    round2RetryPopup.classList.add("hidden");
 
     loadInbox();
     clearEmailPreview();
@@ -322,13 +413,22 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.innerHTML = `<strong>${em.sender}</strong><br>${em.subject}`;
       if (i > currentEmailIndex) {
+        // locked
         li.style.filter = "brightness(0.3)";
+        const lockImg = document.createElement("img");
+        lockImg.src = "../assets/images/lock-icon.png";
+        lockImg.alt = "Locked";
+        lockImg.className = "lock-symbol";
+        li.appendChild(lockImg);
       }
       li.addEventListener("click", () => {
         if (i > currentEmailIndex) {
           showPopup("You must classify the previous email first!");
         } else {
           showEmail(i);
+          // highlight selected
+          inboxEl.querySelectorAll("li").forEach(l => l.classList.remove("selectedEmail"));
+          li.classList.add("selectedEmail");
         }
       });
       inboxEl.appendChild(li);
@@ -341,7 +441,7 @@ document.addEventListener("DOMContentLoaded", () => {
     emailContentEl.innerHTML = emailObj.content;
     gsap.fromTo("#emailContent", { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5 });
 
-    // Mark suspicious red flags
+    // red flags
     const redFlags = emailContentEl.querySelectorAll(".redflag");
     redFlags.forEach((rf) => {
       rf.addEventListener("click", function handler() {
@@ -353,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // If user clicks CTA in a phishing email, hack simulation
+    // phishing CTA
     const ctas = emailContentEl.querySelectorAll(".email-action");
     ctas.forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -370,15 +470,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function classifyEmail(idx, userChoicePhish) {
+    if (isEmailClassified[idx]) {
+      showPopup("You already classified this email!");
+      return;
+    }
+    isEmailClassified[idx] = true;
+
     const emailObj = emails[idx];
     if (userChoicePhish === emailObj.phishing) {
       updateScore(10);
       round1Correct++;
-      markInboxStatus(idx, userChoicePhish);
     } else {
       updateScore(-5);
-      markInboxStatus(idx, userChoicePhish);
     }
+
+    animateChoiceBubble(idx, userChoicePhish);
 
     currentEmailIndex++;
     if (currentEmailIndex >= totalEmails) {
@@ -389,12 +495,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function markInboxStatus(idx, isPhish) {
+  // *** Updated function to place final bubble absolutely on top of the li ***
+  function animateChoiceBubble(idx, isPhish) {
     const li = inboxEl.querySelectorAll("li")[idx];
-    const status = document.createElement("span");
-    status.style.color = "#39ff14";
-    status.textContent = isPhish ? " (Spam)" : " (Safe)";
-    li.appendChild(status);
+    // remove lock if present
+    const lockIcon = li.querySelector(".lock-symbol");
+    if (lockIcon) lockIcon.remove();
+
+    // create floating label that moves from preview to li
+    const label = document.createElement("div");
+    label.textContent = isPhish ? "SPAM" : "SAFE";
+    label.style.position = "absolute";
+    label.style.background = isPhish ? "red" : "#39ff14";
+    label.style.color = "#000";
+    label.style.padding = "5px 10px";
+    label.style.borderRadius = "8px";
+    label.style.fontSize = "1rem";
+    label.style.zIndex = "3000";
+    label.style.fontWeight = "bold";
+    document.body.appendChild(label);
+
+    const previewRect = document.getElementById("emailPreviewPanel").getBoundingClientRect();
+    const liRect = li.getBoundingClientRect();
+
+    // start from preview center
+    label.style.left = (previewRect.left + previewRect.width / 2) + "px";
+    label.style.top = (previewRect.top + previewRect.height / 2) + "px";
+
+    gsap.to(label, {
+      x: liRect.left - previewRect.left + 30,
+      y: liRect.top - previewRect.top - 10,
+      duration: 1,
+      ease: "power2.inOut",
+      onComplete: () => {
+        label.remove();
+        // place a bubble absolutely on top of the li
+        li.style.position = "relative";
+        const finalBubble = document.createElement("div");
+        finalBubble.textContent = isPhish ? "SPAM" : "SAFE";
+        finalBubble.style.position = "absolute";
+        finalBubble.style.top = "5px";
+        finalBubble.style.right = "5px";
+        finalBubble.style.background = isPhish ? "red" : "#39ff14";
+        finalBubble.style.color = "#000";
+        finalBubble.style.padding = "3px 8px";
+        finalBubble.style.borderRadius = "8px";
+        finalBubble.style.fontSize = "1rem";
+        finalBubble.style.fontWeight = "bold";
+        finalBubble.style.zIndex = "500";
+        li.appendChild(finalBubble);
+      }
+    });
   }
 
   function clearEmailPreview() {
@@ -461,36 +612,60 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function startRound2Timer() {
-    document.getElementById("timeLeft").textContent = round2TimeLeft;
+    timeLeftEl.textContent = round2TimeLeft;
     round2Timer = setInterval(() => {
       round2TimeLeft--;
-      document.getElementById("timeLeft").textContent = round2TimeLeft;
+      timeLeftEl.textContent = round2TimeLeft;
+
+      // mild scale each second
+      gsap.fromTo("#timerBar", { scale: 1 }, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 });
+
+      // if 5 seconds left, shake
+      if (round2TimeLeft === 5) {
+        gsap.fromTo("#timerBar", { x: -4 }, {
+          x: 4,
+          duration: 0.1,
+          repeat: 8,
+          yoyo: true,
+          ease: "power1.inOut"
+        });
+      }
+
       if (round2TimeLeft <= 0) {
         clearInterval(round2Timer);
-        endRound2();
+        // Time’s up, show retry popup
+        round2Container.classList.add("hidden");
+        round2RetryPopup.classList.remove("hidden");
       }
     }, 1000);
   }
 
+  // Retry popup logic
+  retryYesBtn.addEventListener("click", () => {
+    round2RetryPopup.classList.add("hidden");
+    startRound2();
+  });
+  retryNoBtn.addEventListener("click", () => {
+    round2RetryPopup.classList.add("hidden");
+    // user quits -> partial results
+    endLevelMessageEl.textContent = `You ended Round 2 early. Final Score: ${score}`;
+    endLevelRankEl.textContent = "No Rank";
+    endLevelPopup.classList.remove("hidden");
+  });
+
   function endRound2() {
     clearInterval(round2Timer);
     round2Container.classList.add("hidden");
+
     let rank = "";
     if (score >= 100) rank = "Phishing Master!";
     else if (score >= 60) rank = "Phishing Apprentice";
     else rank = "Phishing Newbie";
+
     endLevelMessageEl.textContent = `You got ${round2Correct} out of ${round2Images.length} correct in Round 2. Final Score: ${score}`;
     endLevelRankEl.textContent = rank;
     endLevelPopup.classList.remove("hidden");
   }
-
-  homeBtn.addEventListener("click", () => {
-    window.location.href = "../index.html"; // or your homepage
-  });
-  replayBtn.addEventListener("click", () => {
-    endLevelPopup.classList.add("hidden");
-    startRound1();
-  });
 
   /* ========== UTILITY POPUP ========== */
   function showPopup(msg) {
@@ -508,33 +683,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ========== OPTIONAL INTRO TYPING ========== */
-  const introLines = [
-    "Welcome to Level 4: Phishing Awareness!",
-    "Round 1: Investigate 5-6 emails in your Inbox.",
-    "Click suspicious red text for bonus points.",
-    "If you click a scam CTA, watch out for the hack simulation!",
-    "Then proceed to Round 2 for a timed challenge. Good luck!"
-  ];
-  let iLine = 0, iChar = 0;
-  const introEl = document.getElementById("typingIntro");
-  function typeIntro() {
-    if (iLine < introLines.length) {
-      if (iChar < introLines[iLine].length) {
-        introEl.textContent += introLines[iLine].charAt(iChar);
-        iChar++;
-        setTimeout(typeIntro, 40);
-      } else {
-        introEl.textContent += "\n";
-        iLine++;
-        iChar = 0;
-        setTimeout(typeIntro, 400);
-      }
-    }
-  }
-  typeIntro();
-
-  /* ==========  PARTICLES SETUP ========== */
+  /* ========== OPTIONAL PARTICLES SETUP ========== */
   particlesJS("particles-js", {
     particles: {
       number: { value: 40, density: { enable: true, value_area: 800 } },
