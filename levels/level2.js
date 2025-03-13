@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ---------------------------
-    // Utility: showPopup & hidePopup
-    // ---------------------------
+
     function showPopup(overlay) {
       overlay.classList.remove("hidden");
       const content = overlay.querySelector(".popup-content");
@@ -26,9 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   
-    // ---------------------------
-    // BUBBLE MENU & LEAVE GAME
-    // ---------------------------
+
     const bubbleLinks = document.querySelectorAll(".bubble-bar-right a");
     const leaveGamePopup = document.getElementById("leaveGamePopup");
     const leaveYes = document.getElementById("leaveYes");
@@ -60,14 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   
-    // ---------------------------
-    // INTRO POPUP & SLOW TYPING
-    // ---------------------------
+
     const introPopup = document.getElementById("introPopup");
     const introStoryText = document.getElementById("introStoryText");
     const introStartBtn = document.getElementById("introStartBtn");
   
-    // Our possible secrets
+
     const possibleTargets = [
       { name: "Birthday", value: "05/12/2002" },
       { name: "PIN Code", value: "1337" },
@@ -77,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Secret Phrase", value: "OpenSesame" }
     ];
   
-    let currentRound = 1;  // We'll do 2 rounds total
+    let currentRound = 1; 
     let chosen = pickNewSecret();
   
     function pickNewSecret() {
@@ -98,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       typeOneChar();
     }
   
-    // Show intro popup
+
     showPopup(introPopup);
     startTypingStory();
   
@@ -106,10 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
       hidePopup(introPopup);
       showPopup(modePopup);
     });
-  
-    // ---------------------------
-    // MODE POPUP
-    // ---------------------------
+
     const modePopup = document.getElementById("modePopup");
     const explorerBtn = document.getElementById("explorerBtn");
     const terminalBtn = document.getElementById("terminalBtn");
@@ -138,9 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
          </ul>`;
     });
   
-    // ---------------------------
-    // ANSWER SUBMISSION (2-round secret)
-    // ---------------------------
+
     const answerInput = document.getElementById("answerInput");
     const submitAnswerBtn = document.getElementById("submitAnswerBtn");
   
@@ -155,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
           showInPagePopup(`ACCESS GRANTED!\nYou found the ${chosen.name} secret.\nNow, your next mission: find the secret <strong>${pickNewSecret().name}</strong>.`);
           currentRound = 2;
           const newSecret = pickNewSecret();
-          chosen = newSecret; // keep it consistent
+          chosen = newSecret;
           buildExplorerStructure(chosen.value);
           buildTerminalFileSystem(chosen.value);
           answerInput.value = "";
@@ -206,9 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   
-    // ---------------------------
-    // TERMINAL vs. EXPLORER
-    // ---------------------------
+ 
     const terminalWindow = document.getElementById("terminalWindow");
     const explorerWindow = document.getElementById("explorerWindow");
     let terminalCurrentFolder = null;
@@ -225,24 +212,21 @@ document.addEventListener("DOMContentLoaded", () => {
       explorerWindow.classList.remove("hidden");
     }
   
-    // ---------------------------
-    // Terminal Logic
-    // ---------------------------
+ 
     const terminalScreen = document.getElementById("terminalScreen");
   
-    // Create each prompt line in the same background color
+
     function createNewPromptLine() {
       const lineContainer = document.createElement("div");
       lineContainer.className = "terminal-line";
-      lineContainer.style.marginBottom = "10px"; // extra spacing
+      lineContainer.style.marginBottom = "10px"; 
   
-      // Prompt text
+
       const promptSpan = document.createElement("span");
       promptSpan.className = "prompt";
       promptSpan.textContent = "user@machine:~$ ";
       lineContainer.appendChild(promptSpan);
   
-      // The user’s contenteditable input
       const inputSpan = document.createElement("span");
       inputSpan.className = "terminal-input";
       inputSpan.contentEditable = "true";
@@ -256,19 +240,19 @@ document.addEventListener("DOMContentLoaded", () => {
           e.preventDefault();
           const cmd = inputSpan.textContent.trim();
   
-          // Finalize line
+
           lineContainer.removeChild(inputSpan);
           lineContainer.textContent = promptSpan.textContent + cmd;
   
-          // Process command => show results
+
           processTerminalCommand(cmd);
   
-          // Create next line
+
           createNewPromptLine();
         }
       });
   
-      // Always scroll to bottom
+
       terminalScreen.scrollTop = terminalScreen.scrollHeight;
     }
   
@@ -303,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     function appendOutputLine(text) {
       const outLine = document.createElement("div");
-      outLine.style.marginBottom = "10px"; // extra spacing for output
+      outLine.style.marginBottom = "10px";
       outLine.textContent = text;
       terminalScreen.appendChild(outLine);
     }
@@ -344,9 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   
-    // ---------------------------
-    // File Explorer Logic
-    // ---------------------------
+  
     const explorerList = document.getElementById("explorerList");
     const goBackBtn = document.getElementById("goBackBtn");
     const fileViewer = document.getElementById("fileViewer");
@@ -531,13 +513,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   
-    // Initialize the file systems with the first secret
+
     buildExplorerStructure(chosen.value);
     buildTerminalFileSystem(chosen.value);
   
-    // ---------------------------
-    // Confetti
-    // ---------------------------
+
     function triggerConfetti() {
       const confettiCount = 150;
       for (let i = 0; i < confettiCount; i++) {
@@ -567,9 +547,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   
-    // ---------------------------
-    // Final Popup for Level Complete
-    // ---------------------------
+
     function showLevelCompletePopup() {
       const overlay = document.createElement("div");
       overlay.className = "popup-overlay fancy-popup";
@@ -595,12 +573,8 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "../levels/level3.html";
       });
     }
-  
-    // ---------------------------
-    // In-Page Popup
-    // ---------------------------
+
     function showInPagePopup(msg) {
-      // Check if we have "ACCESS GRANTED" or "ACCESS DENIED" to apply special style
       let styleClass = "";
       if (msg.includes("ACCESS GRANTED")) {
         styleClass = "popup-access-granted"; 

@@ -4,28 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>CyberSavvy - Level 2</title>
-    <!-- Main CSS -->
     <link rel="stylesheet" href="level2.css" />
-    <!-- FontAwesome for icons -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <!-- GSAP for animations -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- jQuery -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Main JS -->
+
     <script src="level2.js" defer></script>
   </head>
   <body>
-    <!-- Persistent Header -->
+
     <header class="page-header">
       <h1>Level 2: System Infiltration</h1>
     </header>
 
-    <!-- Background & Particle Canvas -->
+
     <div class="level-bg"></div>
     <canvas id="levelCanvas"></canvas>
 
-    <!-- Bubble Menu -->
+
     <nav class="bubble-bar-right">
       <a href="../levels.html" class="bubble">
         <span class="label">Play Game</span>
@@ -49,10 +48,10 @@
       </a>
     </nav>
 
-    <!-- Home Button -->
+
     <a href="../index.html" class="home-button" id="homeBtn">Home</a>
 
-    <!-- Intro Story Popup -->
+
     <div class="popup-overlay hidden" id="introPopup">
       <div class="popup-content popup-animated fancy-popup intro-popup">
         <div class="intro-flex">
@@ -66,7 +65,7 @@
       </div>
     </div>
 
-    <!-- Mode Selection Popup -->
+
     <div class="popup-overlay hidden" id="modePopup">
       <div class="popup-content popup-animated fancy-popup mode-popup">
         <h2>Choose Your Interface</h2>
@@ -76,7 +75,7 @@
       </div>
     </div>
 
-    <!-- Leave Game Popup -->
+
     <div class="popup-overlay hidden" id="leaveGamePopup">
       <div class="popup-content popup-animated fancy-popup">
         <h2>Leave the Game?</h2>
@@ -88,32 +87,32 @@
       </div>
     </div>
 
-    <!-- Main Layout -->
+
     <div class="main-layout">
-      <!-- Left Window: Terminal or File Explorer -->
+
       <div class="left-window" id="leftWindow">
-        <!-- Terminal Window (Hidden by Default) -->
+
         <div class="terminal-window hidden" id="terminalWindow">
             <div class="window-titlebar">Terminal</div>
             <pre class="ascii-art" id="asciiArt">
 
-                                                         _____         _                  _____                             
-                                                        /  __ \       | |                /  ___|                            
-                                                        | /  \/ _   _ | |__    ___  _ __ \ `--.   __ _ __   ____   __ _   _ 
-                                                        | |    | | | || '_ \  / _ \| '__| `--. \ / _` |\ \ / /\ \ / /| | | |
-                                                        | \__/\| |_| || |_) ||  __/| |   /\__/ /| (_| | \ V /  \ V / | |_| |
-                                                         \____/ \__, ||_.__/  \___||_|   \____/  \__,_|  \_/    \_/   \__, |
-                                                                 __/ |                                                 __/ |
-                                                                 |___/                                                 |___/ 
+                                      _____         _                  _____                             
+                                     /  __ \       | |                /  ___|                            
+                                     | /  \/ _   _ | |__    ___  _ __ \ `--.   __ _ __   ____   __ _   _ 
+                                     | |    | | | || '_ \  / _ \| '__| `--. \ / _` |\ \ / /\ \ / /| | | |
+                                     | \__/\| |_| || |_) ||  __/| |   /\__/ /| (_| | \ V /  \ V / | |_| |
+                                      \____/ \__, ||_.__/  \___||_|   \____/  \__,_|  \_/    \_/   \__, |
+                                             __/ |                                                 __/ |
+                                            |___/                                                 |___/ 
                                                         
             </pre>
         
-            <!-- Scrollable terminal screen -->
+
             <div class="terminal-screen" id="terminalScreen"></div>
         </div>
   
 
-        <!-- File Explorer Window (Hidden by Default) -->
+
         <div class="explorer-window hidden" id="explorerWindow">
           <div class="window-titlebar">
             <span>File Explorer</span>
@@ -125,7 +124,7 @@
             </div>
             <ul class="explorer-list" id="explorerList"></ul>
           </div>
-          <!-- Popup to display file contents -->
+
           <div class="file-viewer hidden" id="fileViewer">
             <div class="viewer-header">
               <span id="viewerFilename"></span>
@@ -136,7 +135,7 @@
         </div>
       </div>
 
-      <!-- Right Column: Instructions & Task -->
+
       <div class="right-window">
         <div class="window instructions-window">
           <div class="window-titlebar">Instructions</div>

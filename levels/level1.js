@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ========== 1) BUBBLE MENU - LEAVE GAME POPUP ==========
+
   const bubbleLinks = document.querySelectorAll(".bubble-bar-right a");
   const leaveGamePopup = document.getElementById("leaveGamePopup");
   const leaveYes = document.getElementById("leaveYes");
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ========== 2) HOME BUTTON (In-Page Popup) ==========
+
   const homeBtn = document.getElementById("homeBtn");
   if (homeBtn) {
     homeBtn.addEventListener("click", (e) => {
@@ -34,13 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ========== 3) DIFFICULTY POPUP ON LOAD ==========
+
   const difficultyPopup = document.getElementById("difficultyPopup");
   const rookieBtn = document.getElementById("rookieBtn");
   const proBtn = document.getElementById("proBtn");
   let difficulty = "rookie";
 
-  // Show difficulty popup initially
+
   showPopup(difficultyPopup);
 
   rookieBtn.addEventListener("click", () => {
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initGame();
   });
 
-  // ========== 4) TIP POPUP (Hint) ==========
+
   const tipBtn = document.getElementById("tipBtn");
   const tipPopup = document.getElementById("tipPopup");
   const tipContent = document.getElementById("tipContent");
@@ -87,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ========== 5) PARTICLE BACKGROUND ==========
   const bgCanvas = document.getElementById("levelCanvas");
   if (bgCanvas) {
     const ctx = bgCanvas.getContext("2d");
@@ -139,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ========== 6) GAME VARIABLES & LOGIC ==========
   const tileContainer = document.getElementById("tileContainer");
   const passwordDisplay = document.getElementById("passwordDisplay");
   const meterBar = document.getElementById("meterBar");
@@ -148,31 +146,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackText = document.getElementById("feedbackText");
   const starRating = document.getElementById("starRating");
 
-  // Hacker images & hidden click trick
+
   const hackerImg = document.getElementById("hackerImg");
   let hackerClickCount = 0;
 
-  // Instructions text
+
   const cyberInstructions = document.getElementById("cyberInstructions");
 
-  // 4 castle parts
+
   const part1 = document.querySelector(".part1");
   const part2 = document.querySelector(".part2");
   const part3 = document.querySelector(".part3");
   const part4 = document.querySelector(".part4");
 
-  // Password data
+
   let currentPasswordArr = []; // for rookie
   let typedPassword = "";      // for pro
   let successfulPasswords = 0;
 
-  // Arrays for difficulty
+
   const rookieWords = ["cat", "sun", "panda", "pizza", "sigma", "toy", "frog"];
   const proWords = ["kingkong", "unicorn", "f00bar", "n!nja", "b@n@n@", "SIGMA", "qu4ntum"];
   const numbers = ["123", "007", "42", "999", "2023", "000"];
   const symbols = ["!", "@", "#", "$", "%", "^", "&"];
 
-  // QUIZ => 10 possible, pick 3 random
+
   const quizPopup = document.getElementById("quizPopup");
   const quizQuestionsDiv = document.getElementById("quizQuestions");
   const quizFeedback = document.getElementById("quizFeedback");
@@ -194,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentQuizIndex = 0;     
   let quizCorrectCount = 0;      
 
-  // Celebration popup & confetti
+
   const castleCompletePopup = document.getElementById("castleCompletePopup"); 
   const castleCompleteClose = document.getElementById("castleCompleteClose");
   const confettiContainer = document.getElementById("confettiContainer");
@@ -206,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Hacker click trick => 3 clicks => angry
+
   if (hackerImg) {
     hackerImg.addEventListener("click", () => {
       hackerClickCount++;
@@ -220,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Animate instructions => random small shake
+
   function animateInstructions() {
     gsap.to("#cyberInstructions", {
       x: (Math.random() - 0.5) * 5,
@@ -236,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   animateInstructions();
 
-  // Initialize game after difficulty
+
   function initGame() {
     if (difficulty === "rookie") {
       cyberInstructions.innerText = "Drag tiles to build your fortress!";
@@ -244,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cyberInstructions.innerText = "Type your password to build your fortress!";
     }
 
-    // Hide castle
+
     part1.classList.add("hidden");
     part2.classList.add("hidden");
     part3.classList.add("hidden");
@@ -258,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
     meterBar.style.width = "0%";
     meterBar.style.background = "red";
 
-    // If pro => contenteditable => bigger font
+
     if (difficulty === "pro") {
       passwordDisplay.setAttribute("contenteditable", "true");
       passwordDisplay.style.fontSize = "2rem";
@@ -274,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setHackerNormal();
     updatePasswordDisplay();
 
-    // Prepare new quiz set
+
     selectedQuestions = getRandomItems(allPossibleQuestions, 3);
     currentQuizIndex = 0;
     quizCorrectCount = 0;
@@ -300,7 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Pro => typed
+
   passwordDisplay.addEventListener("input", () => {
     if (difficulty === "pro") {
       typedPassword = passwordDisplay.textContent.trim();
@@ -308,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Drag & drop => rookie
+
   passwordDisplay.addEventListener("dragover", (e) => {
     e.preventDefault();
   });
@@ -440,7 +438,6 @@ document.addEventListener("DOMContentLoaded", () => {
       starRating.textContent = "★★★";
       successfulPasswords++;
 
-      // If 2 strong passwords => start quiz
       if (successfulPasswords >= 2) {
         startQuiz();
       }
@@ -466,11 +463,10 @@ document.addEventListener("DOMContentLoaded", () => {
     part3.classList.add("hidden");
     part4.classList.add("hidden");
     setHackerNormal();
-    // Make reset button bigger w/ icon
     resetBtn.innerHTML = "🔄 Reset";
   }
 
-  // ========== QUIZ LOGIC: 10 possible => pick 3 random => must get correct to proceed ==========
+
   function startQuiz() {
     selectedQuestions = getRandomItems(allPossibleQuestions, 3);
     currentQuizIndex = 0;
@@ -480,12 +476,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showNextQuizQuestion() {
     if (currentQuizIndex >= selectedQuestions.length) {
-      // user got all 3 => final success in quiz popup
+
       quizQuestionsDiv.innerHTML = "";
       quizFeedback.innerHTML = "You got all 3 questions correct! Great job!<br>";
-      spawnConfettiQuiz(); // confetti in quiz popup
+      spawnConfettiQuiz(); 
 
-      // Two buttons => Play again or Next level
+
       const againBtn = document.createElement("button");
       againBtn.className = "popup-btn";
       againBtn.textContent = "Play Again";
@@ -507,7 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // show single question
+
     const q = selectedQuestions[currentQuizIndex];
     quizQuestionsDiv.innerHTML = "";
     quizFeedback.textContent = "";
@@ -526,12 +522,12 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.innerText = opt;
       btn.addEventListener("click", () => {
         if (i === q.answer) {
-          // correct => next question
+
           currentQuizIndex++;
           hidePopup(quizPopup);
           setTimeout(() => showNextQuizQuestion(), 400);
         } else {
-          // wrong => shake
+
           quizFeedback.textContent = "Nope, try again!";
           shakePopup(quizPopup);
         }
@@ -576,9 +572,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ========== 9) CASTLE COMPLETE POPUP & CONFETTI ==========
-  //const castleCompleteClose = document.getElementById("castleCompleteClose");
-  //const confettiContainer = document.getElementById("confettiContainer");
 
   function showCastleCompletePopup() {
     let sc = calculateScore();
@@ -623,7 +616,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
-  // ========== 10) POPUP SHOW/HIDE UTILS ==========
+
   function showPopup(overlay) {
     overlay.classList.remove("hidden");
     const content = overlay.querySelector(".popup-content");
@@ -654,19 +647,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ========== 11) ON LOAD ANIMATIONS & START ==========
+
   gsap.from(".castle-container", { x: -30, opacity: 0, duration: 1 });
   gsap.from(".hacker-img", { x: 30, opacity: 0, duration: 1 });
   animateInstructions();
 });
 
-/* Utility for random items */
+
 function getRandomItems(arr, count) {
   const shuffled = arr.slice().sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
 
-/* Utility for array shuffle */
+
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));

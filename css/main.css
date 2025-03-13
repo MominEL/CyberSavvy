@@ -1,8 +1,8 @@
-/* 🔹 General Page Styling */
+
 body {
     margin: 0;
     padding: 0;
-    overflow:hidden; /* Disable scrolling */
+    overflow:hidden; 
     background: linear-gradient(to right, #0a0f2c, #1b1f3a);
     color: white;
     font-family: 'Nunito', sans-serif;
@@ -12,9 +12,6 @@ body {
 
 
 
-
-/* 🔹 Background Animation (Cyber Effect) */
-/* Cyber-Themed Background Animation */
 .background-animation {
     position: absolute;
     top: 0;
@@ -24,21 +21,20 @@ body {
     background: url('assets/images/cyber-matrix.gif') no-repeat center center;
     background-size: cover;
     animation: fadeBackground 20s infinite alternate;
-    z-index: -2;  /* Place behind everything */
+    z-index: -2;  
   }
   
-  /* Network Canvas: full-screen, behind UI elements */
+
   #networkCanvas {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Place between background and UI */
-    pointer-events: none; /* So it doesn't block clicks */
+    z-index: -1; 
+    pointer-events: none; 
   }
   
-  /* Centered UI: ensure it’s above the canvas */
   .center-content {
     position: absolute;
     top: 50%;
@@ -46,56 +42,53 @@ body {
     transform: translate(-50%, -50%);
     text-align: center;
     width: 100%;
-    z-index: 2; /* Make sure it's above the canvas */
+    z-index: 2; 
   }
 
-/* ---------------------------
-   Right-Side Bubble Bar Navigation (FIXED)
---------------------------- */
 .bubble-bar-right {
     position: fixed;
-    right: 15px;                   /* Gap from the screen edge */
+    right: 15px;                   
     top: 50%;
     transform: translateY(-50%);
-    width: 50px;                   /* Fixed width so container doesn't grow */
+    width: 50px;                   
     display: flex;
     flex-direction: column;
-    align-items: flex-end;         /* Bubbles align to the right edge */
-    gap: 1.5rem;                   /* Vertical space between bubbles */
+    align-items: flex-end;        
+    gap: 1.5rem;                  
     z-index: 1000;
-    overflow: visible;             /* Allows bubble expansion beyond container */
+    overflow: visible;            
   }
   
   .bubble {
     position: relative;
-    flex-shrink: 0;               /* Prevent flex from resizing or shifting items */
+    flex-shrink: 0;              
     width: 50px;
     height: 50px;
-    background: #39FF14;          /* Neon green (adjust as desired) */
+    background: #39FF14;         
     border-radius: 50%;
     cursor: pointer;
     overflow: visible;
     transition: width 0.3s ease, border-radius 0.3s ease;
   }
   
-  /* Absolutely place the icon so it never moves or stretches */
+
   .bubble img {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    width: 28px;        /* Fixed icon size so it doesn’t stretch */
+    width: 28px;        
     height: 28px;
     pointer-events: none;
   }
   
-  /* Absolutely place the label on the left side, hidden by default */
+
   .bubble .label {
     position: absolute;
     left: 10px;
     top: 50%;
     transform: translateY(-50%) translateX(-20px);
-    font-size: 1rem;    /* Larger text for easy reading */
+    font-size: 1rem;    
     font-weight: bold;
     color: #000;
     white-space: nowrap;
@@ -104,21 +97,21 @@ body {
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
   
-  /* Expand the hovered/tapped bubble from 50px to 160px, become a pill shape */
+
   .bubble:hover,
   .bubble.expanded {
     width: 160px;
     border-radius: 25px;
   }
   
-  /* Reveal the label when expanded */
+
   .bubble:hover .label,
   .bubble.expanded .label {
     opacity: 1;
     transform: translateY(-50%) translateX(0);
   }
   
-  /* Optional glow on hover */
+
   .bubble:hover {
     box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
   }
@@ -131,27 +124,21 @@ body {
     50% { text-shadow: 0 0 30px limegreen; }
     100% { text-shadow: 0 0 5px limegreen; }
 }
-/* ✅ Typing Effect for CyberSavvy Title */
-/* ============================================= */
-/* CYBER TITLE - TYPING + PER-LETTER GLITCH HOVER */
-/* ============================================= */
 
-/* We keep the font-size, color, shadows, etc. */
 .cyber-title {
     font-size: 80px;
     color: limegreen;
     text-shadow: 0 0 5px limegreen, 0 0 10px cyan;
-    /* We want to hide overflow and keep everything on one line */
+
     overflow: hidden;
     white-space: nowrap;
-    border-right: 4px solid limegreen; /* The "cursor" effect */
-    display: inline-block; /* So the border-right looks like a cursor at the end */
-    /* Optional: animate the cursor blinking */
+    border-right: 4px solid limegreen; 
+    display: inline-block; 
     animation: blinkCursor 0.8s infinite;
-    margin: 0 auto; /* Center horizontally if needed */
+    margin: 0 auto; 
 }
 
-/* Blinking cursor animation */
+
 @keyframes blinkCursor {
     0%, 49% {
         border-right-color: limegreen;
@@ -164,18 +151,17 @@ body {
     }
 }
 
-/* Each letter gets a class so we can hover them individually */
+
 .letter {
-    display: inline-block; /* So each letter can be hovered separately */
+    display: inline-block; 
 }
 
-/* Once typing is complete, we add .typing-completed to the parent (.cyber-title).
-   Then any .letter inside it will glitch on hover. */
+
 .typing-completed .letter:hover {
     animation: glitch 0.3s infinite;
 }
 
-/* We'll keep your existing glitch keyframes */
+
 @keyframes glitch {
     0%   { transform: translate(1px, 1px); }
     25%  { transform: translate(-1px, -1px); }
@@ -189,7 +175,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* 🔹 3D Interactive Buttons */
+
 .btn {
     padding: 15px 40px;
     font-size: 22px;
@@ -214,12 +200,12 @@ body {
     transform: scale(0.95);
 }
 
-/* 🔹 Floating Cyber Icons */
+
 .floating-icon {
     position: absolute;
     width: 80px;
     opacity: 0.5;
-    filter: blur(3px); /* Adds depth effect */
+    filter: blur(3px); 
 }
 .icon1 { top: 10%; left: 5%; animation: float 2s infinite alternate; }
 .icon2 { top: 50%; right: 10%; animation: float 1s infinite alternate; }
@@ -227,7 +213,7 @@ body {
 .icon4 { top: 30%; right: 25%; animation: float 1s infinite alternate; }
 .icon5 { bottom: 10%; right: 40%; animation: float 2s infinite alternate; }
 
-/* 🔹 Animations */
+
 @keyframes pulse {
     0% { text-shadow: 0 0 10px limegreen; }
     100% { text-shadow: 0 0 20px limegreen; }
@@ -259,7 +245,7 @@ button:hover {
     display: none;
 }
 
-/* 🔹 Floating Cyber Icons */
+
 .floating-icon {
     position: absolute;
     width: 80px;

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* ========== 1) BOUNCE THE HACKER IMAGE ========== */
+
   gsap.to(".welcome-hacker", {
     y: -15,
     repeat: -1,
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     duration: 1.2
   });
 
-  /* ========== 2) INTRO TYPING EFFECT ========== */
+
   const introLines = [
     "Hello Cyber Investigator!",
     "In Round 1, explore 5–6 emails in your Inbox.",
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   typeIntro();
 
-  /* ========== 3) SHUFFLE ARRAY UTILITY ========== */
+
   function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ========== 4) GLOBAL VARIABLES ========== */
+
   let score = 0;
   let currentEmailIndex = 0;
   let emails = [];
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let round2Correct = 0;
   let isEmailClassified = {};
 
-  /* ========== 5) DOM REFERENCES ========== */
+
   const introPopupEl = document.getElementById("introPopup");
   const startRound1Btn = document.getElementById("startRound1Btn");
   const round1Container = document.getElementById("round1Container");
@@ -82,18 +82,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   homeBtn.addEventListener("click", () => {
     console.log("Home button clicked");
-    // Adjust the URL to your home page if needed
+
     window.location.href = "../index.html";
   });
 
   replayBtn.addEventListener("click", () => {
     console.log("Replay button clicked");
-    // Hide the end-level popup and restart Round 1
+
     endLevelPopup.classList.add("hidden");
     startRound1();
   });
 
-  /* ========== BUBBLE MENU LEAVE GAME POPUP ========== */
+
   const bubbleLinks = document.querySelectorAll(".bubble-bar-right a");
   const leaveGamePopup = document.getElementById("leaveGamePopup");
   const leaveYes = document.getElementById("leaveYes");
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ========== SCORE & PROGRESS ========== */
+
   function updateScore(points) {
     score += points;
     document.getElementById("scoreLabel").textContent = "Score: " + score;
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("progressBar").style.width = percent + "%";
     document.getElementById("progressPercentLabel").textContent = percent + "%";
 
-    // Floating +points effect
+
     const floatEl = document.createElement("div");
     floatEl.style.position = "absolute";
     floatEl.style.fontSize = "1.2rem";
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ========== HACK SIMULATION (5s Transparent Matrix) ========== */
+
   let matrixInterval = null;
   function triggerHackSimulation() {
     const hackOverlay = document.getElementById("hackOverlay");
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     matrixInterval = setInterval(drawMatrix, 50);
 
-    // 5 seconds total
+
     setTimeout(() => {
       clearInterval(matrixInterval);
       gsap.to("#hackOverlay", {
@@ -192,9 +192,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 5000);
   }
 
-  /* ========== 9) ROUND 1 EMAIL POOL ========== */
+
   const emailPool = [
-    /* (Same emails as before, referencing ../assets/images if needed) */
+
     {
       sender: "freegift@amazon-rewards.com",
       subject: "Claim Your FREE $100 Gift Card!",
@@ -359,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  /* ========== ROUND 2 IMAGE POOL ========== */
+
   const round2Pool = [
     "../assets/images/round2_1.png",
     "../assets/images/round2_2.png",
@@ -373,7 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "../assets/images/round2_10.png"
   ];
 
-  /* ========== START ROUND 1 ON CLICK ========== */
+
   startRound1Btn.addEventListener("click", () => {
     gsap.to(introPopupEl, {
       opacity: 0,
@@ -385,10 +385,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ========== ROUND 1 FUNCTIONS ========== */
+
   function startRound1() {
     shuffleArray(emailPool);
-    const pickCount = Math.floor(Math.random() * 2) + 5; // 5 or 6
+    const pickCount = Math.floor(Math.random() * 2) + 5;
     emails = emailPool.slice(0, pickCount);
     totalEmails = pickCount;
     currentEmailIndex = 0;
@@ -413,7 +413,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const li = document.createElement("li");
       li.innerHTML = `<strong>${em.sender}</strong><br>${em.subject}`;
       if (i > currentEmailIndex) {
-        // locked
         li.style.filter = "brightness(0.3)";
         const lockImg = document.createElement("img");
         lockImg.src = "../assets/images/lock-icon.png";
@@ -426,7 +425,6 @@ document.addEventListener("DOMContentLoaded", () => {
           showPopup("You must classify the previous email first!");
         } else {
           showEmail(i);
-          // highlight selected
           inboxEl.querySelectorAll("li").forEach(l => l.classList.remove("selectedEmail"));
           li.classList.add("selectedEmail");
         }
@@ -441,7 +439,6 @@ document.addEventListener("DOMContentLoaded", () => {
     emailContentEl.innerHTML = emailObj.content;
     gsap.fromTo("#emailContent", { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5 });
 
-    // red flags
     const redFlags = emailContentEl.querySelectorAll(".redflag");
     redFlags.forEach((rf) => {
       rf.addEventListener("click", function handler() {
@@ -453,7 +450,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // phishing CTA
     const ctas = emailContentEl.querySelectorAll(".email-action");
     ctas.forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -495,14 +491,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // *** Updated function to place final bubble absolutely on top of the li ***
+
   function animateChoiceBubble(idx, isPhish) {
     const li = inboxEl.querySelectorAll("li")[idx];
-    // remove lock if present
+
     const lockIcon = li.querySelector(".lock-symbol");
     if (lockIcon) lockIcon.remove();
 
-    // create floating label that moves from preview to li
+
     const label = document.createElement("div");
     label.textContent = isPhish ? "SPAM" : "SAFE";
     label.style.position = "absolute";
@@ -518,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const previewRect = document.getElementById("emailPreviewPanel").getBoundingClientRect();
     const liRect = li.getBoundingClientRect();
 
-    // start from preview center
+
     label.style.left = (previewRect.left + previewRect.width / 2) + "px";
     label.style.top = (previewRect.top + previewRect.height / 2) + "px";
 
@@ -529,7 +525,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ease: "power2.inOut",
       onComplete: () => {
         label.remove();
-        // place a bubble absolutely on top of the li
+
         li.style.position = "relative";
         const finalBubble = document.createElement("div");
         finalBubble.textContent = isPhish ? "SPAM" : "SAFE";
@@ -564,7 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
     round2StoryPopup.classList.remove("hidden");
   });
 
-  /* ========== ROUND 2 ========== */
+
   startRound2Btn.addEventListener("click", () => {
     round2StoryPopup.classList.add("hidden");
     startRound2();
@@ -594,7 +590,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("round2PhishBtn").addEventListener("click", () => classifyRound2(true));
 
   function classifyRound2(isPhish) {
-    // Quick logic: if file name has '3' or '5', we say it's phishing
+
     const fileName = round2Images[round2Index];
     const actualPhish = fileName.includes("3") || fileName.includes("5");
     if (actualPhish === isPhish) {
@@ -617,10 +613,10 @@ document.addEventListener("DOMContentLoaded", () => {
       round2TimeLeft--;
       timeLeftEl.textContent = round2TimeLeft;
 
-      // mild scale each second
+
       gsap.fromTo("#timerBar", { scale: 1 }, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 });
 
-      // if 5 seconds left, shake
+
       if (round2TimeLeft === 5) {
         gsap.fromTo("#timerBar", { x: -4 }, {
           x: 4,
@@ -633,21 +629,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (round2TimeLeft <= 0) {
         clearInterval(round2Timer);
-        // Time’s up, show retry popup
+
         round2Container.classList.add("hidden");
         round2RetryPopup.classList.remove("hidden");
       }
     }, 1000);
   }
 
-  // Retry popup logic
+
   retryYesBtn.addEventListener("click", () => {
     round2RetryPopup.classList.add("hidden");
     startRound2();
   });
   retryNoBtn.addEventListener("click", () => {
     round2RetryPopup.classList.add("hidden");
-    // user quits -> partial results
+
     endLevelMessageEl.textContent = `You ended Round 2 early. Final Score: ${score}`;
     endLevelRankEl.textContent = "No Rank";
     endLevelPopup.classList.remove("hidden");
@@ -667,7 +663,7 @@ document.addEventListener("DOMContentLoaded", () => {
     endLevelPopup.classList.remove("hidden");
   }
 
-  /* ========== UTILITY POPUP ========== */
+
   function showPopup(msg) {
     const overlay = document.createElement("div");
     overlay.className = "popup-overlay";
@@ -683,7 +679,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ========== OPTIONAL PARTICLES SETUP ========== */
+
   particlesJS("particles-js", {
     particles: {
       number: { value: 40, density: { enable: true, value_area: 800 } },

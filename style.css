@@ -1,8 +1,8 @@
-/* 🔹 General Page Styling */
+
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Disable scrolling */
+    overflow: hidden; 
     background: linear-gradient(to right, #0a0f2c, #1b1f3a);
     color: white;
     font-family: 'Nunito', sans-serif;
@@ -10,7 +10,7 @@ body {
     height: 100vh;
 }
 
-/* 🔹 Background Animation (Cyber Effect) */
+
 .background-animation {
     position: absolute;
     top: 0;
@@ -22,7 +22,7 @@ body {
     animation: fadeBackground 20s infinite alternate;
 }
 
-/* 🔹 Navigation Menu */
+
 nav {
     position: fixed;
     top: 10px;
@@ -57,7 +57,7 @@ nav {
     background: limegreen;
 }
 
-/* 🔹 Centered UI */
+
 .center-content {
     position: absolute;
     top: 50%;
@@ -80,7 +80,7 @@ nav {
     margin-bottom: 20px;
 }
 
-/* 🔹 3D Interactive Buttons */
+
 .btn {
     padding: 15px 40px;
     font-size: 22px;
@@ -105,12 +105,12 @@ nav {
     transform: scale(0.95);
 }
 
-/* 🔹 Floating Cyber Icons */
+
 .floating-icon {
     position: absolute;
     width: 80px;
     opacity: 0.5;
-    filter: blur(3px); /* Adds depth effect */
+    filter: blur(3px); 
 }
 .icon1 { top: 10%; left: 5%; animation: float 6s infinite alternate; }
 .icon2 { top: 50%; right: 10%; animation: float 8s infinite alternate; }
@@ -118,7 +118,7 @@ nav {
 .icon4 { top: 30%; right: 25%; animation: float 9s infinite alternate; }
 .icon5 { bottom: 10%; right: 40%; animation: float 5s infinite alternate; }
 
-/* 🔹 Animations */
+
 @keyframes pulse {
     0% { text-shadow: 0 0 10px limegreen; }
     100% { text-shadow: 0 0 20px limegreen; }
@@ -135,7 +135,7 @@ nav {
 
 
 
-/* 🔹 FAQ Section */
+
 .faq-section {
     max-width: 600px;
     margin: 20px auto;
@@ -166,7 +166,7 @@ nav {
     color: #ddd;
     transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
 }
-/* 🔹 FAQ Hover Effect */
+
 .faq-question {
     transition: 0.3s ease-in-out;
 }
@@ -181,13 +181,12 @@ nav {
 
 .faq.open .faq-answer {
     display: block;
-    max-height: 500px; /* Adjust as needed */
+    max-height: 500px; 
     opacity: 1;
     transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 
-/* 🔹 Submit Button Hover Effect */
 button {
     transition: 0.3s;
 }
@@ -201,7 +200,6 @@ button:hover {
     font-size: 20px;
 }
 
-/* 🔹 Contact Form */
 .contact-form {
     max-width: 500px;
     margin: 30px auto;
@@ -230,7 +228,7 @@ button:hover {
     display: none;
 }
 
-/* 🔹 Floating Cyber Icons */
+
 .floating-icon {
     position: absolute;
     width: 80px;

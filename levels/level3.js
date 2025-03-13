@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // INTRO POPUP: Typing Effect Function
+
   const introTextEl = document.getElementById("introText");
   const introLines = [
     "Welcome to Level 3: Social Media Privacy!",
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function typeIntroText() {
     if (currentLine < introLines.length) {
       let line = introLines[currentLine];
-      // Create an element for the line: use <h2> for the first line, <p> for others
+
       let el = document.createElement(currentLine === 0 ? "h2" : "p");
       el.className = currentLine === 0 ? "intro-title" : "intro-paragraph";
       introTextEl.appendChild(el);
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   introPopup.style.display = "flex";
   typeIntroText();
   
-  // Start Game button animation (subtle bounce on hover)
+
   const startGameBtn = document.getElementById("startGameBtn");
   startGameBtn.addEventListener("mouseenter", () => {
     gsap.to(startGameBtn, { scale: 1.1, duration: 0.3, ease: "back.out(1.7)" });
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   
-  // PARTICLES.JS SETUP
+
   particlesJS("particles-js", {
     particles: {
       number: { value: 60, density: { enable: true, value_area: 800 } },
@@ -84,16 +84,16 @@ document.addEventListener("DOMContentLoaded", () => {
     retina_detect: true
   });
   
-  // GLOBAL STATE and Post Pools
+
   let currentRound = 1;
   let currentPostIndex = 0;
   let score = 0;
-  const round1Count = 2; // 2 posts for round 1 from poolRound1
-  const round2Count = 3; // 3 posts for round 2 from poolRound2
+  const round1Count = 2; 
+  const round2Count = 3; 
   let postsR1 = [];
   let postsR2 = [];
   
-  // Define pool for Round 1
+
   const poolRound1 = [
     {
       image: "../assets/images/post1.jpg",
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
   
-  // Define pool for Round 2
+
   const poolRound2 = [
     {
       image: "../assets/images/post1.jpg",
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
   
-  // Define pool of 10 quiz questions
+
   const quizPool = [
     { question: "Which of these should NEVER be shared online?", options: ["Home address", "Nickname", "Favorite color", "Pet's name"], correct: "Home address" },
     { question: "Why should your full name and birthdate be kept private?", options: ["For fun", "To protect your identity", "To impress friends", "Because it’s trendy"], correct: "To protect your identity" },
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const replayLevelBtn = document.getElementById("replayLevelBtn");
   const nextLevelBtn = document.getElementById("nextLevelBtn");
   
-  // Helper Functions
+
   function updateScore(points) {
     score += points;
     scoreLabelEl.textContent = "Score: " + score;
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
     roundContent.appendChild(btn);
   }
   
-  // ROUND 1: Identification Challenge
+
   function startRound1() {
     currentRound = 1;
     currentPostIndex = 0;
@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   
-  // ROUND 2: Leak Evaluation Challenge
+
   function startRound2() {
     currentRound = 2;
     currentPostIndex = 0;
@@ -365,7 +365,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   
-  // FINAL QUIZ
   function startFinalQuiz() {
     roundInstructions.innerHTML = `
       <h2>Final Quiz</h2>
@@ -416,7 +415,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   
-  // END-OF-LEVEL POPUP
+
   replayLevelBtn.addEventListener("click", () => {
     score = 0;
     updateScore(0);
@@ -424,10 +423,10 @@ document.addEventListener("DOMContentLoaded", () => {
     startRound1();
   });
   nextLevelBtn.addEventListener("click", () => {
-    window.location.href = "../level4.html";
+    window.location.href = "../levels/level4.html";
   });
   
-  // POPUP UTILS
+
   function showInPagePopup(msg) {
     const overlay = document.createElement("div");
     overlay.className = "popup-overlay fancy-popup";
@@ -461,5 +460,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   
-  // Start game after intro popup is dismissed (handled in the intro popup section)
 });

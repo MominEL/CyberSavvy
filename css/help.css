@@ -1,17 +1,14 @@
-/* help.css */
 
-/* Override main.css scrolling settings for this page */
 body {
     overflow-y: auto;
     height: auto;
     scroll-behavior: smooth;
-    
-    /* Firefox scrollbar settings */
+
     scrollbar-width: thin;
     scrollbar-color: #39FF14 rgba(0,0,0,0.3);
   }
   
-  /* Custom scrollbar for WebKit browsers */
+
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -28,48 +25,48 @@ body {
 
   .bubble-bar-right {
     position: fixed;
-    right: 15px;                   /* Gap from the screen edge */
+    right: 15px;                  
     top: 50%;
     transform: translateY(-50%);
-    width: 50px;                   /* Fixed width so container doesn't grow */
+    width: 50px;                  
     display: flex;
     flex-direction: column;
-    align-items: flex-end;         /* Bubbles align to the right edge */
-    gap: 1.5rem;                   /* Vertical space between bubbles */
+    align-items: flex-end;        
+    gap: 1.5rem;                 
     z-index: 1000;
-    overflow: visible;             /* Allows bubble expansion beyond container */
+    overflow: visible;             
   }
   
   .bubble {
     position: relative;
-    flex-shrink: 0;               /* Prevent flex from resizing or shifting items */
+    flex-shrink: 0;               
     width: 50px;
     height: 50px;
-    background: #39FF14;          /* Neon green (adjust as desired) */
+    background: #39FF14;         
     border-radius: 50%;
     cursor: pointer;
     overflow: visible;
     transition: width 0.3s ease, border-radius 0.3s ease;
   }
   
-  /* Absolutely place the icon so it never moves or stretches */
+
   .bubble img {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    width: 28px;        /* Fixed icon size so it doesn’t stretch */
+    width: 28px;       
     height: 28px;
     pointer-events: none;
   }
   
-  /* Absolutely place the label on the left side, hidden by default */
+
   .bubble .label {
     position: absolute;
     left: 10px;
     top: 50%;
     transform: translateY(-50%) translateX(-20px);
-    font-size: 1rem;    /* Larger text for easy reading */
+    font-size: 1rem;   
     font-weight: bold;
     color: #000;
     white-space: nowrap;
@@ -78,34 +75,32 @@ body {
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
   
-  /* Expand the hovered/tapped bubble from 50px to 160px, become a pill shape */
+ 
   .bubble:hover,
   .bubble.expanded {
     width: 160px;
     border-radius: 25px;
   }
   
-  /* Reveal the label when expanded */
+
   .bubble:hover .label,
   .bubble.expanded .label {
     opacity: 1;
     transform: translateY(-50%) translateX(0);
   }
   
-  /* Optional glow on hover */
+
   .bubble:hover {
     box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
   }
   
   
-  /* ---------------------------
-     Frosted Glass Container
-  --------------------------- */
+
   .help-container {
     position: relative;
     max-width: 800px;
     margin: 100px auto;
-    background: rgba(255, 255, 255, 0.07); /* Slight translucent white */
+    background: rgba(255, 255, 255, 0.07); 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -114,7 +109,7 @@ body {
     box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
   }
   
-  /* Page title and subtitle */
+
   .page-title {
     font-size: 52px;
     margin-bottom: 10px;
@@ -126,12 +121,12 @@ body {
     margin-bottom: 30px;
   }
   
-  /* FAQ Section */
+
   .faq-section {
     text-align: left;
   }
   
-  /* Each FAQ item */
+
   .faq-item {
     margin-bottom: 10px;
     border-radius: 8px;
@@ -139,7 +134,7 @@ body {
     border: 1px solid rgba(57, 255, 20, 0.4);
   }
   
-  /* FAQ Question row */
+
   .faq-question {
     display: flex;
     align-items: center;
@@ -150,7 +145,7 @@ body {
     background: rgba(0,0,0,0.2);
   }
   
-  /* Plus/Minus Icon */
+
   .toggle-icon {
     font-size: 2rem;
     font-weight: bold;
@@ -159,7 +154,7 @@ body {
     transition: transform 0.3s ease;
   }
   
-  /* FAQ Answer with smooth slide animation */
+
   .faq-answer {
     font-size: 1.2rem;
     line-height: 1.6;
@@ -171,18 +166,18 @@ body {
     transition: max-height 0.4s ease, padding 0.4s ease;
   }
   
-  /* Expanded FAQ Answer */
+
   .faq-item.open .faq-answer {
     padding: 20px;
     max-height: 500px;
   }
   
-  /* Rotate toggle icon when open */
+
   .faq-item.open .toggle-icon {
     transform: rotate(45deg);
   }
   
-  /* Need More Help Section */
+
   .need-help-container {
     margin-top: 30px;
     padding: 20px;
@@ -195,7 +190,7 @@ body {
     font-size: 1.8rem;
   }
   
-  /* Popup Overlay & Form */
+
   .popup-overlay {
     position: fixed;
     top: 0;
@@ -253,13 +248,13 @@ body {
     outline: none;
   }
   
-  /* Form button */
+
   .popup-form button {
     margin-top: 15px;
     margin-right: 10px;
   }
   
-  /* Glowing "X" Close Button */
+
   .close-popup {
     position: absolute;
     top: 10px;

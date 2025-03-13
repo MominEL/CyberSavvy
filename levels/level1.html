@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>CyberSavvy - Level 1</title>
 
-  <!-- Level 1 CSS -->
+
   <link rel="stylesheet" href="level1.css" />
 
-  <!-- GSAP (for animations) -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-  <!-- Level 1 JS -->
+
   <script src="level1.js" defer></script>
 </head>
 <body>
-  <!-- Background & Particle Canvas -->
+
   <div class="level-bg"></div>
   <canvas id="levelCanvas"></canvas>
 
-  <!-- Bubble Bar -->
+
   <nav class="bubble-bar-right">
     <a href="../levels.html" class="bubble">
       <span class="label">Play Game</span>
@@ -43,54 +43,51 @@
     </a>
   </nav>
 
-  <!-- Home Button => In-page popup instead of confirm() -->
+
   <a href="../index.html" class="home-button" id="homeBtn">Home</a>
 
-  <!-- Level Header -->
+
   <header class="level-header">
     <h1 class="level-title">Level 1: Password Fortress</h1>
     <p class="level-subtitle">Build a strong password to protect your fortress!</p>
   </header>
 
-  <!-- Main 2-Column Layout -->
+
   <main class="level-main">
-    <!-- Left Column: castle & hacker side-by-side -->
+
     <div class="level-left">
       <div class="castle-hacker-row">
         <div class="castle-container">
-          <!-- 4-part castle images -->
           <img src="../assets/images/castle-part1.png" class="castle-part part1 hidden" alt="Castle Part 1">
           <img src="../assets/images/castle-part2.png" class="castle-part part2 hidden" alt="Castle Part 2">
           <img src="../assets/images/castle-part3.png" class="castle-part part3 hidden" alt="Castle Part 3">
           <img src="../assets/images/castle-part4.png" class="castle-part part4 hidden" alt="Castle Part 4">
         </div>
-        <!-- Hacker has 3 images: normal, happy, angry. We'll swap in JS. -->
         <img src="../assets/images/hacker-normal.png" alt="Hacker" class="hacker-img" id="hackerImg">
       </div>
     </div>
 
-    <!-- Right Column: Password UI -->
+
     <div class="level-right">
-      <!-- Center & Animate this text, add glow, occasional shake -->
       <h2 class="cyber-instructions" id="cyberInstructions"></h2>
 
-      <!-- Single .password-display for both modes. If rookie => drag & drop, if pro => typed. -->
+
       <div class="password-display" id="passwordDisplay" contenteditable="false">
         <span class="placeholder-text">Drop tiles here</span>
       </div>
 
-      <!-- Strength meter bigger & spaced -->
+
       <div class="strength-meter bigger-meter">
         <div class="meter-bar" id="meterBar"></div>
       </div>
 
-      <!-- Draggable tiles container for Rookie -->
+
       <div class="tile-container" id="tileContainer"></div>
 
-      <!-- Buttons -->
+
       <div class="buttons-row">
         <button id="submitBtn" class="action-btn bigger-submit">Submit Password</button>
-        <!-- Larger reset button with icon -->
+
         <button id="resetBtn" class="action-btn bigger-submit">🔄 Reset</button>
       </div>
 
@@ -101,10 +98,10 @@
     </div>
   </main>
 
-  <!-- Tip Circle Button -->
+
   <div class="tip-circle" id="tipBtn">?</div>
 
-  <!-- Difficulty Popup -->
+
   <div class="popup-overlay hidden" id="difficultyPopup">
     <div class="popup-content popup-animated fancy-popup">
       <h2>Choose Your Challenge!</h2>
@@ -114,7 +111,7 @@
     </div>
   </div>
 
-  <!-- Leave Game Popup (replaces confirm) -->
+
   <div class="popup-overlay hidden" id="leaveGamePopup">
     <div class="popup-content popup-animated fancy-popup">
       <h2>Leave the Game?</h2>
@@ -126,7 +123,7 @@
     </div>
   </div>
 
-  <!-- Quiz Popup => One question at a time, must get it right to proceed -->
+
   <div class="popup-overlay hidden" id="quizPopup">
     <div class="popup-content popup-animated fancy-popup">
       <div id="quizQuestions"></div>
@@ -134,18 +131,18 @@
     </div>
   </div>
 
-  <!-- Tip Popup (Hint changes depending on mode) -->
+
   <div class="popup-overlay hidden" id="tipPopup">
     <div class="popup-content popup-animated fancy-popup" id="tipContent">
-      <!-- We'll fill in JS depending on mode. -->
+
     </div>
   </div>
 
-  <!-- Castle Complete Popup with Confetti Above the Castle -->
+
   <div class="popup-overlay hidden" id="castleCompletePopup">
     <div class="popup-content popup-animated fancy-popup" id="castleCompleteContent">
       <div style="position: relative;">
-        <!-- Confetti is absolutely placed above the castle. -->
+ 
         <div id="confettiContainer" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
         <img src="../assets/images/castle-part4.png" alt="Castle Fully Built" style="max-width: 350px;" />
       </div>

@@ -1,4 +1,4 @@
-/* RESET & GLOBAL */
+
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +10,7 @@ body {
   color: #fff;
 }
 
-/* WELCOME POPUP */
+
 .welcome-popup {
   max-width: 700px;
   min-height: 300px;
@@ -40,7 +40,7 @@ body {
   padding: 15px 25px;
 }
 
-/* HEADER */
+
 .page-header {
   text-align: center;
   padding: 15px;
@@ -48,7 +48,7 @@ body {
   position: relative;
   z-index: 1000;
 }
-/* Matrix-style glitch on hover for #mainTitle */
+
 #mainTitle {
   position: relative;
   display: inline-block;
@@ -80,7 +80,7 @@ body {
   background: rgba(0,0,0,0.3);
   border-radius: 10px;
   padding: 5px 10px;
-  position: relative; /* for floating +score elements */
+  position: relative;
 }
 #scoreLabel {
   margin-right: 10px;
@@ -105,7 +105,7 @@ body {
   margin-left: 10px;
 }
 
-/* BUBBLE MENU */
+
 .bubble-bar-right {
   position: fixed;
   right: 15px;
@@ -165,7 +165,7 @@ body {
   box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
 }
 
-/* POPUPS */
+
 .popup-overlay {
   position: fixed;
   top: 0; left: 0;
@@ -214,7 +214,7 @@ body {
   padding: 15px 25px;
 }
 
-/* HACK OVERLAY (Transparent Matrix Canvas) */
+
 #hackOverlay {
   position: fixed;
   top: 0; left: 0;
@@ -233,7 +233,7 @@ body {
   background: transparent;
 }
 
-/* PARTICLES BACKGROUND */
+
 #particles-js {
   position: fixed;
   top: 0; left: 0;
@@ -241,11 +241,11 @@ body {
   z-index: -1;
 }
 
-/* ROUNDS LAYOUT */
+
 .round-container {
   display: flex;
   justify-content: center;
-  align-items: center; /* center vertically */
+  align-items: center; 
   gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
@@ -336,7 +336,7 @@ body {
   color: #fff;
 }
 
-/* Instructions Panel */
+
 #instructionsPanel {
   max-width: 280px;
 }
@@ -358,7 +358,7 @@ body {
   transform: translateY(2px);
 }
 
-/* Round 2 */
+
 #round2Container {
   flex-direction: column;
   text-align: center;
@@ -423,7 +423,7 @@ body {
 }
 
 
-/* Suspicious Red Flags */
+
 .redflag {
   text-decoration: underline dashed red;
   cursor: pointer;
@@ -433,7 +433,7 @@ body {
   color: red;
 }
 
-/* Glitch hover for mainTitle */
+
 @keyframes glitchHover {
   0% { transform: translate(0, 0); }
   20% { transform: translate(2px, -2px) skewX(5deg); }

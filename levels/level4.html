@@ -4,33 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>CyberSavvy - Level 4: Phishing Awareness</title>
-
-    <!-- CSS -->
     <link rel="stylesheet" href="level4.css" />
-
-    <!-- FontAwesome for icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
-
-    <!-- GSAP for animations -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
       defer
     ></script>
-
-    <!-- Particles.js (optional) -->
     <script
       src="https://cdn.jsdelivr.net/gh/VincentGarreau/particles.js/particles.min.js"
       defer
     ></script>
 
-    <!-- Main JS -->
     <script src="level4.js" defer></script>
   </head>
   <body>
-    <!-- Leave Game Popup (Bubble Menu) -->
     <div class="popup-overlay hidden" id="leaveGamePopup">
       <div class="popup-content fancy-popup">
         <h2>Leave Game?</h2>
@@ -40,16 +30,13 @@
       </div>
     </div>
 
-    <!-- Intro Popup (Round 1) -->
     <div class="popup-overlay" id="introPopup">
       <div class="popup-content intro-content welcome-popup">
-        <!-- Hacker Image with bounce -->
         <img
           src="../assets/images/hacker-happy.png"
           alt="Hacker"
           class="welcome-hacker"
         />
-        <!-- Title & typed text -->
         <div class="welcome-text">
           <h2 class="welcome-title">Welcome to Level 4!</h2>
           <div id="typingIntro" class="typing-intro"></div>
@@ -57,8 +44,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Round 2 Story Popup -->
     <div class="popup-overlay hidden" id="round2StoryPopup">
       <div class="popup-content fancy-popup">
         <h2>Round 2: Rapid Classification!</h2>
@@ -67,7 +52,6 @@
       </div>
     </div>
 
-    <!-- End-of-Level Popup -->
     <div class="popup-overlay hidden" id="endLevelPopup">
       <div class="popup-content fancy-popup" style="pointer-events: auto;">
         <h2>Level Complete!</h2>
@@ -80,7 +64,7 @@
       </div>
     </div>
 
-    <!-- Retry Popup if time runs out in Round 2 -->
+
     <div class="popup-overlay hidden" id="round2RetryPopup">
       <div class="popup-content fancy-popup">
         <h2>Time’s Up!</h2>
@@ -90,15 +74,15 @@
       </div>
     </div>
 
-    <!-- Hack Simulation Overlay with Transparent Matrix Canvas -->
+
     <div id="hackOverlay" class="hidden">
       <canvas id="matrixCanvas"></canvas>
     </div>
 
-    <!-- Particles Background (optional) -->
+
     <div id="particles-js"></div>
 
-    <!-- Header -->
+
     <header class="page-header">
       <h1 id="mainTitle">Phishing Awareness</h1>
       <h2 class="subtitle">Stay alert, spot the scams!</h2>
@@ -111,7 +95,7 @@
       </div>
     </header>
 
-    <!-- Bubble Menu (as provided) -->
+
     <nav class="bubble-bar-right">
       <a href="../levels.html" class="bubble">
         <span class="label">Play Game</span>
@@ -135,15 +119,15 @@
       </a>
     </nav>
 
-    <!-- Round 1 Container -->
+
     <div id="round1Container" class="round-container">
-      <!-- Inbox Panel -->
+
       <div class="panel" id="inboxPanel">
         <h3>Inbox</h3>
         <ul id="emailList"></ul>
       </div>
 
-      <!-- Email Preview Panel -->
+
       <div class="panel big-panel" id="emailPreviewPanel">
         <h3 id="emailTitle">Email Preview</h3>
         <div id="emailContent"></div>
@@ -153,7 +137,7 @@
         </div>
       </div>
 
-      <!-- Instructions Panel -->
+
       <div class="panel" id="instructionsPanel">
         <h3>Instructions</h3>
         <ul class="inst-list">
@@ -167,7 +151,7 @@
       </div>
     </div>
 
-    <!-- Round 1 Results Popup -->
+
     <div class="popup-overlay hidden" id="round1ResultsPopup">
       <div class="popup-content fancy-popup">
         <h2>Round 1 Complete!</h2>
@@ -176,7 +160,6 @@
       </div>
     </div>
 
-    <!-- Round 2 Container (Hidden initially) -->
     <div id="round2Container" class="round-container hidden">
       <h2 id="round2Title" style="width:100%; text-align:center; font-size:2.2rem; margin-bottom:10px;">
         Round 2: Timed Challenge

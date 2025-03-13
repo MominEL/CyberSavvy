@@ -1,23 +1,21 @@
-/* Basic reset */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Body */
 body {
   font-family: 'Nunito', sans-serif;
   color: white;
   background: #0a0f2c;
   min-height: 100vh;
-  /* Remove overflow hidden so we can scroll vertically on smaller screens */
-  overflow-x: hidden; /* Only hide horizontal scroll if you want */
-  overflow-y: auto;   /* Allow vertical scroll if cards exceed screen height */
+  overflow-x: hidden; 
+  overflow-y: auto;   
   position: relative;
 }
 
-/* Subtle BG + Particle Canvas */
+
 .levels-bg {
   position: absolute;
   top: 0; left: 0;
@@ -35,28 +33,26 @@ body {
   z-index: -1;
 }
 
-/* ---------------------------
-   Right-Side Bubble Bar Navigation (From Main Page)
---------------------------- */
+
 .bubble-bar-right {
   position: fixed;
-  right: 15px; /* Gap from the screen edge */
+  right: 15px; 
   top: 50%;
   transform: translateY(-50%);
-  width: 50px; /* Fixed width so container doesn't grow */
+  width: 50px; 
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Bubbles align to the right edge */
-  gap: 1.5rem; /* Vertical space between bubbles */
+  align-items: flex-end; 
+  gap: 1.5rem; 
   z-index: 1000;
-  overflow: visible; /* Allows bubble expansion beyond container */
+  overflow: visible; 
 }
 .bubble {
   position: relative;
   flex-shrink: 0;
   width: 50px;
   height: 50px;
-  background: #39FF14; /* Neon green (adjust as desired) */
+  background: #39FF14; 
   border-radius: 50%;
   cursor: pointer;
   overflow: visible;
@@ -67,7 +63,7 @@ body {
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  width: 28px;  /* Fixed icon size so it doesn’t stretch */
+  width: 28px; 
   height: 28px;
   pointer-events: none;
 }
@@ -76,7 +72,7 @@ body {
   left: 10px;
   top: 50%;
   transform: translateY(-50%) translateX(-20px);
-  font-size: 1rem; /* Larger text for easy reading */
+  font-size: 1rem;
   font-weight: bold;
   color: #000;
   white-space: nowrap;
@@ -98,7 +94,7 @@ body {
   box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
 }
 
-/* Go Back to Home Button (top-right) */
+
 .home-button {
   position: fixed;
   top: 15px;
@@ -117,7 +113,7 @@ body {
   box-shadow: 0 0 15px limegreen;
 }
 
-/* Header / Intro */
+
 .levels-header {
   text-align: center;
   padding: 40px 20px;
@@ -149,7 +145,7 @@ body {
   box-shadow: 0 0 15px limegreen;
 }
 
-/* Levels Container: 4 side by side, no mismatch in card heights */
+
 .levels-container {
   display: flex;
   justify-content: center;
@@ -158,10 +154,10 @@ body {
   padding: 20px;
   position: relative;
   z-index: 1;
-  flex-wrap: nowrap; /* Single row => might overflow horizontally on small screens */
+  flex-wrap: nowrap; 
 }
 
-/* Each Card: fixed 300×450 => none appear taller */
+
 .level-card {
   width: 300px;
   height: 450px;
@@ -179,7 +175,7 @@ body {
   box-shadow: 0 0 20px limegreen;
 }
 
-/* Icon at the top */
+
 .level-icon {
   width: 60px;
   height: 60px;
@@ -194,7 +190,6 @@ body {
   50% { transform: translateY(-6px); }
 }
 
-/* Title & Tagline inside card */
 .level-card h2 {
   font-size: 1.1rem;
   color: limegreen;
@@ -207,7 +202,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* "Play Now" button */
+
 .start-level-btn {
   background: limegreen;
   border: none;
@@ -223,11 +218,10 @@ body {
   box-shadow: 0 0 10px limegreen;
 }
 
-/* If screen is smaller than 1200px or 1000px, let them wrap in multiple rows
-   so the user can scroll vertically. */
+
 @media (max-width: 1000px) {
   .levels-container {
-    flex-wrap: wrap; /* multiple rows if needed */
+    flex-wrap: wrap; 
     justify-content: center;
   }
 }

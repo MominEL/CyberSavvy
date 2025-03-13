@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Animate heading and cards
+
   gsap.from(".levels-title", {
     y: -30,
     opacity: 0,
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     stagger: 0.2
   });
 
-  // Bubble bar bobbing + two-tap logic
+
   gsap.utils.toArray(".bubble").forEach((bubble) => {
     gsap.to(bubble, {
       y: 5,
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Particle background effect
+
   const canvas = document.getElementById("levelsCanvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");

@@ -1,11 +1,11 @@
-/* Basic Reset */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
   
-  /* Body & Background */
+
   body {
     font-family: 'Nunito', sans-serif;
     background: #0a0f2c;
@@ -15,7 +15,7 @@
     overflow: hidden;
   }
   
-  /* Page Header */
+
   .page-header {
     position: fixed;
     top: 0;
@@ -32,7 +32,7 @@
     font-size: 1.8rem;
   }
   
-  /* BG & Canvas */
+
   .level-bg {
     position: absolute;
     top: 0;
@@ -54,7 +54,7 @@
     pointer-events: none;
   }
   
-  /* Bubble Menu */
+
   .bubble-bar-right {
     position: fixed;
     right: 15px;
@@ -114,7 +114,7 @@
     box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
   }
   
-  /* Home Button */
+
   .home-button {
     position: fixed;
     top: 60px;
@@ -133,7 +133,7 @@
     box-shadow: 0 0 15px limegreen;
   }
   
-  /* Popup Overlays & Content */
+
   .popup-overlay {
     position: fixed;
     top: 0;
@@ -184,7 +184,7 @@
     padding: 15px 25px;
   }
   
-  /* Intro Popup */
+
   .intro-popup {
     width: 700px;
     max-width: 90%;
@@ -207,7 +207,7 @@
     min-height: 100px;
   }
   
-  /* Mode Popup */
+
   .mode-popup h2 {
     font-size: 1.8rem;
   }
@@ -215,7 +215,7 @@
     font-size: 1.3rem;
   }
   
-  /* Main Layout */
+
   .main-layout {
     position: absolute;
     top: 60px;
@@ -227,7 +227,7 @@
     padding: 10px;
   }
   
-  /* Left Window */
+
   .left-window {
     flex: 2;
     background: #111;
@@ -237,7 +237,7 @@
     overflow: hidden;
   }
   
-  /* Right Column */
+
   .right-window {
     width: 400px;
     display: flex;
@@ -246,7 +246,7 @@
     margin-right: 100px;
   }
   
-  /* Window Style */
+
   .window {
     background: #222;
     border: 2px solid limegreen;
@@ -280,7 +280,7 @@
     font-weight: bold;
   }
   
-  /* Answer Area */
+
   .task-content {
     text-align: center;
   }
@@ -310,10 +310,9 @@
     100% { transform: translateX(0); }
   }
   
-  /* Terminal Window */
-/* Terminal Window */
+
 .terminal-window {
-    background: #011; /* unify the entire window background */
+    background: #011; 
     border: 2px solid limegreen;
     border-radius: 8px;
     position: absolute;
@@ -322,15 +321,14 @@
     flex-direction: column;
   }
   
-  /* ASCII art shares same background for uniformity */
+
   .ascii-art {
     color: #0f0;
     margin: 10px;
     text-shadow: 0 0 5px #0f0;
   }
   
-  /* The scrollable terminal screen. Same background color, 
-     so lines blend in visually. */
+
   .terminal-screen {
     flex: 1;
     overflow-y: auto;
@@ -342,24 +340,24 @@
     margin-bottom: 10px;
   }
   
-  /* Each line we dynamically create for the prompt or output */
+
   .terminal-line {
-    background: transparent; /* no special color or border */
-    margin: 5px 0;          /* spacing between lines */
+    background: transparent; 
+    margin: 5px 0;          
     display: flex;
     align-items: center;
     margin-bottom: 20px;
   }
   
-  /* Prompt text color */
+
   .terminal-line .prompt {
     color: #0f0;
     margin-right: 5px;
   }
   
-  /* The user’s typed input is distinct, e.g. yellow (#ff0) */
+
   .terminal-line .terminal-input {
-    color: #fff; /* or #fff if you prefer white */
+    color: #fff; 
     outline: none;
     border: none;
     background: transparent;
@@ -367,7 +365,7 @@
     white-space: nowrap;
   }
   
-  /* Explorer Window */
+
   .explorer-window {
     position: absolute;
     top: 10px;
@@ -382,19 +380,18 @@
   }
 
 
-  /* Special style classes for “ACCESS GRANTED” / “ACCESS DENIED” popups */
 .popup-access-granted {
-    background: #044; /* dark greenish background */
-    color: #0f0;      /* bright green text */
+    background: #044; 
+    color: #0f0;     
     animation: bounce 1s infinite alternate;
   }
   .popup-access-denied {
-    background: #400; /* dark red background */
-    color: #f00;      /* bright red text */
+    background: #400; 
+    color: #f00;      
     animation: shake2 0.5s infinite alternate;
   }
   
-  /* Some simple animations for the popups */
+
   @keyframes bounce {
     0% { transform: translateY(0); }
     100% { transform: translateY(-10px); }
@@ -407,9 +404,7 @@
     100% { transform: translateX(0); }
   }
   
-  /*************************************************
-   * SIMPLE FILE EXPLORER (Polished & Engaging)
-   *************************************************/
+
   .simple-explorer {
     padding: 15px;
     background: #111; 
@@ -472,7 +467,7 @@
     font-size: 1.6rem;
   }
   
-  /* File Viewer Popup */
+
   .file-viewer {
     position: absolute;
     top: 60px;
@@ -517,7 +512,7 @@
     color: #0f0;
   }
   
-  /* Final Popup (Level Complete) */
+
   .final-popup {
     display: flex;
     align-items: center;
