@@ -39,4 +39,75 @@
     color: #39FF14;
     text-shadow: 0 0 5px limegreen;
   }
+
+  .bubble-bar-right {
+    position: fixed;
+    right: 15px;                   /* Gap from the screen edge */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;                   /* Fixed width so container doesn't grow */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;         /* Bubbles align to the right edge */
+    gap: 1.5rem;                   /* Vertical space between bubbles */
+    z-index: 1000;
+    overflow: visible;             /* Allows bubble expansion beyond container */
+  }
+  
+  .bubble {
+    position: relative;
+    flex-shrink: 0;               /* Prevent flex from resizing or shifting items */
+    width: 50px;
+    height: 50px;
+    background: #39FF14;          /* Neon green (adjust as desired) */
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: visible;
+    transition: width 0.3s ease, border-radius 0.3s ease;
+  }
+  
+  /* Absolutely place the icon so it never moves or stretches */
+  .bubble img {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;        /* Fixed icon size so it doesn’t stretch */
+    height: 28px;
+    pointer-events: none;
+  }
+  
+  /* Absolutely place the label on the left side, hidden by default */
+  .bubble .label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%) translateX(-20px);
+    font-size: 1rem;    /* Larger text for easy reading */
+    font-weight: bold;
+    color: #000;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none; 
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Expand the hovered/tapped bubble from 50px to 160px, become a pill shape */
+  .bubble:hover,
+  .bubble.expanded {
+    width: 160px;
+    border-radius: 25px;
+  }
+  
+  /* Reveal the label when expanded */
+  .bubble:hover .label,
+  .bubble.expanded .label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  
+  /* Optional glow on hover */
+  .bubble:hover {
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
+  }
   
