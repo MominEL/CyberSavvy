@@ -1,35 +1,87 @@
 /* RESET & GLOBAL */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 body {
   font-family: 'Nunito', sans-serif;
   background: #0a0f2c;
   color: #fff;
-  overflow: hidden;
+  /* We allow scrolling, so no overflow:hidden; */
 }
 
-/* BUBBLE MENU */
+/* HEADER */
+.page-header {
+  text-align: center;
+  padding: 15px;
+  background: transparent;
+  position: relative;
+  z-index: 1000; /* on top of particles */
+}
+.page-header h1 {
+  font-size: 2.4rem;
+  color: #39ff14;
+  margin-bottom: 5px;
+}
+.subtitle {
+  font-size: 1.3rem;
+  color: #81d4fa;
+  margin-bottom: 10px;
+}
+.score-bar {
+  font-size: 1.2rem;
+  display: inline-block;
+  background: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+#scoreLabel {
+  margin-right: 10px;
+}
+.progress-bar-container {
+  width: 120px;
+  height: 10px;
+  background: #333;
+  border-radius: 5px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 10px;
+}
+.progress-bar-fill {
+  width: 0;
+  height: 100%;
+  background: #39ff14;
+  transition: width 0.4s;
+}
+#progressPercentLabel {
+  margin-left: 10px;
+}
+
+/* BUBBLE MENU (as provided) */
 .bubble-bar-right {
   position: fixed;
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
+  width: 50px;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 1.5rem;
   z-index: 1000;
+  overflow: visible;
 }
 .bubble {
   position: relative;
   width: 50px;
   height: 50px;
-  background: #39ff14;
+  background: #39FF14;
   border-radius: 50%;
   cursor: pointer;
-  transition: width 0.3s, border-radius 0.3s;
+  overflow: visible;
+  transition: width 0.3s ease, border-radius 0.3s ease;
 }
 .bubble img {
   position: absolute;
@@ -48,278 +100,23 @@ body {
   font-size: 1rem;
   font-weight: bold;
   color: #000;
+  white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.bubble:hover {
+.bubble:hover,
+.bubble.expanded {
   width: 160px;
   border-radius: 25px;
-  box-shadow: 0 0 12px rgba(57,255,20,0.8);
 }
-.bubble:hover .label {
+.bubble:hover .label,
+.bubble.expanded .label {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
 }
-
-/* INTRO POPUP */
-.popup-overlay#introPopup {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
-}
-.popup-content.intro-content {
-  background: #222;
-  padding: 40px;
-  border-radius: 20px;
-  text-align: center;
-  max-width: 600px;
-  width: 90%;
-  box-shadow: 0 0 20px rgba(57,255,20,0.5);
-}
-#typingIntro {
-  font-size: 2rem;
-  line-height: 1.5;
-  margin-bottom: 20px;
-  color: #fff;
-}
-
-/* HEADER */
-.page-header {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  padding: 15px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: transparent;
-}
-.header-text {
-  text-align: center;
-}
-#mainTitle {
-  font-size: 3rem;
-  color: #39ff14;
-  transition: transform 0.3s;
-  cursor: pointer;
-}
-#mainTitle:hover {
-  transform: rotate(-3deg) scale(1.05);
-}
-.subtitle {
-  font-size: 1.4rem;
-  color: #81d4fa;
-  margin-top: 5px;
-  text-align: center;
-}
-.score-progress {
-  margin-top: 10px;
-  font-size: 1.6rem;
-  text-align: center;
-}
-#scoreLabel { font-weight: bold; color: #39ff14; }
-.progress-bar-container {
-  width: 150px;
-  height: 12px;
-  background: #333;
-  border-radius: 6px;
-  overflow: hidden;
-  display: inline-block;
-  margin: 0 10px;
-}
-.progress-bar-fill {
-  width: 0;
-  height: 100%;
-  background: #39ff14;
-  transition: width 0.5s ease;
-}
-#progressPercentLabel { color: #39ff14; }
-
-/* PARTICLES */
-#particles-js {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: -1;
-}
-#particles-js canvas {
-  filter: blur(2px);
-  opacity: 0.7;
-}
-
-/* MAIN LAYOUT */
-.main-layout {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  padding: 20px;
-  position: absolute;
-  top: 120px; bottom: 20px; left: 0; right: 0;
-  background: url("assets/images/hacker-normal.png") no-repeat 80% 100px;
-  background-size: 200px auto;
-}
-
-/* INBOX PANEL */
-.inbox-panel {
-  width: 400px;
-  background: #1a1a1a;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 0 15px rgba(57,255,20,0.3);
-  text-align: center;
-  max-height: 70vh;
-  overflow-y: auto;
-}
-.inbox-panel .panel-title {
-  font-size: 2rem;
-  margin-bottom: 15px;
-  color: #81d4fa;
-}
-#emailList { list-style: none; padding: 0; }
-#emailList li {
-  background: #333;
-  margin: 10px 0;
-  padding: 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s;
-  font-size: 1.1rem;
-  position: relative;
-}
-#emailList li:hover { background: #444; }
-.lock-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-}
-
-/* PREVIEW PANEL */
-.preview-panel {
-  width: 600px;
-  background: #1a1a1a;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 0 15px rgba(57,255,20,0.3);
-  position: relative;
-}
-.preview-panel .panel-title {
-  font-size: 2rem;
-  margin-bottom: 15px;
-  color: #81d4fa;
-}
-#emailPreview {
-  background: #fff;
-  color: #333;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  min-height: 220px;
-  opacity: 0;
-  font-size: 1.1rem;
-  line-height: 1.5;
-  position: relative;
-}
-
-/* Link Tooltip */
-.email-link {
-  color: #0066cc;
-  text-decoration: underline;
-  cursor: pointer;
-  position: relative;
-}
-.email-link:hover::after {
-  content: attr(data-url);
-  position: absolute;
-  top: 110%;
-  left: 0;
-  background: #000;
-  color: #fff;
-  padding: 4px 6px;
-  border-radius: 5px;
-  white-space: nowrap;
-  z-index: 10;
-  font-size: 0.9rem;
-}
-
-/* Red Flag Elements */
-.redflag {
-  border-bottom: 2px dashed red;
-  cursor: pointer;
-}
-.redflag.flagged {
-  background: rgba(255,0,0,0.2);
-  color: red;
-}
-
-/* Email Action Buttons */
-.email-action {
-  background: #ffce00;
-  color: #333;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin: 8px 0;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-/* BUTTON GROUP */
-.button-group {
-  text-align: center;
-  margin-top: 20px;
-}
-.action-btn {
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 12px 20px;
-  margin: 10px 5px;
-  cursor: pointer;
-  font-size: 1.3rem;
-  transition: transform 0.3s, background 0.3s;
-}
-.action-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px #39ff14;
-}
-.legit-btn { background: #28a745; }
-.phishing-btn { background: #dc3545; }
-
-/* HINT BUTTON */
-.hint-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 48px;
-  height: 48px;
-  border: none;
-  background: url("assets/images/help-icon.png") no-repeat center center;
-  background-size: 70%;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-.hint-btn:hover { transform: scale(1.1); }
-
-/* FLOATING SCORE */
-.floating-score {
-  position: absolute;
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #39ff14;
-  pointer-events: none;
-  z-index: 2000;
+.bubble:hover {
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
 }
 
 /* POPUPS */
@@ -327,22 +124,28 @@ body {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.7);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
+  z-index: 3000;
 }
-.hidden { display: none !important; }
+.hidden {
+  display: none !important;
+}
 .popup-content {
   background: #222;
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 15px;
   text-align: center;
-  max-width: 600px;
+  max-width: 500px;
   width: 90%;
   box-shadow: 0 0 20px #39ff14;
   color: #fff;
+}
+.intro-content {
+  background: #111;
+  box-shadow: 0 0 15px #39ff14;
 }
 .popup-btn {
   background: #39ff14;
@@ -350,29 +153,30 @@ body {
   border: none;
   border-radius: 10px;
   padding: 12px 20px;
-  margin: 10px 0;
+  font-size: 1.1rem;
+  margin: 10px;
   cursor: pointer;
-  font-size: 1.2rem;
-  transition: transform 0.3s, background 0.3s;
+  transition: transform 0.3s;
 }
 .popup-btn:hover {
   transform: scale(1.05);
-  background: #52ff3f;
-  box-shadow: 0 0 10px #39ff14;
 }
-.bigger-btn { font-size: 1.3rem; padding: 15px 25px; }
-.end-buttons { margin-top: 20px; }
+.bigger-btn {
+  font-size: 1.2rem;
+  padding: 15px 25px;
+}
 
-/* HACK SIMULATION OVERLAY */
+/* HACK OVERLAY (Matrix) */
 #hackOverlay {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   background: rgba(0,255,0,0.9);
-  z-index: 3000;
+  z-index: 4000;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
 }
 #matrixEffect {
   font-family: 'Courier New', monospace;
@@ -382,9 +186,163 @@ body {
   height: 100%;
   white-space: nowrap;
   overflow: hidden;
-  animation: fall 5s linear forwards;
+  animation: matrixFall 4s linear forwards;
 }
-@keyframes fall {
+@keyframes matrixFall {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
+}
+
+/* PARTICLES BACKGROUND */
+#particles-js {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1; /* behind content */
+}
+
+/* ROUNDS LAYOUT */
+.round-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.panel {
+  background: #1a1a1a;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(57,255,20,0.3);
+  min-width: 250px;
+  min-height: 400px;
+}
+.panel h3 {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  color: #81d4fa;
+}
+#emailList {
+  list-style: none;
+  padding: 0;
+}
+#emailList li {
+  background: #333;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  position: relative;
+}
+#emailList li:hover {
+  background: #444;
+}
+.big-panel {
+  flex: 1;
+  min-width: 400px;
+}
+#emailTitle {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: #81d4fa;
+}
+#emailContent {
+  background: #fff;
+  color: #333;
+  border-radius: 10px;
+  padding: 15px;
+  min-height: 300px;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+.button-group {
+  text-align: center;
+  margin-top: 20px;
+}
+.action-btn {
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.action-btn:hover {
+  transform: scale(1.05);
+}
+.legit-btn {
+  background: #28a745;
+  color: #fff;
+}
+.phishing-btn {
+  background: #dc3545;
+  color: #fff;
+}
+
+/* Instructions Panel */
+#instructionsPanel {
+  max-width: 250px;
+}
+.inst-text {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* Round 2 */
+#round2Container {
+  flex-direction: column;
+  text-align: center;
+}
+#timerBar {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+.round2-content {
+  background: #1a1a1a;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(57,255,20,0.3);
+  width: 500px;
+  margin: 0 auto;
+}
+#round2ImageBox {
+  background: #fff;
+  border-radius: 10px;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Email Action Buttons in the email content */
+.email-action {
+  display: inline-block;
+  background: #ffce00;
+  color: #333;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-align: center;
+  min-width: 120px;
+}
+.email-action:hover {
+  filter: brightness(1.1);
+}
+
+/* Suspicious Red Flags */
+.redflag {
+  text-decoration: underline dashed red;
+  cursor: pointer;
+}
+.redflag.flagged {
+  background: rgba(255,0,0,0.2);
+  color: red;
 }
