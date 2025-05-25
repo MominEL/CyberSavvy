@@ -120,11 +120,24 @@
   .bubble:hover {
     box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
   }
-  :root {
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+:root {
     --prime: #0a0f2c;
     --second: #1b1f3a;
     --neon-red: #ff0400;
-    --wire-color: rgba(150, 150, 150, 0.3);
 }
 
 @font-face {
@@ -151,7 +164,6 @@ body, html {
     position: relative;
 }
 
-
 .text {
     font-family: "Liberty", sans-serif;
     font-weight: 100;
@@ -164,7 +176,6 @@ body, html {
     position: relative;
 }
 
-
 .letter {
     color: var(--neon-red);
     text-shadow: 
@@ -176,16 +187,11 @@ body, html {
     transition: all 0.3s ease-in-out;
 }
 
-
 .hanging {
     display: inline-block;
     transform: translate(-0.3rem, 2rem) rotate(15deg);
     animation: hanging-move 3s ease-in-out infinite alternate;
 }
-
-
-
-
 
 @keyframes hanging-move {
     0% {
@@ -198,7 +204,6 @@ body, html {
         transform: translate(-0.3rem, 1.7rem) rotate(10deg);
     }
 }
-
 
 .letter-1 {
     animation: flicker-1 4s infinite alternate;
@@ -245,7 +250,6 @@ body, html {
     82% { opacity: 1; }
 }
 
-
 @keyframes glitch {
     0% {
         text-shadow: 
@@ -271,3 +275,4 @@ body, html {
         transform: translateX(1px);
     }
 }
+
