@@ -259,3 +259,77 @@ button:hover {
     bottom: 10%; right: 15%; animation: float 8s infinite alternate;
 }
 
+
+/* Creator Credit Footer */
+.creator-credit {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    animation: floatCredit 3s ease-in-out infinite;
+}
+
+.credit-link {
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: rgba(57, 255, 20, 0.05);
+    border: 1px solid rgba(57, 255, 20, 0.2);
+}
+
+.credit-text {
+    font-weight: 400;
+}
+
+.credit-name {
+    font-weight: 700;
+    color: #39FF14;
+    text-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
+    transition: all 0.3s ease;
+}
+
+.credit-link:hover {
+    background: rgba(57, 255, 20, 0.15);
+    border-color: rgba(57, 255, 20, 0.6);
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+    transform: translateY(-3px) scale(1.05);
+}
+
+.credit-link:hover .credit-name {
+    color: cyan;
+    text-shadow: 0 0 10px cyan, 0 0 20px rgba(0, 255, 255, 0.5);
+    animation: glitchCredit 0.5s infinite;
+}
+
+.credit-link:hover .credit-text {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes floatCredit {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0px);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-8px);
+    }
+}
+
+@keyframes glitchCredit {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(-1px, 1px);
+    }
+    50% {
+        transform: translate(1px, -1px);
+    }
+    75% {
+        transform: translate(-1px, -1px);
+    }
+}
