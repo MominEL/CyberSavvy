@@ -6,13 +6,13 @@
   <title>CyberSavvy - Levels</title>
   <link rel="stylesheet" href="css/levels.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="js/levels.js" defer></script>
 </head>
 <body>
   
   <div class="levels-bg"></div>
   <canvas id="levelsCanvas"></canvas>
-
 
   <nav class="bubble-bar-right">
     <a href="levels.html" class="bubble">
@@ -37,52 +37,216 @@
     </a>
   </nav>
 
-  
   <a href="index.html" class="home-button">Home</a>
 
-  
   <header class="levels-header">
-    <h1 class="levels-title">Ready to Become a Cyber Hero?</h1>
-    <p class="levels-subtitle">Choose any level below or play them all in order!</p>
-    <button class="play-all-btn" onclick="window.location.href='levels/level1.html'">Play All Levels in Order</button>
+    <h1 class="levels-title">Cyber Missions. All Systems Go.</h1>
+    <p class="levels-subtitle">Pick a mission to sharpen your defenses—or launch campaign mode to run the full gauntlet.</p>
+    <button class="play-all-btn" onclick="window.location.href='levels/level1.html'">Launch Campaign Mode</button>
   </header>
 
- 
   <main>
-    <div class="levels-container">
-      
-      <div class="level-card">
-        <img src="assets/images/shield-icon.png" alt="Password Security" class="level-icon" />
-        <h2>Level 1: Password Fortress</h2>
-        <p class="tagline">Learn to create strong passwords!</p>
-        <!-- Example link to "levels/level1.html" -->
-        <button class="start-level-btn" onclick="window.location.href='levels/level1.html'">Play Now</button>
+    <section class="levels-showcase">
+      <div class="levels-ambient">
+        <span class="ambient orb orb-1"></span>
+        <span class="ambient orb orb-2"></span>
+        <span class="ambient orb orb-3"></span>
       </div>
 
-      
-      <div class="level-card">
-        <img src="assets/images/lock-icon.png" alt="Command Line" class="level-icon" />
-        <h2>Level 2: System Infiltration</h2>
-        <p class="tagline">Master basic command line skills!</p>
-        <button class="start-level-btn" onclick="window.location.href='levels/level2.html'">Play Now</button>
-      </div>
+      <div class="levels-grid">
+        <article class="level-card" data-difficulty="rookie" style="--card-accent:#39ff14; --accent-secondary:#37e4ff; --progress-value:34%;">
+          <div class="card-glow"></div>
+          <div class="card-outline"></div>
+          <div class="card-content">
+            <div class="level-top">
+              <div class="level-number">
+                <span class="label">Level</span>
+                <span class="value">01</span>
+              </div>
+              <span class="difficulty-badge">
+                <span class="badge-pulse"></span>
+                Rookie
+              </span>
+            </div>
 
-      
-      <div class="level-card">
-        <img src="assets/images/firewall-icon.png" alt="Social Media Privacy" class="level-icon" />
-        <h2>Level 3: Social Media Privacy</h2>
-        <p class="tagline">Protect your data online!</p>
-        <button class="start-level-btn" onclick="window.location.href='levels/level3.html'">Play Now</button>
-      </div>
+            <div class="level-icon-wrapper">
+              <div class="icon-ring"></div>
+              <img src="assets/images/shield-icon.png" alt="Password Fortress icon" class="level-icon" />
+            </div>
 
-      
-      <div class="level-card">
-        <img src="assets/images/virus-icon.png" alt="Phishing Awareness" class="level-icon" />
-        <h2>Level 4: Phishing Awareness</h2>
-        <p class="tagline">Spot fake emails &amp; scams!</p>
-        <button class="start-level-btn" onclick="window.location.href='levels/level4.html'">Play Now</button>
+            <h2 class="level-heading">Level 01 · Password Fortress</h2>
+            <p class="level-description">Construct unstoppable passphrases, fortify a cyber castle, and become the guardian of login gates.</p>
+
+            <ul class="level-highlights">
+              <li>Drag-and-drop defenses to shape a password stronghold</li>
+              <li>Watch live strength meters react to every move</li>
+              <li>Unlock micro quizzes to cement your new skills</li>
+            </ul>
+
+            <div class="level-progress">
+              <span class="progress-label">Mastery Ramp</span>
+              <div class="progress-track">
+                <span class="progress-fill"></span>
+              </div>
+              <span class="progress-value">Focus: Password Power</span>
+            </div>
+
+            <div class="level-actions">
+              <a class="start-level-btn" href="levels/level1.html">
+                <span>Play Level</span>
+                <svg class="btn-icon" viewBox="0 0 20 12" aria-hidden="true">
+                  <path d="M1 6h16M11 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="level-card" data-difficulty="operative" style="--card-accent:#00f5ff; --accent-secondary:#3effa3; --progress-value:56%;">
+          <div class="card-glow"></div>
+          <div class="card-outline"></div>
+          <div class="card-content">
+            <div class="level-top">
+              <div class="level-number">
+                <span class="label">Level</span>
+                <span class="value">02</span>
+              </div>
+              <span class="difficulty-badge">
+                <span class="badge-pulse"></span>
+                Operative
+              </span>
+            </div>
+
+            <div class="level-icon-wrapper">
+              <div class="icon-ring"></div>
+              <img src="assets/images/lock-icon.png" alt="System Infiltration icon" class="level-icon" />
+            </div>
+
+            <h2 class="level-heading">Level 02 · System Infiltration</h2>
+            <p class="level-description">Jump between GUI and command-line sleuthing to trace intruders and shut down their foothold.</p>
+
+            <ul class="level-highlights">
+              <li>Investigate a faux file system for suspicious breadcrumbs</li>
+              <li>Switch to terminal mode for hacker-speed commands</li>
+              <li>Correlate anomalies to stop breaches before they spread</li>
+            </ul>
+
+            <div class="level-progress">
+              <span class="progress-label">Mastery Ramp</span>
+              <div class="progress-track">
+                <span class="progress-fill"></span>
+              </div>
+              <span class="progress-value">Focus: Digital Sleuthing</span>
+            </div>
+
+            <div class="level-actions">
+              <a class="start-level-btn" href="levels/level2.html">
+                <span>Play Level</span>
+                <svg class="btn-icon" viewBox="0 0 20 12" aria-hidden="true">
+                  <path d="M1 6h16M11 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="level-card" data-difficulty="specialist" style="--card-accent:#b84dff; --accent-secondary:#58d6ff; --progress-value:78%;">
+          <div class="card-glow"></div>
+          <div class="card-outline"></div>
+          <div class="card-content">
+            <div class="level-top">
+              <div class="level-number">
+                <span class="label">Level</span>
+                <span class="value">03</span>
+              </div>
+              <span class="difficulty-badge">
+                <span class="badge-pulse"></span>
+                Specialist
+              </span>
+            </div>
+
+            <div class="level-icon-wrapper">
+              <div class="icon-ring"></div>
+              <img src="assets/images/firewall-icon.png" alt="Social Media Privacy icon" class="level-icon" />
+            </div>
+
+            <h2 class="level-heading">Level 03 · Social Media Privacy</h2>
+            <p class="level-description">Interrogate viral posts, decode hidden tells, and make the call on who earns your trust.</p>
+
+            <ul class="level-highlights">
+              <li>Compare multiple rounds of evolving social feeds</li>
+              <li>Spot subtle red flags hiding in likes and comments</li>
+              <li>Uncover motives before misinformation spreads</li>
+            </ul>
+
+            <div class="level-progress">
+              <span class="progress-label">Mastery Ramp</span>
+              <div class="progress-track">
+                <span class="progress-fill"></span>
+              </div>
+              <span class="progress-value">Focus: Trust Intelligence</span>
+            </div>
+
+            <div class="level-actions">
+              <a class="start-level-btn" href="levels/level3.html">
+                <span>Play Level</span>
+                <svg class="btn-icon" viewBox="0 0 20 12" aria-hidden="true">
+                  <path d="M1 6h16M11 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="level-card" data-difficulty="elite" style="--card-accent:#ff6ec7; --accent-secondary:#7d6bff; --progress-value:92%;">
+          <div class="card-glow"></div>
+          <div class="card-outline"></div>
+          <div class="card-content">
+            <div class="level-top">
+              <div class="level-number">
+                <span class="label">Level</span>
+                <span class="value">04</span>
+              </div>
+              <span class="difficulty-badge">
+                <span class="badge-pulse"></span>
+                Elite
+              </span>
+            </div>
+
+            <div class="level-icon-wrapper">
+              <div class="icon-ring"></div>
+              <img src="assets/images/virus-icon.png" alt="Phishing Awareness icon" class="level-icon" />
+            </div>
+
+            <h2 class="level-heading">Level 04 · Phishing Awareness</h2>
+            <p class="level-description">Disarm deceptive emails, survive timed gauntlets, and neutralize the final wave of threats.</p>
+
+            <ul class="level-highlights">
+              <li>Inspect suspicious inbox messages and attachments</li>
+              <li>Race lightning challenges to classify phishing attempts</li>
+              <li>Trigger the hack overlay to watch threats unfold</li>
+            </ul>
+
+            <div class="level-progress">
+              <span class="progress-label">Mastery Ramp</span>
+              <div class="progress-track">
+                <span class="progress-fill"></span>
+              </div>
+              <span class="progress-value">Focus: Threat Response</span>
+            </div>
+
+            <div class="level-actions">
+              <a class="start-level-btn" href="levels/level4.html">
+                <span>Play Level</span>
+                <svg class="btn-icon" viewBox="0 0 20 12" aria-hidden="true">
+                  <path d="M1 6h16M11 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
-    </div>
+    </section>
   </main>
 </body>
 </html>
