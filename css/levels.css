@@ -225,7 +225,10 @@ body {
   border-radius: 50%;
   filter: blur(80px);
   opacity: 0.15;
-  animation: floatOrb 20s ease-in-out infinite;
+  animation: floatOrb 30s ease-in-out infinite;
+  /* Optimize rendering */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .orb-1 {
@@ -298,6 +301,13 @@ body {
   will-change: transform;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  /* Ensure cards are visible by default */
+  opacity: 1 !important;
+  visibility: visible !important;
+  /* Optimize rendering */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .card-glow {
@@ -359,6 +369,9 @@ body {
   min-height: 580px;
   transform-style: preserve-3d;
   perspective: 1000px;
+  /* Optimize rendering */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .level-top {
@@ -720,6 +733,45 @@ body {
   .level-highlights li {
     font-size: 0.82rem;
   }
+
+  /* Reduce animations on mobile for better performance */
+  .level-card {
+    transition: transform 0.3s ease;
+  }
+
+  .level-card:hover,
+  .level-card.is-active {
+    transform: translateY(-8px);
+  }
+
+  .ambient.orb {
+    animation-duration: 40s; /* Slower animations on mobile */
+  }
+
+  /* Disable heavy effects on mobile */
+  .card-glow,
+  .card-outline {
+    display: none;
+  }
+}
+
+/* Fallback styles to ensure cards are visible even if JavaScript fails */
+.no-js .level-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+.no-js .card-glow,
+.no-js .card-outline {
+  opacity: 0.3 !important;
+}
+
+.no-js .levels-title,
+.no-js .levels-subtitle,
+.no-js .play-all-btn {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
