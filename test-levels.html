@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Levels Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .pass { background-color: #d4edda; color: #155724; }
+        .fail { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Levels Page Test Results</h1>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        function addResult(test, passed, message) {
+            const div = document.createElement('div');
+            div.className = `test-result ${passed ? 'pass' : 'fail'}`;
+            div.innerHTML = `<strong>${test}:</strong> ${passed ? 'PASS' : 'FAIL'} - ${message}`;
+            results.appendChild(div);
+        }
+
+        // Test 1: Check if levels.html exists and loads
+        fetch('levels.html')
+            .then(response => {
+                if (response.ok) {
+                    addResult('HTML File', true, 'levels.html loads successfully');
+                    return response.text();
+                } else {
+                    addResult('HTML File', false, `HTTP ${response.status}`);
+                }
+            })
+            .then(html => {
+                if (html) {
+                    // Test 2: Check for required elements
+                    const hasCards = html.includes('level-card');
+                    const hasCanvas = html.includes('levelsCanvas');
+                    const hasGSAP = html.includes('gsap.min.js');
+                    
+                    addResult('Card Elements', hasCards, hasCards ? 'Found level-card elements' : 'Missing level-card elements');
+                    addResult('Canvas Element', hasCanvas, hasCanvas ? 'Found canvas element' : 'Missing canvas element');
+                    addResult('GSAP Library', hasGSAP, hasGSAP ? 'GSAP library included' : 'GSAP library missing');
+                }
+            })
+            .catch(error => {
+                addResult('HTML File', false, error.message);
+            });
+
+        // Test 3: Check CSS file
+        fetch('css/levels.css')
+            .then(response => {
+                if (response.ok) {
+                    addResult('CSS File', true, 'levels.css loads successfully');
+                    return response.text();
+                } else {
+                    addResult('CSS File', false, `HTTP ${response.status}`);
+                }
+            })
+            .then(css => {
+                if (css) {
+                    const hasCardStyles = css.includes('.level-card');
+                    const hasVisibilityFix = css.includes('opacity: 1 !important');
+                    
+                    addResult('Card Styles', hasCardStyles, hasCardStyles ? 'Found card styles' : 'Missing card styles');
+                    addResult('Visibility Fix', hasVisibilityFix, hasVisibilityFix ? 'Found visibility fixes' : 'Missing visibility fixes');
+                }
+            })
+            .catch(error => {
+                addResult('CSS File', false, error.message);
+            });
+
+        // Test 4: Check JavaScript file
+        fetch('js/levels.js')
+            .then(response => {
+                if (response.ok) {
+                    addResult('JavaScript File', true, 'levels.js loads successfully');
+                    return response.text();
+                } else {
+                    addResult('JavaScript File', false, `HTTP ${response.status}`);
+                }
+            })
+            .then(js => {
+                if (js) {
+                    const hasErrorHandling = js.includes('try {') && js.includes('catch');
+                    const hasVisibilityFix = js.includes('opacity: "1"');
+                    const hasPerformanceOpt = js.includes('throttle');
+                    
+                    addResult('Error Handling', hasErrorHandling, hasErrorHandling ? 'Found error handling' : 'Missing error handling');
+                    addResult('JS Visibility Fix', hasVisibilityFix, hasVisibilityFix ? 'Found JS visibility fixes' : 'Missing JS visibility fixes');
+                    addResult('Performance Optimization', hasPerformanceOpt, hasPerformanceOpt ? 'Found performance optimizations' : 'Missing performance optimizations');
+                }
+            })
+            .catch(error => {
+                addResult('JavaScript File', false, error.message);
+            });
+
+        // Test 5: Check assets
+        const testAssets = [
+            'assets/images/shield-icon.png',
+            'assets/images/lock-icon.png',
+            'assets/images/firewall-icon.png',
+            'assets/images/virus-icon.png'
+        ];
+
+        testAssets.forEach(asset => {
+            fetch(asset)
+                .then(response => {
+                    addResult(`Asset ${asset}`, response.ok, response.ok ? 'Loads successfully' : `HTTP ${response.status}`);
+                })
+                .catch(error => {
+                    addResult(`Asset ${asset}`, false, error.message);
+                });
+        });
+    </script>
+</body>
+</html>

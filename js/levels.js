@@ -2,6 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   const prefersReducedMotion = reduceMotionQuery.matches;
 
+  // Ensure cards are visible immediately as a fallback
+  const cards = document.querySelectorAll(".level-card");
+  cards.forEach(card => {
+    card.style.opacity = "1";
+    card.style.visibility = "visible";
+  });
+
   if (typeof ScrollTrigger !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
   }
@@ -12,37 +19,63 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  if (!prefersReducedMotion) {
-    const headerTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-    headerTimeline
-      .from(".levels-title", { y: -50, opacity: 0, duration: 1.1 })
-      .from(".levels-subtitle", { y: -30, opacity: 0, duration: 0.9 }, "-=0.6")
-      .from(
-        ".play-all-btn",
-        { scale: 0.85, opacity: 0, duration: 0.7, ease: "back.out(1.7)" },
-        "-=0.45"
-      );
-  } else {
-    revealInstantly([".levels-title", ".levels-subtitle", ".play-all-btn"]);
-  }
-
-  const cards = gsap.utils.toArray(".level-card");
-
-  if (!prefersReducedMotion) {
-    gsap.from(cards, {
-      y: 90,
-      opacity: 0,
-      scale: 0.92,
-      duration: 1.1,
-      delay: 0.3,
-      ease: "power3.out",
-      stagger: 0.18
+  // Ensure header elements are visible
+  try {
+    if (!prefersReducedMotion) {
+      const headerTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+      headerTimeline
+        .from(".levels-title", { y: -50, opacity: 0, duration: 1.1 })
+        .from(".levels-subtitle", { y: -30, opacity: 0, duration: 0.9 }, "-=0.6")
+        .from(
+          ".play-all-btn",
+          { scale: 0.85, opacity: 0, duration: 0.7, ease: "back.out(1.7)" },
+          "-=0.45"
+        );
+    } else {
+      revealInstantly([".levels-title", ".levels-subtitle", ".play-all-btn"]);
+    }
+  } catch (error) {
+    console.warn("GSAP header animation failed:", error);
+    // Fallback: make elements visible
+    document.querySelectorAll(".levels-title, .levels-subtitle, .play-all-btn").forEach(el => {
+      el.style.opacity = "1";
     });
-  } else {
-    gsap.set(cards, { opacity: 1 });
   }
 
-  cards.forEach((card) => {
+  const cardsArray = gsap.utils.toArray(".level-card");
+
+  // Ensure cards animation works with error handling
+  try {
+    if (!prefersReducedMotion && cardsArray.length > 0) {
+      gsap.from(cardsArray, {
+        y: 90,
+        opacity: 0,
+        scale: 0.92,
+        duration: 1.1,
+        delay: 0.3,
+        ease: "power3.out",
+        stagger: 0.18,
+        onComplete: () => {
+          // Ensure cards are fully visible after animation
+          cardsArray.forEach(card => {
+            card.style.opacity = "1";
+            card.style.visibility = "visible";
+          });
+        }
+      });
+    } else {
+      gsap.set(cardsArray, { opacity: 1 });
+    }
+  } catch (error) {
+    console.warn("GSAP cards animation failed:", error);
+    // Fallback: make all cards visible
+    cardsArray.forEach(card => {
+      card.style.opacity = "1";
+      card.style.visibility = "visible";
+    });
+  }
+
+  cardsArray.forEach((card) => {
     const content = card.querySelector(".card-content");
     const glow = card.querySelector(".card-glow");
     const outline = card.querySelector(".card-outline");
@@ -60,24 +93,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const hoverProgress = `${Math.min(progressValue + 12, 100)}%`;
     const baseProgress = `${progressValue}%`;
 
-    gsap.set(content, { transformStyle: "preserve-3d" });
-    gsap.set(glow, { opacity: 0 });
-    gsap.set(outline, { opacity: 0 });
-    gsap.set(highlights, { opacity: 0.45, y: 18 });
-    gsap.set(description, { opacity: 0.8 });
-    gsap.set(progressFill, { width: baseProgress });
+    // Initialize card with error handling
+    try {
+      gsap.set(content, { transformStyle: "preserve-3d" });
+      gsap.set(glow, { opacity: 0 });
+      gsap.set(outline, { opacity: 0 });
+      gsap.set(highlights, { opacity: 0.45, y: 18 });
+      gsap.set(description, { opacity: 0.8 });
+      gsap.set(progressFill, { width: baseProgress });
 
-    if (!prefersReducedMotion && typeof ScrollTrigger !== "undefined") {
-      gsap.from(progressFill, {
-        width: 0,
-        duration: 1.2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
-      });
+      if (!prefersReducedMotion && typeof ScrollTrigger !== "undefined") {
+        gsap.from(progressFill, {
+          width: 0,
+          duration: 1.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        });
+      }
+    } catch (error) {
+      console.warn("Card initialization failed:", error);
+      // Ensure elements are visible as fallback
+      if (glow) glow.style.opacity = "0";
+      if (outline) outline.style.opacity = "0";
+      if (progressFill) progressFill.style.width = baseProgress;
     }
 
     const hoverTimeline = gsap.timeline({
@@ -113,10 +155,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
-    if (!prefersReducedMotion) {
-      card.addEventListener("pointerenter", activateCard);
-      card.addEventListener("pointerleave", deactivateCard);
-      card.addEventListener("pointermove", (event) => {
+    // Throttled mouse move handler for better performance
+    let moveThrottle = false;
+    const throttledMouseMove = (event) => {
+      if (moveThrottle) return;
+      moveThrottle = true;
+      
+      requestAnimationFrame(() => {
         const bounds = card.getBoundingClientRect();
         const relX = event.clientX - bounds.left;
         const relY = event.clientY - bounds.top;
@@ -136,7 +181,17 @@ document.addEventListener("DOMContentLoaded", () => {
           duration: 0.6,
           ease: "power2.out"
         });
+        
+        setTimeout(() => {
+          moveThrottle = false;
+        }, 16); // ~60fps throttling
       });
+    };
+
+    if (!prefersReducedMotion) {
+      card.addEventListener("pointerenter", activateCard);
+      card.addEventListener("pointerleave", deactivateCard);
+      card.addEventListener("pointermove", throttledMouseMove);
     } else {
       card.addEventListener("mouseenter", activateCard);
       card.addEventListener("mouseleave", deactivateCard);
@@ -172,27 +227,35 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Optimized ambient animations with reduced frequency
   if (!prefersReducedMotion) {
     const orbs = gsap.utils.toArray(".ambient.orb");
     orbs.forEach((orb, index) => {
+      // Slower, less resource-intensive animations
       gsap.to(orb, {
-        x: "random(-40, 40)",
-        y: "random(-40, 40)",
-        scale: "random(0.9, 1.1)",
-        duration: "random(15, 24)",
+        x: "random(-20, 20)", // Reduced movement range
+        y: "random(-20, 20)", // Reduced movement range
+        scale: "random(0.95, 1.05)", // Reduced scale range
+        duration: "random(20, 30)", // Slower animations
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        delay: index * 5
+        delay: index * 2 // Reduced delay
       });
     });
   }
 
   const canvas = document.getElementById("levelsCanvas");
   if (canvas) {
-    const ctx = canvas.getContext("2d");
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    try {
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        console.warn("Could not get canvas context");
+        return;
+      }
+      
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
 
     class Particle {
       constructor() {
@@ -222,9 +285,9 @@ document.addEventListener("DOMContentLoaded", () => {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-        ctx.fillStyle = `${this.color} ${this.opacity})`;
+        ctx.fillStyle = `${this.color}${this.opacity})`;
         ctx.shadowBlur = 18;
-        ctx.shadowColor = `${this.color} ${this.opacity})`;
+        ctx.shadowColor = `${this.color}${this.opacity})`;
         ctx.fill();
       }
     }
@@ -237,31 +300,48 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const particles = [];
-    const particleTotal = prefersReducedMotion ? 40 : Math.min(140, Math.floor(width / 12));
+    // Reduce particle count for better performance
+    const particleTotal = prefersReducedMotion ? 20 : Math.min(60, Math.floor(width / 20));
 
     for (let i = 0; i < particleTotal; i++) {
       particles.push(new Particle());
     }
 
-    function animate() {
+    let lastFrameTime = 0;
+    const targetFPS = 30; // Reduce from 60fps to 30fps for better performance
+    const frameInterval = 1000 / targetFPS;
+
+    function animate(currentTime) {
+      // Throttle frame rate for better performance
+      if (currentTime - lastFrameTime < frameInterval) {
+        requestAnimationFrame(animate);
+        return;
+      }
+      lastFrameTime = currentTime;
+
       ctx.clearRect(0, 0, width, height);
       particles.forEach((particle, index) => {
         particle.update();
         particle.draw();
 
-        for (let j = index + 1; j < particles.length; j++) {
+        // Only draw connections for nearby particles to reduce calculations
+        const maxConnections = 3; // Limit connections per particle
+        let connectionCount = 0;
+        
+        for (let j = index + 1; j < particles.length && connectionCount < maxConnections; j++) {
           const other = particles[j];
           const dx = particle.x - other.x;
           const dy = particle.y - other.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 110) {
+          if (distance < 80) { // Reduced distance for fewer connections
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(57, 255, 20, ${(1 - distance / 110) * 0.15})`;
+            ctx.strokeStyle = `rgba(57, 255, 20, ${(1 - distance / 80) * 0.1})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(other.x, other.y);
             ctx.stroke();
+            connectionCount++;
           }
         }
       });
@@ -271,10 +351,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     animate();
 
-    window.addEventListener("resize", () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
+      window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+    } catch (error) {
+      console.warn("Particle system initialization failed:", error);
+    }
   }
 
   const shimmerStyle = document.createElement("style");
@@ -293,5 +376,20 @@ document.addEventListener("DOMContentLoaded", () => {
       transform: translateX(120%);
     }
   `;
-  document.head.appendChild(shimmerStyle);
+  try {
+    document.head.appendChild(shimmerStyle);
+  } catch (error) {
+    console.warn("Could not add shimmer style:", error);
+  }
+
+  // Final visibility check - ensure all cards are visible after page load
+  setTimeout(() => {
+    document.querySelectorAll('.level-card').forEach(card => {
+      if (card.style.opacity === '0' || card.style.visibility === 'hidden') {
+        console.warn('Forcing card visibility');
+        card.style.opacity = '1';
+        card.style.visibility = 'visible';
+      }
+    });
+  }, 2000);
 });
