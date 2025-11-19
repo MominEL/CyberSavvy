@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hoverTimeline
       .to(content, { y: -22, scale: 1.03, boxShadow: "0 28px 60px rgba(0, 0, 0, 0.55)" }, 0)
-      .to(glow, { opacity: 0.9, scale: 1.05 }, 0)
+      .to(glow, { opacity: 0.9, scale: 1.1 }, 0)
       .to(outline, { opacity: 1 }, 0)
       .to(iconWrapper, { y: -10 }, 0)
       .to(iconRing, { scale: 1.18, rotation: 200, transformOrigin: "50% 50%" }, 0)
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
       card.classList.remove("is-active");
       if (!prefersReducedMotion) {
         gsap.to(content, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "power3.out" });
-        gsap.to(glow, { x: 0, y: 0, duration: 0.6, ease: "power3.out" });
+        gsap.to(glow, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.out" });
       }
     };
 
@@ -186,8 +186,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         gsap.to(glow, {
-          x: (relX - bounds.width / 2) * 0.08,
-          y: (relY - bounds.height / 2) * 0.08,
+          x: (relX - bounds.width / 2) * 0.15,
+          y: (relY - bounds.height / 2) * 0.15,
+          scale: 1.1,
           duration: 0.6,
           ease: "power2.out"
         });
@@ -370,27 +371,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const shimmerStyle = document.createElement("style");
-  shimmerStyle.textContent = `
-    .level-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.12) 45%, transparent 70%);
-      transform: translateX(-120%);
-      transition: transform 0.8s ease;
-      pointer-events: none;
-    }
+  // Enhanced hover fill coverage and shimmer effect
+    const hoverFillStyle = document.createElement("style");
+    hoverFillStyle.textContent = `
+      .level-card::before {
+        content: '';
+        position: absolute;
+        top: -5%;
+        left: -5%;
+        right: -5%;
+        bottom: -5%;
+        background: linear-gradient(135deg, var(--card-accent), var(--accent-secondary));
+        border-radius: inherit;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: -2;
+        filter: blur(15px);
+        transform-origin: center center;
+      }
+      
+      .level-card:hover::before {
+        opacity: 0.4;
+      }
+      
+      .level-card.is-active::before {
+        opacity: 0.6;
+      }
+      
+      .level-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.12) 45%, transparent 70%);
+        transform: translateX(-120%);
+        transition: transform 0.8s ease;
+        pointer-events: none;
+        z-index: 1;
+      }
 
-    .level-card.is-active::after {
-      transform: translateX(120%);
+      .level-card.is-active::after {
+        transform: translateX(120%);
+      }
+    `;
+    try {
+      document.head.appendChild(hoverFillStyle);
+    } catch (error) {
+      console.warn("Could not add hover fill style:", error);
     }
-  `;
-  try {
-    document.head.appendChild(shimmerStyle);
-  } catch (error) {
-    console.warn("Could not add shimmer style:", error);
-  }
 
   // Final visibility check - ensure all elements are visible after page load
   setTimeout(() => {
