@@ -121,32 +121,23 @@
         span.classList.add("letter");
         span.textContent = text.charAt(index);
         title.appendChild(span);
-
+  
         index++;
-        setTimeout(typeTitle, 180);
+        setTimeout(typeTitle, 180); 
       } else {
 
-        title.style.borderRight = "none";
-        title.style.animation = "none";
+        title.style.borderRight = "none"; 
+        title.style.animation = "none";  
         title.classList.add("typing-completed");
-
-        // Add click interactivity to title
-        title.addEventListener("click", function() {
-          title.classList.add("active");
-          setTimeout(() => {
-            title.classList.remove("active");
-          }, 600);
-        });
       }
     }
-
+  
     typeTitle();
-
+  
 
     gsap.from(".cyber-title", { opacity: 0, y: -50, duration: 1 });
     gsap.from(".subtitle", { opacity: 0, delay: 0.5, duration: 1 });
-    gsap.from(".button-group", { opacity: 0, delay: 1, duration: 0.8 });
-
+  
 
     let playGameBtn = document.getElementById("playGame");
     if (playGameBtn) {
@@ -154,21 +145,14 @@
         window.location.href = "levels.html";
       });
     }
-
+  
     let learnMoreBtn = document.getElementById("learnMore");
     if (learnMoreBtn) {
       learnMoreBtn.addEventListener("click", function () {
         window.location.href = "learn.html";
       });
     }
-
-    let playAllBtn = document.getElementById("playAll");
-    if (playAllBtn) {
-      playAllBtn.addEventListener("click", function () {
-        window.location.href = "levels/level1.html";
-      });
-    }
-
+  
 
     const links = document.querySelectorAll("nav a");
     links.forEach(link => {

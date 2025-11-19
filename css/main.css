@@ -2,34 +2,31 @@
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden; 
+    overflow:hidden; 
     background: linear-gradient(to right, #0a0f2c, #1b1f3a);
     color: white;
     font-family: 'Nunito', sans-serif;
     text-align: center;
     height: 100vh;
-    width: 100vw;
-    position: fixed;
 }
 
 
 
 .background-animation {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: url('assets/images/cyber-matrix.gif') no-repeat center center;
     background-size: cover;
-    background-attachment: fixed;
     animation: fadeBackground 20s infinite alternate;
     z-index: -2;  
   }
   
 
   #networkCanvas {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -39,20 +36,13 @@ body {
   }
   
   .center-content {
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     width: 100%;
-    z-index: 2;
-    max-height: 90vh;
-    overflow: visible;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+    z-index: 2; 
   }
 
 .bubble-bar-right {
@@ -127,8 +117,8 @@ body {
   }
   
   
-  
 
+  
 @keyframes pulseGlow {
     0% { text-shadow: 0 0 5px limegreen; }
     50% { text-shadow: 0 0 30px limegreen; }
@@ -145,10 +135,7 @@ body {
     border-right: 4px solid limegreen; 
     display: inline-block; 
     animation: blinkCursor 0.8s infinite;
-    margin: 0 auto;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
+    margin: 0 auto; 
 }
 
 
@@ -172,8 +159,6 @@ body {
 
 .typing-completed .letter:hover {
     animation: glitch 0.3s infinite;
-    color: cyan;
-    text-shadow: 0 0 10px cyan, 0 0 20px limegreen;
 }
 
 
@@ -185,59 +170,31 @@ body {
     100% { transform: translate(0, 0); }
 }
 
-.cyber-title:hover {
-    text-shadow: 0 0 20px limegreen, 0 0 30px cyan, 0 0 40px #00f5ff;
-    transform: scale(1.05) translateY(-5px);
-    filter: brightness(1.2);
-}
-
-.cyber-title.active {
-    animation: titleWave 0.6s ease-in-out;
-}
-
-@keyframes titleWave {
-    0%, 100% { transform: scale(1); }
-    25% { transform: scale(1.1) rotateY(10deg); }
-    50% { transform: scale(1.15) rotateY(-10deg); }
-    75% { transform: scale(1.1) rotateY(5deg); }
-}
-
 .subtitle {
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-.button-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-}
 
 .btn {
     padding: 15px 40px;
-    font-size: 18px;
+    font-size: 22px;
     border: none;
     cursor: pointer;
     border-radius: 15px;
     transition: transform 0.3s, box-shadow 0.3s;
-    font-weight: 600;
-    display: inline-block;
 }
 .green-btn {
     background: limegreen;
-    color: #000;
     box-shadow: 0 0 15px limegreen;
 }
 .blue-btn {
     background: dodgerblue;
-    color: #fff;
     box-shadow: 0 0 15px dodgerblue;
 }
 .btn:hover {
     transform: scale(1.1) rotate(2deg);
-    box-shadow: 0 0 25px cyan, 0 0 40px rgba(0, 255, 255, 0.6);
+    box-shadow: 0 0 20px cyan;
 }
 .btn:active {
     transform: scale(0.95);
@@ -376,4 +333,3 @@ button:hover {
         transform: translate(-1px, -1px);
     }
 }
-

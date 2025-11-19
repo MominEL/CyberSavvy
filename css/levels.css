@@ -8,10 +8,10 @@ body {
   font-family: 'Nunito', sans-serif;
   color: white;
   background: #0a0f2c;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;   
-  position: fixed;
+  min-height: 100vh;
+  overflow-x: hidden; 
+  overflow-y: auto;   
+  position: relative;
 }
 
 .levels-bg {
@@ -125,15 +125,15 @@ body {
 
 .levels-header {
   text-align: center;
-  padding: 30px 20px 20px;
+  padding: 60px 20px 40px;
   position: relative;
   z-index: 1;
 }
 
 .levels-title {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: clamp(2rem, 5vw, 3.5rem);
   color: #39FF14;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   font-weight: 800;
   letter-spacing: -0.02em;
   text-shadow: 0 0 20px rgba(57, 255, 20, 0.5), 0 0 40px rgba(57, 255, 20, 0.2);
@@ -145,21 +145,21 @@ body {
 }
 
 .levels-subtitle {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  margin-bottom: 15px;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  margin-bottom: 30px;
   color: rgba(255, 255, 255, 0.85);
   font-weight: 400;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .play-all-btn {
   background: linear-gradient(135deg, #39FF14 0%, #00f5ff 100%);
   border: none;
-  padding: 12px 28px;
-  font-size: 0.95rem;
+  padding: 16px 36px;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #000;
   border-radius: 50px;
@@ -204,12 +204,9 @@ body {
 
 .levels-showcase {
   position: relative;
-  padding: 20px 20px 40px;
+  padding: 40px 20px 80px;
   max-width: 1600px;
   margin: 0 auto;
-  height: calc(100vh - 280px);
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .levels-ambient {
