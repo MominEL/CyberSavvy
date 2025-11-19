@@ -21,6 +21,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Ensure header elements are visible
   try {
+    // Force play all button to be visible immediately
+    const playAllBtn = document.querySelector('.play-all-btn');
+    if (playAllBtn) {
+      playAllBtn.style.opacity = '1';
+      playAllBtn.style.visibility = 'visible';
+      playAllBtn.style.transform = 'none';
+      playAllBtn.style.display = 'inline-block';
+    }
+    
     if (!prefersReducedMotion) {
       const headerTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
       headerTimeline
@@ -39,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fallback: make elements visible
     document.querySelectorAll(".levels-title, .levels-subtitle, .play-all-btn").forEach(el => {
       el.style.opacity = "1";
+      el.style.visibility = "visible";
     });
   }
 
@@ -227,20 +237,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Optimized ambient animations with reduced frequency
+  // Optimized ambient animations with expanded coverage
   if (!prefersReducedMotion) {
     const orbs = gsap.utils.toArray(".ambient.orb");
     orbs.forEach((orb, index) => {
-      // Slower, less resource-intensive animations
+      // Expanded movement range for better coverage
       gsap.to(orb, {
-        x: "random(-20, 20)", // Reduced movement range
-        y: "random(-20, 20)", // Reduced movement range
-        scale: "random(0.95, 1.05)", // Reduced scale range
-        duration: "random(20, 30)", // Slower animations
+        x: "random(-40, 40)", // Expanded movement range
+        y: "random(-40, 40)", // Expanded movement range
+        scale: "random(0.9, 1.15)", // Expanded scale range
+        duration: "random(25, 35)", // Slightly slower animations for better visibility
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        delay: index * 2 // Reduced delay
+        delay: index * 3 // Staggered delays
       });
     });
   }
@@ -265,10 +275,10 @@ document.addEventListener("DOMContentLoaded", () => {
       reset(initial = false) {
         this.x = Math.random() * width;
         this.y = initial ? Math.random() * height : -10;
-        this.dx = (Math.random() - 0.5) * 0.5;
-        this.dy = Math.random() * 0.6 + 0.3;
-        this.size = Math.random() * 2.5 + 0.6;
-        this.opacity = Math.random() * 0.6 + 0.2;
+        this.dx = (Math.random() - 0.5) * 0.8; // Increased movement range
+        this.dy = Math.random() * 0.8 + 0.4; // Increased movement range
+        this.size = Math.random() * 3 + 0.8; // Slightly larger particles
+        this.opacity = Math.random() * 0.7 + 0.3; // Increased visibility
         this.color = Particle.colors[Math.floor(Math.random() * Particle.colors.length)];
       }
 
@@ -279,14 +289,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (this.y > height + 10) this.reset();
         if (this.x < -20 || this.x > width + 20) this.dx *= -1;
 
-        this.opacity = Math.sin(Date.now() * 0.001 + this.x * 0.01) * 0.3 + 0.5;
+        this.opacity = Math.sin(Date.now() * 0.001 + this.x * 0.01) * 0.4 + 0.6;
       }
 
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
         ctx.fillStyle = `${this.color}${this.opacity})`;
-        ctx.shadowBlur = 18;
+        ctx.shadowBlur = 25; // Increased glow
         ctx.shadowColor = `${this.color}${this.opacity})`;
         ctx.fill();
       }
@@ -300,8 +310,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const particles = [];
-    // Reduce particle count for better performance
-    const particleTotal = prefersReducedMotion ? 20 : Math.min(60, Math.floor(width / 20));
+    // Increase particle count for better coverage
+    const particleTotal = prefersReducedMotion ? 30 : Math.min(80, Math.floor(width / 15));
 
     for (let i = 0; i < particleTotal; i++) {
       particles.push(new Particle());
@@ -325,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
         particle.draw();
 
         // Only draw connections for nearby particles to reduce calculations
-        const maxConnections = 3; // Limit connections per particle
+        const maxConnections = 4; // Increased connections per particle
         let connectionCount = 0;
         
         for (let j = index + 1; j < particles.length && connectionCount < maxConnections; j++) {
@@ -334,10 +344,10 @@ document.addEventListener("DOMContentLoaded", () => {
           const dy = particle.y - other.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 80) { // Reduced distance for fewer connections
+          if (distance < 120) { // Increased distance for more connections
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(57, 255, 20, ${(1 - distance / 80) * 0.1})`;
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = `rgba(57, 255, 20, ${(1 - distance / 120) * 0.15})`; // Increased visibility
+            ctx.lineWidth = 0.8; // Slightly thicker lines
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(other.x, other.y);
             ctx.stroke();
@@ -382,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.warn("Could not add shimmer style:", error);
   }
 
-  // Final visibility check - ensure all cards are visible after page load
+  // Final visibility check - ensure all elements are visible after page load
   setTimeout(() => {
     document.querySelectorAll('.level-card').forEach(card => {
       if (card.style.opacity === '0' || card.style.visibility === 'hidden') {
@@ -391,5 +401,44 @@ document.addEventListener("DOMContentLoaded", () => {
         card.style.visibility = 'visible';
       }
     });
+    
+    // Ensure play all button is visible
+    const playAllBtn = document.querySelector('.play-all-btn');
+    if (playAllBtn) {
+      playAllBtn.style.opacity = '1';
+      playAllBtn.style.visibility = 'visible';
+      playAllBtn.style.display = 'inline-block';
+    }
   }, 2000);
+
+  // Add interactive title functionality
+  const title = document.querySelector('.levels-title');
+  if (title) {
+    title.addEventListener('click', () => {
+      gsap.to(title, {
+        scale: 1.1,
+        rotation: 5,
+        duration: 0.3,
+        yoyo: true,
+        repeat: 1,
+        ease: "power2.inOut"
+      });
+    });
+    
+    title.addEventListener('mouseenter', () => {
+      gsap.to(title, {
+        textShadow: "0 0 50px rgba(57, 255, 20, 1), 0 0 100px rgba(0, 245, 255, 0.8)",
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    });
+    
+    title.addEventListener('mouseleave', () => {
+      gsap.to(title, {
+        textShadow: "0 0 20px rgba(57, 255, 20, 0.5), 0 0 40px rgba(57, 255, 20, 0.2)",
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    });
+  }
 });

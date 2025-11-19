@@ -14,7 +14,7 @@
   <script src="js/levels.js" defer></script>
 </head>
 <body>
-  
+
   <div class="levels-bg"></div>
   <canvas id="levelsCanvas"></canvas>
 
@@ -43,21 +43,22 @@
 
   <a href="index.html" class="home-button">Home</a>
 
-  <header class="levels-header">
-    <h1 class="levels-title">Cyber Missions. All Systems Go.</h1>
-    <p class="levels-subtitle">Pick a mission to sharpen your defenses—or launch campaign mode to run the full gauntlet.</p>
-    <button class="play-all-btn" onclick="window.location.href='levels/level1.html'">Launch Campaign Mode</button>
-  </header>
+  <div class="content-wrapper">
+    <header class="levels-header">
+      <h1 class="levels-title">Cyber Missions. All Systems Go.</h1>
+      <p class="levels-subtitle">Pick a mission to sharpen your defenses—or launch campaign mode to run the full gauntlet.</p>
+      <button class="play-all-btn" onclick="window.location.href='levels/level1.html'">Launch Campaign Mode</button>
+    </header>
 
-  <main>
-    <section class="levels-showcase">
-      <div class="levels-ambient">
-        <span class="ambient orb orb-1"></span>
-        <span class="ambient orb orb-2"></span>
-        <span class="ambient orb orb-3"></span>
-      </div>
+    <main>
+      <section class="levels-showcase">
+        <div class="levels-ambient">
+          <span class="ambient orb orb-1"></span>
+          <span class="ambient orb orb-2"></span>
+          <span class="ambient orb orb-3"></span>
+        </div>
 
-      <div class="levels-grid">
+        <div class="levels-grid">
         <article class="level-card" data-difficulty="rookie" style="--card-accent:#39ff14; --accent-secondary:#37e4ff; --progress-value:34%;">
           <div class="card-glow"></div>
           <div class="card-outline"></div>
@@ -252,5 +253,6 @@
       </div>
     </section>
   </main>
+  </div>
 </body>
 </html>
