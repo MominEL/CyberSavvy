@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   const tipBtn = document.getElementById("tipBtn");
-  const tipPopup = document.getElementById("tipPopup");
+  const tipModal = document.getElementById("tipModal");
   const tipContent = document.getElementById("tipContent");
 
   tipBtn.addEventListener("click", () => {
@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <button id="tipCloseBtn" class="popup-btn">Got it!</button>
       `;
     }
-    showPopup(tipPopup);
+    modalManager.show("tipModal");
 
     const tipCloseBtnDynamic = document.getElementById("tipCloseBtn");
     tipCloseBtnDynamic.addEventListener("click", () => {
-      hidePopup(tipPopup);
+      modalManager.hide("tipModal");
     });
   });
 
