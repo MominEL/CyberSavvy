@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hoverTimeline
       .to(content, { y: -22, scale: 1.03, boxShadow: "0 28px 60px rgba(0, 0, 0, 0.55)" }, 0)
-      .to(glow, { opacity: 0.9, scale: 1.02 }, 0)
+      .to(glow, { opacity: 0.9, scale: 1.05 }, 0)
       .to(outline, { opacity: 1 }, 0)
       .to(iconWrapper, { y: -10 }, 0)
       .to(iconRing, { scale: 1.18, rotation: 200, transformOrigin: "50% 50%" }, 0)
