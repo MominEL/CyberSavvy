@@ -48,85 +48,58 @@
 
 
   <header class="level-header">
-    <div class="level-chip">Level 1</div>
-    <div>
-      <h1 class="level-title">Password Fortress Reforged</h1>
-      <p class="level-subtitle">Craft the ultimate password and watch your neon castle rise.</p>
-    </div>
+    <h1 class="level-title">Level 1: Password Fortress</h1>
+    <p class="level-subtitle">Build a strong password to protect your fortress!</p>
   </header>
 
 
   <main class="level-main">
 
     <div class="level-left">
-      <div class="castle-card">
-        <div class="castle-hacker-row">
-          <div class="castle-stage">
-            <div class="castle-silhouette"></div>
-            <div class="castle-container">
-              <img src="../assets/images/castle-part1.png" class="castle-part part1 piece-hidden" alt="Castle Part 1">
-              <img src="../assets/images/castle-part2.png" class="castle-part part2 piece-hidden" alt="Castle Part 2">
-              <img src="../assets/images/castle-part3.png" class="castle-part part3 piece-hidden" alt="Castle Part 3">
-              <img src="../assets/images/castle-part4.png" class="castle-part part4 piece-hidden" alt="Castle Part 4">
-            </div>
-          </div>
-          <div class="hacker-wrapper">
-            <img src="../assets/images/hacker-normal.png" alt="Hacker" class="hacker-img" id="hackerImg">
-            <div class="speech-bubble" id="hackerBubble">"…easy pickings."</div>
-          </div>
+      <div class="castle-hacker-row">
+        <div class="castle-container">
+          <img src="../assets/images/castle-part1.png" class="castle-part part1 hidden" alt="Castle Part 1">
+          <img src="../assets/images/castle-part2.png" class="castle-part part2 hidden" alt="Castle Part 2">
+          <img src="../assets/images/castle-part3.png" class="castle-part part3 hidden" alt="Castle Part 3">
+          <img src="../assets/images/castle-part4.png" class="castle-part part4 hidden" alt="Castle Part 4">
         </div>
-        <div class="castle-progress">
-          <div class="castle-label">Fortress build progress</div>
-          <div class="strength-meter bigger-meter">
-            <div class="meter-bar" id="meterBar"></div>
-          </div>
-        </div>
+        <img src="../assets/images/hacker-normal.png" alt="Hacker" class="hacker-img" id="hackerImg">
       </div>
     </div>
 
 
     <div class="level-right">
-      <div class="cyber-card">
-        <div class="card-header">
-          <div>
-            <p class="eyebrow">Challenge</p>
-            <h2 class="cyber-instructions" id="cyberInstructions"></h2>
-          </div>
-          <button id="tipBtn" class="ghost-btn">Need a hint?</button>
-        </div>
+      <h2 class="cyber-instructions" id="cyberInstructions"></h2>
 
 
-        <div class="password-panel">
-          <div class="password-display" id="passwordDisplay" contenteditable="false">
-            <span class="placeholder-text">Drag or tap tiles to build</span>
-          </div>
-          <div class="requirement-grid" id="requirementGrid"></div>
-        </div>
-
-        <div class="tile-section" id="rookieArea">
-          <div class="tile-header">
-            <div>
-              <p class="eyebrow">Rookie tiles</p>
-              <h3>Mix words, numbers & symbols</h3>
-            </div>
-            <button id="shuffleTiles" class="ghost-btn">Shuffle tiles</button>
-          </div>
-          <div class="tile-container" id="tileContainer"></div>
-        </div>
+      <div class="password-display" id="passwordDisplay" contenteditable="false">
+        <span class="placeholder-text">Drop tiles here</span>
+      </div>
 
 
-        <div class="buttons-row">
-          <button id="submitBtn" class="action-btn bigger-submit">Build My Fortress</button>
-          <button id="resetBtn" class="secondary-btn bigger-submit">Reset</button>
-        </div>
+      <div class="strength-meter bigger-meter">
+        <div class="meter-bar" id="meterBar"></div>
+      </div>
 
-        <div class="result-area">
-          <p id="feedbackText"></p>
-          <p id="starRating"></p>
-        </div>
+
+      <div class="tile-container" id="tileContainer"></div>
+
+
+      <div class="buttons-row">
+        <button id="submitBtn" class="action-btn bigger-submit">Submit Password</button>
+
+        <button id="resetBtn" class="action-btn bigger-submit">🔄 Reset</button>
+      </div>
+
+      <div class="result-area">
+        <p id="feedbackText"></p>
+        <p id="starRating"></p>
       </div>
     </div>
   </main>
+
+
+  <div class="tip-circle" id="tipBtn">?</div>
 
 
   <div class="popup-overlay hidden" id="difficultyPopup">
