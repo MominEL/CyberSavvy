@@ -729,7 +729,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   gsap.from(".castle-container", { x: -30, opacity: 0, duration: 1 });
   gsap.from(".hacker-img", { x: 30, opacity: 0, duration: 1 });
-  animateInstructions();
 });
 
 
