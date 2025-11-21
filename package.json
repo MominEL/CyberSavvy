@@ -1,12 +1,5 @@
 {
-  "name": "cybersavvy",
-  "version": "1.0.0",
-  "private": true,
   "dependencies": {
     "@xterm/xterm": "^5.5.0"
-  },
-  "scripts": {
-    "lint": "node --check levels/level1.js",
-    "test": "npm run lint"
   }
 }
